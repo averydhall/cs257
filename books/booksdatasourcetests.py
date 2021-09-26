@@ -18,6 +18,61 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(len(authors) == 1)
         self.assertTrue(authors[0] == Author('Pratchett', 'Terry'))
 
+    def test_authors_bronte(self):
+
+
+    def test_author_nonexistent(self):
+        authors = self.data_source.authors('ghjk')
+        self.assertTrue(len(authors) == 0)
+
+    def test_author_emptyString(self):
+        authors = self.data_source.authors('')
+        self.assertTrue(len(authors)) == 6) #Assuming we're using the smaller csv
+        self.assertTrue(titles[3] == Author('Austen', 'Jane')
+
+    def test_author_partial(self):
+        authors = self.data_source.authors('or')
+        self.
+
+
+    def test_unique_title(self):
+        titles = self.data_source.books('The Fire Next Time')
+        self.assertTrue(len(titles) == 1)
+        self.assertTrue(titles[0] == Title('The Fire Next Time'))
+        self.assertTrue(titles[0] == Author('Baldwin', 'James'))
+
+    def test_title_Option_n(self):
+        titles = self.data_source.books('and', 'n')
+        self.assertTrue(len(titles) == 6)
+        self.assertTrue(titles[0] == Title('Boys and Sex'))
+        self.assertTrue(titles[3] == Title('Sense and Sensibility'))
+        self.assertTrue(titles[4] == Author('Orenstein', 'Peggy'))
+        self.assertTrue(titles[5] == Title('The Life and Opinions of Tristram Shandy, Gentleman'))
+
+    def test_unique_title_Option_y(self):
+        titles = self.data_source.books('and', 'y')
+        self.assertTrue(len(titles) == 6)
+        self.assertTrue(titles[0] == Title('The Life and Opinions of Tristram Shandy, Gentleman'))
+        self.assertTrue(titles[1] == Author('Austen','Jane'))
+        self.assertTrue(titles[5] == Title('Boys and Sex'))
+
+    def test_title_nonexistent(self):
+        titles = self.data_source.books('asdf', 'n')
+        self.assertTrue(len(titles) == 0)
+
+    def test_title_emptyString(self):
+
+    def test_title_partial(self):
+
+
+
+
+    def test_betweenyrs_unique(self):
+
+    def test_betweenyrs_empty(self):
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
-
