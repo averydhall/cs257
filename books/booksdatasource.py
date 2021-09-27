@@ -67,7 +67,7 @@ class BooksDataSource:
             The list of books is sorted in an order depending on the sort_by parameter:
 
                 'year' -- sorts by publication_year, breaking ties with (case-insenstive) title
-                'title' -- sorts by (case-insensitive) title, breaking ties with publication_year
+                'title' -- sorts by (case-insensitive) title
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
