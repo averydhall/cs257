@@ -27,13 +27,14 @@ class BooksDataSourceTester(unittest.TestCase):
 
     def test_author_emptyString(self):
         authors = self.data_source.authors('')
-        self.assertTrue(len(authors)) == 6) #Assuming we're using the smaller csv
-        self.assertTrue(titles[3] == Author('Austen', 'Jane')
+        self.assertTrue(len(authors)) == 41)
+        self.assertTrue(authors[0] == Author('Austen', 'Jane')
+        self.assertTrue(authors[40] == Author('Wodehouse', 'Pelham Grenville')
 
     def test_author_partial(self):
         authors = self.data_source.authors('or')
-        self.
-
+        self.assertTrue(titles[0] == Author('Morrison', 'Toni'))
+        self.assertTrue(titles[2] == Author('Orenstein', 'Peggy'))
 
     def test_unique_title(self):
         titles = self.data_source.books('The Fire Next Time')
@@ -61,10 +62,14 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(len(titles) == 0)
 
     def test_title_emptyString(self):
+        titles = self.data_source.books('')
+        self.assertTrue(len(authors)) == 41)
+        self.assertTrue(titles[0] == Author('All Clear')
+        self.assertTrue(titles[40] == Author('There, There')
 
     def test_title_partial(self):
-
-
+        titles = self.data_source.books('')
+        self.
 
 
     def test_betweenyrs_unique(self):
