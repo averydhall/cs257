@@ -27,10 +27,10 @@ class BooksDataSourceTester(unittest.TestCase):
 
     def test_author_emptyString(self):
         authors = self.data_source.authors('')
-        self.assertTrue(len(authors)) == 41)
-        self.assertTrue(authors[0] == Author('Austen', 'Jane')
-        self.assertTrue(authors[40] == Author('Wodehouse', 'Pelham Grenville')
-
+        self.assertTrue(len(authors) == 41)
+        self.assertTrue(authors[0] == Author('Austen', 'Jane'))
+        self.assertTrue(authors[40] == Author('Wodehouse', 'Pelham Grenville'))
+        
     def test_author_partial(self):
         authors = self.data_source.authors('or')
         self.assertTrue(titles[0] == Author('Morrison', 'Toni'))
@@ -64,18 +64,22 @@ class BooksDataSourceTester(unittest.TestCase):
     def test_title_emptyString(self):
         titles = self.data_source.books('')
         self.assertTrue(len(authors)) == 41)
-        self.assertTrue(titles[0] == Author('All Clear')
-        self.assertTrue(titles[40] == Author('There, There')
+        self.assertTrue(titles[0] == Author('All Clear'))
+        self.assertTrue(titles[40] == Author('There, There'))
 
     def test_title_partial(self):
         titles = self.data_source.books('')
-        self.
 
 
     def test_betweenyrs_unique(self):
-
+        
     def test_betweenyrs_empty(self):
-
+    
+    def test_title_Option_y_tie(self):
+        self.data_source = booksdatasource.BooksDataSource('bookstest1.csv')
+        titles = self.data_source.books('', y)
+        self.assertTrue
+        
 
 
 
