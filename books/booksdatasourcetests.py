@@ -67,7 +67,7 @@ class BooksDataSourceTester(unittest.TestCase):
 
     def test_title_emptyString(self):
         titles = self.data_source.books('')
-        self.assertTrue(len(authors)) == 41)
+        self.assertTrue(len(authors) == 41)
         self.assertTrue(titles[0] == Author('All Clear'))
         self.assertTrue(titles[40] == Author('There, There'))
 
@@ -114,7 +114,7 @@ class BooksDataSourceTester(unittest.TestCase):
         #Same
         
     def test_betweenyrs_empty(self):
-        books = self.data_source.books_between_years(,)
+        books = self.data_source.books_between_years(None,None)
         self.assertTrue(len(books) == 41)
         #self.assertTrue(titles[0] == Author('The Life and Opinions of Tristram Shandy, Gentleman'))
         #self.assertTrue(titles[40] == Author('The Invisible Life of Addie LaRue'))
@@ -122,13 +122,13 @@ class BooksDataSourceTester(unittest.TestCase):
     
     def test_betweenyrs_no_start_date(self):
         self.data_source = booksdatasource.BooksDataSource('bookstest1.csv')
-        books = self.data_source.books_between_years(,1995)
+        books = self.data_source.books_between_years(None,1995)
         self.assertTrue(len(books) == 3)
         #self.assertEquals(titles, ['And Then There Were None', 'Beloved', 'Schoolgirls'])
         #Same
     
     def test_betweenyrs_no_end_date(self):
-        books = self.data_source.books_between_years(2005,)
+        books = self.data_source.books_between_years(2005,None)
         self.assertTrue(len(books) == 2)
         #self.assertEquals(titles, ['All Clear', 'Blackout'])
         #Same
