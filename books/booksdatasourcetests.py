@@ -53,7 +53,7 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(titles[0] == Author('Baldwin', 'James'))
 
     def test_title_option_n(self):
-        titles = self.data_source.books('and', 'n')
+        titles = self.data_source.books('and', 'Title')
         self.assertTrue(len(titles) == 6)
         self.assertTrue(titles[0] == Title('Boys and Sex'))
         self.assertTrue(titles[3] == Title('Sense and Sensibility'))
@@ -61,14 +61,14 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(titles[5] == Title('The Life and Opinions of Tristram Shandy, Gentleman'))
 
     def test_unique_title_option_y(self):
-        titles = self.data_source.books('and', 'y')
+        titles = self.data_source.books('and', 'Year')
         self.assertTrue(len(titles) == 6)
         self.assertTrue(titles[0] == Title('The Life and Opinions of Tristram Shandy, Gentleman'))
         self.assertTrue(titles[1] == Author('Austen','Jane'))
         self.assertTrue(titles[5] == Title('Boys and Sex'))
 
     def test_title_nonexistent(self):
-        titles = self.data_source.books('asdf', 'n')
+        titles = self.data_source.books('asdf', 'Title')
         self.assertTrue(len(titles) == 0)
 
     def test_title_emptyString(self):
@@ -85,12 +85,12 @@ class BooksDataSourceTester(unittest.TestCase):
 
     def test_title_option_y_small_set(self):
         self.data_source = booksdatasource.BooksDataSource('bookstest1.csv')
-        titles = self.data_source.books('', 'y')
+        titles = self.data_source.books('', 'Year')
         self.assertEqual(titles, ['And Then There Were None', 'Beloved', 'Schoolgirls', 'To Say Nothing of the Dog', 'All Clear', 'Blackout'])
     
     def test_title_option_n_small_set(self):
         self.data_source = booksdatasource.BooksDataSource('bookstest1.csv')
-        titles = self.data_source.books('', 'n')
+        titles = self.data_source.books('', 'Title')
         self.assertEqual(titles, ['All Clear', 'And Then There Were None', 'Beloved', 'Blackout', 'Schoolgirls', 'To Say Nothing of the Dog'])
     
     '''
