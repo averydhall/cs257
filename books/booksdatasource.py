@@ -49,7 +49,25 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
         '''
-        pass
+        book_collection = []
+        with open(books_csv_file_name, mode ='r')as file:
+            csv_file = csv.reader(file)
+            for lines in csv_file: #for each book in the file
+                author_info = lines[2].split(" and ")
+                all_authors = []
+                for newauthor in author_info: #For each new author information string
+                    name_and_dates = newauthor.split()
+                    dates = name_and_dates[-1].split("-")
+                    born = dates[0][1:]
+                    if(dates[0] == ")"): #if there is no death date
+                        death = ""
+                    else:
+                        death = dates[1][:-1]
+
+                    all_authors.append(Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death))
+
+                book_collection.append(Book(lines[0], lines[1], all_authors))
+        
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
