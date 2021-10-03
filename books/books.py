@@ -31,7 +31,7 @@ if args.h == True:
 
 if args.t == True:
     if args.y == True:
-        book_list = data_source.books(" ".join(args.search_string), "years")
+        book_list = data_source.books(" ".join(args.search_string), "year")
         for returned_book in book_list:
             print(returned_book.title)
     else:
@@ -40,10 +40,29 @@ if args.t == True:
             print(returned_book.title)
 
 elif args.a == True:
-    book_list = booksdatasource.books(args.search_string, "years")
+    if len(args.search_string)==0:
+        author_list = data_source.authors("")
+    else:
+        author_list = data_source.authors(" ".join(args.search_string))
+    book_list = data_source.books("", "title")
+    for author in author_list:
+        author_works = []
+        for book in book_list:
+            for single_author in book.authors:
+                if single_author == author:
+                    author_works.append(book.title)
+        print(author.given_name + ' ' + author.surname)
+        print(author_works)
     
 elif args.r == True:
-    year_list = args.search_string.split()
+    if len(args.search_string)==0:
+        year_list = data_source.books_between_years(None,None)
+    else:
+        dates = args.search_string[0].split(",")
+        year_list = data_source.books_between_years(dates[0],dates[1])
+    for book in year_list:
+        print(book.title + ", " + book.publication_year)
+    
 
 else:
     print(file_contents)
