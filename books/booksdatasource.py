@@ -56,16 +56,20 @@ class BooksDataSource:
             for lines in csv_file: #for each book in the file
                 author_info = lines[2].split(" and ")
                 all_authors = []
-                for newauthor in author_info: #For each new author information string
-                    name_and_dates = newauthor.split()
+                for new_author in author_info: #For each new author information string
+                    name_and_dates = new_author.split()
                     dates = name_and_dates[-1].split("-")
                     born = dates[0][1:]
                     if(dates[0] == ")"): #if there is no death date
                         death = ""
                     else:
                         death = dates[1][:-1]
-
-                    all_authors.append(Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death))
+                    to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
+                    for obtained_book in book_collection:
+                        for obtained_author in obtained_book.authors:
+                            if obtained_author == to_add_author:
+                                to_add_author = obtained_author
+                    all_authors.append(to_add_author)
                 
                 self.book_collection.append(Book(lines[0], lines[1], all_authors))
 
@@ -76,11 +80,20 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        #empty
-        #multiple words
-        #partial of word
-        #if search_text
-        return []
+        result_list = []
+        for cur_book in self.book_collection:
+            for cur_author in cur_book.authors:
+                full_name = cur_author.given_name + cur_author.surname
+                
+                if (search_text == None or search_text == "") and (cur_author not in result_list):
+                    result_list.append(cur_author)
+                    
+                elif ((search_text in full_name) or (search_text.title() in full_name)) and cur_author not in result_list:
+                    result_list.append(cur_author)
+
+                sorted_result_list = sorted(result_list, key=lambda x: x.surname + x.given_name)
+                
+        return sorted_result_list
 
     def books(self, search_text=None, sort_by='title'):
         ''' Returns a list of all the Book objects in this data source whose
@@ -121,5 +134,26 @@ class BooksDataSource:
             during start_year should be included. If both are None, then all books
             should be included.
         '''
-        return []
+        result_list = []
+        if (start_year == None or start_year== "") and (end_year == None or end_year== ""):
+            result_list = self.book_collection
+            
+        elif start_year != None and (end_year == None or end_year == ""):
+            for cur_book in self.book_collection:
+                if int(cur_book.publication_year) >= int(start_year):
+                    result_list.append(cur_book)
+                    
+        elif end_year != None and (start_year == None or start_year == ""):
+            for cur_book in self.book_collection:
+                    if int(cur_book.publication_year) <= int(end_year):
+                        result_list.append(cur_book)
+        else:
+            for cur_book in self.book_collection:
+                if (int(cur_book.publication_year) <= int(end_year)) and (int(cur_book.publication_year) >= int(start_year)):
+                    result_list.append(cur_book)
+                        
+
+        sorted_result_list = sorted(result_list, key=lambda x: x.publication_year + x.title)
+        
+        return sorted_result_list
 
