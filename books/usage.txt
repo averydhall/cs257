@@ -16,16 +16,16 @@ Description:
 
   -t --title  takes in a string and returns a list of book titles that contain the given string (case-insensitive,
               titles sorted alphabetically by default)
-              
+
       -n  used in conjunction with -title, will return list of book titles sorted alphabetically
-      
+
       -y  used in conjunction with -title, will return list of book titles sorted by publication year
 
   -a --author  takes in a string and returns a list of authors whose names contain
                the given string, and for each author a list of their books
                (ordered alphabetically by surname, ties are broken by given name)
 
-  -r --range  takes in a starting year and ending year and returns a list of books
+  -r --range  takes in a starting year and ending year (separated by a space) and returns a list of books
               published between those years (inclusive, books ordered by publication year)
 
   -h -? --help  returns the usage statement
