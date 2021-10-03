@@ -35,7 +35,7 @@ class Book:
         return self.title == other.title
 
 class BooksDataSource:
-    def __init__(self, books_csv_file_name):
+    def __init__(self, books_csv_file_name, book_collection = []):
         ''' The books CSV file format looks like this:
 
                 title,publication_year,author_description
@@ -50,6 +50,7 @@ class BooksDataSource:
             a collection of Author objects and a collection of Book objects.
         '''
         book_collection = []
+        self.book_collection = book_collection
         with open(books_csv_file_name, mode ='r')as file:
             csv_file = csv.reader(file)
             for lines in csv_file: #for each book in the file
@@ -65,9 +66,9 @@ class BooksDataSource:
                         death = dates[1][:-1]
 
                     all_authors.append(Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death))
+                
+                self.book_collection.append(Book(lines[0], lines[1], all_authors))
 
-                book_collection.append(Book(lines[0], lines[1], all_authors))
-        
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
@@ -75,6 +76,10 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
+        #empty
+        #multiple words
+        #partial of word
+        #if search_text
         return []
 
     def books(self, search_text=None, sort_by='title'):
@@ -89,7 +94,21 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
-        return []
+        result_list = []
+        if search_text == None or search_text == "":
+            result_list = self.book_collection
+        else:
+            for cur_book in self.book_collection:
+                if (search_text in cur_book.title) or (search_text.title() in cur_book.title):
+                    result_list.append(cur_book)
+                    
+        if sort_by == "title":
+            sorted_result_list = sorted(result_list, key=lambda x: x.title)
+        
+        if sort_by == "year":
+            sorted_result_list = sorted(result_list, key= lambda x: x.publication_year + x.title)
+            
+        return sorted_result_list
 
     def books_between_years(self, start_year=None, end_year=None):
         ''' Returns a list of all the Book objects in this data source whose publication
