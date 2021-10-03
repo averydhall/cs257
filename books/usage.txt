@@ -25,7 +25,7 @@ Description:
                the given string, and for each author a list of their books
                (ordered alphabetically by surname, ties are broken by given name)
 
-  -r --range  takes in a starting year and ending year (separated by a space) and returns a list of books
+  -r --range  takes in a starting year and ending year (separated by a comma) and returns a list of books
               published between those years (inclusive, books ordered by publication year)
 
   -h -? --help  returns the usage statement
