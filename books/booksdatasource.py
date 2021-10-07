@@ -15,6 +15,7 @@ class Author:
         self.given_name = given_name
         self.birth_year = birth_year
         self.death_year = death_year
+        self.author_works = []
 
     def __eq__(self, other):
         ''' For simplicity, we're going to assume that no two authors have the same name. '''
@@ -35,7 +36,7 @@ class Book:
         return self.title == other.title
 
 class BooksDataSource:
-    def __init__(self, books_csv_file_name, book_collection = []):
+    def __init__(self, books_csv_file_name):
         ''' The books CSV file format looks like this:
 
                 title,publication_year,author_description
@@ -49,13 +50,14 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
         '''
-        book_collection = []
-        self.book_collection = book_collection
+        self.book_collection = []
+        self.author_collection = []
         with open(books_csv_file_name, mode ='r')as file:
             csv_file = csv.reader(file)
             for lines in csv_file: #for each book in the file
+                book_authors = []
+                to_add_book = Book(lines[0], lines[1], book_authors)
                 author_info = lines[2].split(" and ")
-                all_authors = []
                 for new_author in author_info: #For each new author information string
                     name_and_dates = new_author.split()
                     dates = name_and_dates[-1].split("-")
@@ -65,13 +67,20 @@ class BooksDataSource:
                     else:
                         death = dates[1][:-1]
                     to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
-                    for obtained_book in book_collection:
+                    
+                    
+                    if to_add_author not in author_collection:
+                        author_collection.append(to_add_author)
+                    else:
+                        
+                        
+                    for obtained_book in self.book_collection:
                         for obtained_author in obtained_book.authors:
                             if obtained_author == to_add_author:
                                 to_add_author = obtained_author
                     all_authors.append(to_add_author)
                 
-                self.book_collection.append(Book(lines[0], lines[1], all_authors))
+                self.book_collection.append(, all_authors))
 
 
     def authors(self, search_text=None):
@@ -83,12 +92,11 @@ class BooksDataSource:
         result_list = []
         for cur_book in self.book_collection:
             for cur_author in cur_book.authors:
-                full_name = cur_author.given_name + cur_author.surname
-                
+                full_name = cur_author.given_name + " " + cur_author.surname
                 if (search_text == None or search_text == "") and (cur_author not in result_list):
                     result_list.append(cur_author)
                     
-                elif ((search_text in full_name) or (search_text.title() in full_name)) and cur_author not in result_list:
+                elif (search_text.lower() in full_name.lower()) and (cur_author not in result_list):
                     result_list.append(cur_author)
 
                 sorted_result_list = sorted(result_list, key=lambda x: x.surname + x.given_name)
@@ -112,7 +120,7 @@ class BooksDataSource:
             result_list = self.book_collection
         else:
             for cur_book in self.book_collection:
-                if (search_text in cur_book.title) or (search_text.title() in cur_book.title):
+                if (search_text in cur_book.title) or (search_text.lower() in cur_book.title.lower()):
                     result_list.append(cur_book)
                     
         if sort_by == "title":
