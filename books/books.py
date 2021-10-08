@@ -11,6 +11,9 @@ def display_usage():
     print(usage_statement)
     f.close()
                 
+def display_title(books_to_display_list):
+    for book in books_to_display_list:
+        print(book.title)
     
 def main():
     
@@ -18,30 +21,30 @@ def main():
 
     parser = argparse.ArgumentParser("parses arguements", add_help = False)
 
-    parser.add_argument("-t", "--title", action = "store_true", dest = "t")
-    parser.add_argument("-n", action = "store_true", dest = "n")
-    parser.add_argument("-y", action = "store_true", dest = "y")
-    parser.add_argument("-a", "--author", action = "store_true", dest = "a")
-    parser.add_argument("-r", "--range", action = "store_true", dest = "r")
-    parser.add_argument("-h", "-?", "--help", action = "store_true", dest = "help_wanted")
-    parser.add_argument("search_string", type = str, nargs = '*')
+    parser.add_argument("-t", "--title", action = "store_true", dest = "search_by_title")
+    parser.add_argument("-n", action = "store_true", dest = "sort_by_title")
+    parser.add_argument("-y", action = "store_true", dest = "sort_by_year")
+    parser.add_argument("-a", "--author", action = "store_true", dest = "search_by_author")
+    parser.add_argument("-r", "--range", action = "store_true", dest = "search_by_year_range")
+    parser.add_argument("-h", "-?", "--help", action = "store_true", dest = "request_help")
+    parser.add_argument("search_string", type = str)
+    parser.add_argument("--start_year", type = str, nargs = "1")
+
 
     args = parser.parse_args()
 
-    if args.help_wanted:
+    if args.request_help:
         display_usage()
         
-    if args.t == True:
+    if args.search_by_title:
         if args.y == True:
             book_list = data_source.books(" ".join(args.search_string), "year")
-            for returned_book in book_list:
-                print(returned_book.title)
+            display_title(book_list)
         else:
             book_list = data_source.books(" ".join(args.search_string), "title")
-            for returned_book in book_list:
-                print(returned_book.title)
+            display_title(book_list)
 
-    elif args.a == True:
+    elif args.search_by_author:
         if len(args.search_string)==0:
             author_list = data_source.authors("")
         else:
@@ -56,7 +59,7 @@ def main():
             print(author.given_name + ' ' + author.surname)
             print(author_works)
 
-    elif args.r == True:
+    elif args.search_by_year_range:
         if len(args.search_string)==0:
             year_list = data_source.books_between_years(None,None)
         #if len(args.search_string) == 1, (one year, no comma provided) throw error?
@@ -65,7 +68,6 @@ def main():
             year_list = data_source.books_between_years(dates[0],dates[1])
         for book in year_list:
             print(book.title + ", " + book.publication_year)
-
 
     else:
         display_usage()
