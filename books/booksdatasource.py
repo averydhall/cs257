@@ -66,16 +66,17 @@ class BooksDataSource:
                         death = ""
                     else:
                         death = dates[1][:-1]
-                        
-                    to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
                     
+                    to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
+                    for author in self.author_collection:
+                        if to_add_author == author:
+                            to_add_author = author
+                    to_add_author.author_works.append(to_add_book)
+                    to_add_book.authors.append(to_add_author)
+
                     if to_add_author not in self.author_collection:
                         self.author_collection.append(to_add_author)
                     
-                    to_add_author.author_works.append(to_add_book)
-                    
-                    to_add_book.authors.append(to_add_author)
-                
                 self.book_collection.append(to_add_book)
 
 
@@ -112,7 +113,7 @@ class BooksDataSource:
                             or 'title', just do the same thing you would do for 'title')
         '''
         result_list = []
-        if search_text == None or search_text == "":
+        if search_text == "":
             result_list = self.book_collection
         else:
             for cur_book in self.book_collection:
@@ -139,15 +140,15 @@ class BooksDataSource:
             should be included.
         '''
         result_list = []
-        if (start_year == None or start_year== "") and (end_year == None or end_year== ""):
+        if start_year is None and end_year is None:
             result_list = self.book_collection
             
-        elif start_year != None and (end_year == None or end_year == ""):
+        elif start_year is not None and end_year is None:
             for cur_book in self.book_collection:
                 if int(cur_book.publication_year) >= int(start_year):
                     result_list.append(cur_book)
                     
-        elif end_year != None and (start_year == None or start_year == ""):
+        elif end_year is not None and start_year is None:
             for cur_book in self.book_collection:
                     if int(cur_book.publication_year) <= int(end_year):
                         result_list.append(cur_book)
