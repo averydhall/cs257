@@ -66,23 +66,17 @@ class BooksDataSource:
                         death = ""
                     else:
                         death = dates[1][:-1]
+                        
                     to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
                     
-                    to_add_book.authors.append(to_add_author)
+                    if to_add_author not in self.author_collection:
+                        self.author_collection.append(to_add_author)
                     
-                    if to_add_author not in author_collection:
-                        author_collection.append(to_add_author)
-                    else:
-                        
-                        
-                        
-                    for obtained_book in self.book_collection:
-                        for obtained_author in obtained_book.authors:
-                            if obtained_author == to_add_author:
-                                to_add_author = obtained_author
-                    all_authors.append(to_add_author)
+                    to_add_author.author_works.append(to_add_book)
+                    
+                    to_add_book.authors.append(to_add_author)
                 
-                self.book_collection.append(, all_authors))
+                self.book_collection.append(to_add_book)
 
 
     def authors(self, search_text=None):
