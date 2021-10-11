@@ -87,16 +87,12 @@ class BooksDataSource:
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
         result_list = []
-        for cur_book in self.book_collection:
-            for cur_author in cur_book.authors:
-                full_name = cur_author.given_name + " " + cur_author.surname
-                if (search_text == None or search_text == "") and (cur_author not in result_list):
-                    result_list.append(cur_author)
-                    
-                elif (search_text.lower() in full_name.lower()) and (cur_author not in result_list):
-                    result_list.append(cur_author)
+        for author in self.author_collection:
+            full_name = author.given_name + ' ' + author.surname
+            if search_text.lower() in full_name.lower():
+                result_list.append(author)
 
-                sorted_result_list = sorted(result_list, key=lambda x: x.surname + x.given_name)
+            sorted_result_list = sorted(result_list, key=lambda x: x.surname + x.given_name)
                 
         return sorted_result_list
 
@@ -117,7 +113,7 @@ class BooksDataSource:
             result_list = self.book_collection
         else:
             for cur_book in self.book_collection:
-                if (search_text in cur_book.title) or (search_text.lower() in cur_book.title.lower()):
+                if (search_text.lower() in cur_book.title.lower()):
                     result_list.append(cur_book)
                     
         if sort_by == "title":
