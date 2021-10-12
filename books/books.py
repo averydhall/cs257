@@ -34,26 +34,39 @@ def display_authors(list_of_authors_to_display):
           "Right Ho, Jeeves" (1934)
           "The Code of the Woosters" (1938)
      '''
-    for author in list_of_authors_to_display:
-        author_name = author.surname + ', ' + author.given_name
-        author_life_span = ' (' + author.birth_year + '-' + author.death_year + '):'
-        print(author_name + author_life_span)
+    if len(list_of_authors_to_display) == 0:
+        print('No authors were found to include the given search string.')
         
-        for book in author.author_works:
-            print('  "' + book.title + '" (' + book.publication_year + ')')
-        
-        print()
+    else:    
+        for author in list_of_authors_to_display:
+            author_name = author.surname + ', ' + author.given_name
+            author_life_span = ' (' + author.birth_year + '-' + author.death_year + '):'
+            print(author_name + author_life_span)
+
+            for book in author.author_works:
+                print('  "' + book.title + '" (' + book.publication_year + ')')
+
+            print()
 
 def display_range_list(list_of_books_to_display):
     '''Prints out information about books from an input list of book objects
         For example:
-        "Right Ho, Jeeves", Pelham Greenville Wodehouse, 1934
+        "Right Ho, Jeeves", Pelham Grenville Wodehouse, (1934)
      '''
-    for book in list_of_books_to_display:
-        authors_names_string = create_authors_string(book)
-        print('"' + book.title + '", ' + authors_names_string + ', (' + book.publication_year + ')')
+    if len(list_of_books_to_display) == 0:
+        print('No titles were found within the given range.')
+        
+    else:    
+        for book in list_of_books_to_display:
+            authors_names_string = create_authors_string(book)
+            print('"' + book.title + '", ' + authors_names_string + ', (' + book.publication_year + ')')
         
 def create_authors_string(book):
+    '''Returns a string that contains the full names of all of a book object's authors.
+        For example:
+        Pelham Grenville Wodehouse
+        Neil Gaiman and Terry Pratchett
+    '''
     authors_string = ''
     
     for i in range(len(book.authors)):
@@ -68,7 +81,7 @@ def create_authors_string(book):
 def main():
     data_source = booksdatasource.BooksDataSource('books1.csv')
 
-    parser = argparse.ArgumentParser('parses arguments', add_help = False)
+    parser = argparse.ArgumentParser(add_help = False)
 
     parser.add_argument('-t', '--title', type = str, default = '', dest = 'title_search', nargs = '?')
     parser.add_argument('-n', action = 'store_true', dest = 'sort_by_title')
