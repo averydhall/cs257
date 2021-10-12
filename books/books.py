@@ -7,12 +7,17 @@ import argparse
 import booksdatasource
 
 def display_usage():
+    '''Prints out the usage statement for books.py'''
     f = open('usage.txt', 'r')
     usage_statement = f.read()
     print(usage_statement)
     f.close()
                 
 def display_titles(list_of_books_to_display):
+    '''Prints out information about books from an input list of book objects.
+        For example:
+        "Right Ho, Jeeves", Pelham Greenville Wodehouse, 1934
+     '''
     if len(list_of_books_to_display) == 0:
         print('No titles were found to include the given search string.')
     else:
@@ -22,6 +27,13 @@ def display_titles(list_of_books_to_display):
             print('"' +book.title + '"' + ', ' + authors_name_string + ', ' + book.publication_year)
 
 def display_authors(list_of_authors_to_display):
+    '''Prints out information about authors from an input list of author objects.
+        For example:
+        Wodehouse, Pelham Grenville (1881-1975):
+          "Leave it to Psmith" (1923)
+          "Right Ho, Jeeves" (1934)
+          "The Code of the Woosters" (1938)
+     '''
     for author in list_of_authors_to_display:
         author_name = author.surname + ', ' + author.given_name
         author_life_span = ' (' + author.birth_year + '-' + author.death_year + '):'
@@ -33,6 +45,10 @@ def display_authors(list_of_authors_to_display):
         print()
 
 def display_range_list(list_of_books_to_display):
+    '''Prints out information about books from an input list of book objects
+        For example:
+        "Right Ho, Jeeves", Pelham Greenville Wodehouse, 1934
+     '''
     for book in list_of_books_to_display:
         authors_names_string = create_authors_string(book)
         print('"' + book.title + '", ' + authors_names_string + ', (' + book.publication_year + ')')
@@ -61,7 +77,7 @@ def main():
     parser.add_argument('-r', '--range', action = 'store_true', dest = 'search_by_year_range')
     parser.add_argument('-h', '-?', '--help', action = 'store_true', dest = 'request_help')
     parser.add_argument('-s', '--start_yr', type = int, dest = 'start_yr')
-    parser.add_argument("-e", '--end_yr', type = int, dest = 'end_yr')
+    parser.add_argument('-e', '--end_yr', type = int, dest = 'end_yr')
 
     args = parser.parse_args()
 
@@ -71,7 +87,7 @@ def main():
     elif args.title_search != '':
         if args.sort_by_year == True:
             book_list = data_source.books(args.title_search, 'year')
-            display_title(book_list)
+            display_titles(book_list)
         else:
             book_list = data_source.books(args.title_search, 'title')
             display_titles(book_list)

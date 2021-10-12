@@ -53,25 +53,31 @@ class BooksDataSource:
         '''
         self.book_collection = []
         self.author_collection = []
+        
         with open(books_csv_file_name, mode ='r')as file:
             csv_file = csv.reader(file)
+            
             for lines in csv_file: #for each book in the file
                 book_authors = []
                 to_add_book = Book(lines[0], lines[1], book_authors)
-                author_info = lines[2].split(" and ")
-                for new_author in author_info: #For each new author information string
+                author_info = lines[2].split(' and ')
+                
+                for new_author in author_info: #processes each new author information string
                     name_and_dates = new_author.split()
-                    dates = name_and_dates[-1].split("-")
+                    dates = name_and_dates[-1].split('-')
                     born = dates[0][1:]
-                    if(dates[0] == ")"): #if there is no death date
-                        death = ""
+                    
+                    if(dates[0] == ')'): 
+                        death = ''
                     else:
                         death = dates[1][:-1]
                     
-                    to_add_author = Author(name_and_dates[-2], " ".join(name_and_dates[:-2]), born, death)
+                    to_add_author = Author(name_and_dates[-2], ' '.join(name_and_dates[:-2]), born, death)
+                    
                     for author in self.author_collection:
                         if to_add_author == author:
                             to_add_author = author
+                    
                     to_add_author.author_works.append(to_add_book)
                     to_add_book.authors.append(to_add_author)
 
@@ -92,6 +98,7 @@ class BooksDataSource:
             full_name = author.given_name + ' ' + author.surname
             if search_text is None:
                 result_list.append(author)
+                
             elif search_text.lower() in full_name.lower():
                 result_list.append(author)
 
@@ -114,15 +121,16 @@ class BooksDataSource:
         result_list = []
         if search_text == None:
             result_list = self.book_collection
+            
         else:
             for cur_book in self.book_collection:
                 if (search_text.lower() in cur_book.title.lower()):
                     result_list.append(cur_book)
                     
-        if sort_by == "title":
+        if sort_by == 'title':
             sorted_result_list = sorted(result_list, key=lambda x: x.title)
         
-        if sort_by == "year":
+        if sort_by == 'year':
             sorted_result_list = sorted(result_list, key= lambda x: x.publication_year + x.title)
             
         return sorted_result_list
@@ -139,19 +147,20 @@ class BooksDataSource:
             should be included.
         '''
         result_list = []
-        if start_year is None and end_year is None:
+        if start_year is None and end_year is None: #if there is no range
             result_list = self.book_collection
             
-        elif start_year is not None and end_year is None:
+        elif start_year is not None and end_year is None: #if there is only a start year
             for cur_book in self.book_collection:
                 if int(cur_book.publication_year) >= int(start_year):
                     result_list.append(cur_book)
                     
-        elif end_year is not None and start_year is None:
+        elif end_year is not None and start_year is None: #if there is only an end year
             for cur_book in self.book_collection:
                     if int(cur_book.publication_year) <= int(end_year):
                         result_list.append(cur_book)
-        else:
+                        
+        else: #if there is a start and end year
             for cur_book in self.book_collection:
                 if (int(cur_book.publication_year) <= int(end_year)) and (int(cur_book.publication_year) >= int(start_year)):
                     result_list.append(cur_book)
