@@ -2,7 +2,8 @@
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2021
-    Edited by Elliot Hanson, and Avery Hall
+    Edited by Elliot Hanson and Avery Hall, 2 October 2021
+    Revised by Avery Hall and Elliot Hanson, 11 October 2021
     For use in the "books" assignment at the beginning of Carleton's
     CS 257 Software Design class, Fall 2021.
 '''
@@ -89,7 +90,9 @@ class BooksDataSource:
         result_list = []
         for author in self.author_collection:
             full_name = author.given_name + ' ' + author.surname
-            if search_text.lower() in full_name.lower():
+            if search_text is None:
+                result_list.append(author)
+            elif search_text.lower() in full_name.lower():
                 result_list.append(author)
 
             sorted_result_list = sorted(result_list, key=lambda x: x.surname + x.given_name)
@@ -109,7 +112,7 @@ class BooksDataSource:
                             or 'title', just do the same thing you would do for 'title')
         '''
         result_list = []
-        if search_text == "":
+        if search_text == None:
             result_list = self.book_collection
         else:
             for cur_book in self.book_collection:
