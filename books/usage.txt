@@ -3,16 +3,9 @@ Name:
 python3 books.py -- parses a .csv file of book data
 
 Synopsis:
-<<<<<<< HEAD
-	
-python3 books.py -t  "TITLE" [-n|-y]
-python3 books.py -a  "AUTHOR"
-python3 books.py -r  -s START -e END
-=======
 python3 books.py -t  TITLE [-n|-y]
 python3 books.py -a  AUTHOR
 python3 books.py -r  [-s START] [-e END]
->>>>>>> 056c262a0dbbf95b1589aaf9fffaf50134904370
 python3 books.py -h
 
 
