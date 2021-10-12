@@ -3,9 +3,9 @@ Name:
 python3 books.py -- parses a .csv file of book data
 
 Synopsis:
-python3 books.py -t  "TITLE" [-n|-y]
-python3 books.py -a  "AUTHOR"
-python3 books.py -r  [[-s] START] [[-e] END]
+python3 books.py -t  TITLE [-n|-y]
+python3 books.py -a  AUTHOR
+python3 books.py -r  [-s START] [-e END]
 python3 books.py -h
 
 
@@ -14,7 +14,7 @@ Description:
   of which parses books1.csv in a given manner (searching by title, searching by author, or searching by range)
   and returns a list of relevant data.
 
-  -t --title     takes in a string enclosed by quotations (i.e. "Sample_String", or "" to get all titles) and returns a list of book titles that contain the given string (case-insensitive,
+  -t --title     takes in a string enclosed by quotations (i.e. "Sample_String", or "" to get all titles) and                    returns a list of book titles that contain the given string (case-insensitive,
                  titles sorted alphabetically by default)
 
       -n --name used in conjunction with --title, will return list of book titles sorted alphabetically
