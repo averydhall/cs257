@@ -25,7 +25,6 @@ FROM athletes, games, events, event_results
 WHERE athletes.id = event_results.athlete_id
 AND games.id = event_results.games_id
 AND events.id = event_results.event_id
---AND athletes.id = event_results.athlete_id
 AND athletes.name = 'Gregory Efthimios "Greg" Louganis'
 AND NOT event_results.medal = 'NA'
 ORDER BY games.year;
