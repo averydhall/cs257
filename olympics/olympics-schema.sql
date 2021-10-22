@@ -10,32 +10,36 @@ Tables:
 */
 
 CREATE TABLE athletes (
-    id SERIAL,
+    id INTEGER,
     name text,
-    sex text,
+    sex text
 );
 
 CREATE TABLE games (
-    id SERIAL,
+    id INTEGER,
     year integer,
     season text,
-    city integer,
+    city text
 );
 
 CREATE TABLE countries (
-    id SERIAL,
-    country text,
-    NOC text,
+    id INTEGER,
+    country text
+);
+
+CREATE TABLE NOCs (
+  id INTEGER,
+  NOC text
 );
 
 CREATE TABLE sports (
-    id SERIAL,
-    sport text,
+    id INTEGER,
+    sport text
 );
 
 CREATE TABLE events (
-    id SERIAL,
-    event text,
+    id INTEGER,
+    event text
 );
 
 
@@ -45,11 +49,12 @@ CREATE TABLE event_results (
     athlete_id integer,
     games_id integer,
     country_id integer,
+    noc_id integer,
     sport_id integer,
     event_id integer,
 
     medal text,
     age integer,
-    height integer,
-    weight integer,
+    height float,
+    weight float
 );

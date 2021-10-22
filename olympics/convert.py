@@ -8,15 +8,16 @@ import csv
 athletes = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-athletes_file = open('athletes.csv', 'w')
+athletes_file = open('athletes.csv', 'w+')
 writer = csv.writer(athletes_file)
 heading_row = next(reader) # eat up and ignore the heading row of the data file
 for row in reader:
     athlete_id = row[0]
     athlete_name = row[1]
+    athlete_sex = row[2]
     if athlete_id not in athletes:
         athletes[athlete_id] = athlete_name
-        writer.writerow([athlete_id, athlete_name])
+        writer.writerow([athlete_id, athlete_name, athlete_sex])
 original_data_file.close()
 athletes_file.close()
 
@@ -25,7 +26,7 @@ athletes_file.close()
 events = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-events_file = open('events.csv', 'w')
+events_file = open('events.csv', 'w+')
 writer = csv.writer(events_file)
 heading_row = next(reader)
 for row in reader:
@@ -41,7 +42,7 @@ events_file.close()
 games = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-games_file = open('games.csv', 'w')
+games_file = open('games.csv', 'w+')
 writer = csv.writer(games_file)
 heading_row = next(reader)
 for row in reader:
@@ -61,7 +62,7 @@ games_file.close()
 sports = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-games_file = open('sports.csv', 'w')
+sports_file = open('sports.csv', 'w+')
 writer = csv.writer(sports_file)
 heading_row = next(reader)
 for row in reader:
@@ -78,23 +79,38 @@ sports_file.close()
 countries = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-countries_file = open('countries.csv', 'w')
-writer = csv.writer(sports_file)
+countries_file = open('countries.csv', 'w+')
+writer = csv.writer(countries_file)
 heading_row = next(reader)
 for row in reader:
     country_name = row[6]
-    NOC = row[7]
     if country_name not in countries:
         country_id = len(countries) + 1
         countries[country_name] = country_id
-        writer.writerow([country_id, country_name, NOC])
+        writer.writerow([country_id, country_name])
+sports_file.close()
+
+# (6) noc_name -> noc_id
+#      Results in nocs.csv
+nocs = {}
+original_data_file = open('athlete_events.csv')
+reader = csv.reader(original_data_file)
+nocs_file = open('nocs.csv', 'w+')
+writer = csv.writer(nocs_file)
+heading_row = next(reader)
+for row in reader:
+    noc_name = row[7]
+    if noc_name not in nocs:
+        noc_id = len(nocs) + 1
+        nocs[noc_name] = noc_id
+        writer.writerow([noc_id, noc_name])
 sports_file.close()
 
 
-# (6) Linking table
+# (7) Linking table
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
-event_results_file = open('event_results.csv', 'w')
+event_results_file = open('event_results.csv', 'w+')
 writer = csv.writer(event_results_file)
 heading_row = next(reader)
 for row in reader:
@@ -106,25 +122,36 @@ for row in reader:
     country_name = row[6]
     country_id = countries[country_name]
 
+    noc_name = row[7]
+    noc_id = nocs[noc_name]
+
     sport_name = row[12]
     sport_id = sports[sport_name]
 
     event_name = row[13]
-    event_id = events[event_name] # this is guaranteed to work by section (2)
+    event_id = events[event_name]
 
     medal = row[14]
     age = row[3]
+    if age == "NA":
+        age = 'NULL'
     height = row[4]
+    if height == "NA":
+        height = 'NULL'
     weight = row[5]
+    if weight == "NA":
+        weight = 'NULL'
 
-    writer.writerow([athlete_id, games_id, country_id, sport_id, event_id, medal, age, height, weight])
+    writer.writerow([athlete_id, games_id, country_id, noc_id, sport_id, event_id, medal, age, height, weight])
 event_results_file.close()
 
 
 
-
+'''
 def main():
 
 
 if __name__ == '__main__':
     main()
+
+'''
