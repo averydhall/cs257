@@ -52,7 +52,6 @@ CREATE TABLE event_results (
     noc_id integer,
     sport_id integer,
     event_id integer,
-
     medal text,
     age integer,
     height float,

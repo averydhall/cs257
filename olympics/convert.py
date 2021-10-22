@@ -4,7 +4,6 @@ import csv
 
 
 # (1) athlete_id -> athlete_name
-#     Results in athletes.csv
 athletes = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -22,7 +21,6 @@ original_data_file.close()
 athletes_file.close()
 
 # (2)  event_name -> event_id
-#      Results in events.csv
 events = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -38,7 +36,6 @@ for row in reader:
 events_file.close()
 
 # (3)  games_name -> event_id
-#      Results in games.csv
 games = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -58,7 +55,6 @@ games_file.close()
 
 
 # (4) sport_name -> sport_id
-#      Results in sports.csv
 sports = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -75,7 +71,6 @@ sports_file.close()
 
 
 # (5) country_name -> country_id
-#      Results in countries.csv
 countries = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -91,7 +86,6 @@ for row in reader:
 sports_file.close()
 
 # (6) noc_name -> noc_id
-#      Results in nocs.csv
 nocs = {}
 original_data_file = open('athlete_events.csv')
 reader = csv.reader(original_data_file)
@@ -133,7 +127,7 @@ for row in reader:
 
     medal = row[14]
     age = row[3]
-    if age == "NA":
+    if age == "NA": #converting NA to NULL for ints
         age = 'NULL'
     height = row[4]
     if height == "NA":
@@ -144,14 +138,3 @@ for row in reader:
 
     writer.writerow([athlete_id, games_id, country_id, noc_id, sport_id, event_id, medal, age, height, weight])
 event_results_file.close()
-
-
-
-'''
-def main():
-
-
-if __name__ == '__main__':
-    main()
-
-'''

@@ -3,9 +3,9 @@
   mostly equivalent to countries. But in some cases, you might find that a portion of a country participated in a particular
   games (e.g. one guy from Newfoundland in 1904) or some other oddball situation. */
 
-SELECT DISTINCT countries.NOC --Do I want to use DISTINCT here?
-FROM countries
-ORDER BY countries.NOC;
+SELECT nocs.noc
+FROM nocs
+ORDER BY nocs.noc;
 
 
 -- List the names of all the athletes from Kenya. If your database design allows it, sort the athletes by last name.
@@ -26,15 +26,16 @@ WHERE athletes.id = event_results.athlete_id
 AND games.id = event_results.games_id
 AND events.id = event_results.event_id
 --AND athletes.id = event_results.athlete_id
-AND athletes.name = 'Greg Louganis'
+AND athletes.name = 'Gregory Efthimios "Greg" Louganis'
+AND NOT event_results.medal = 'NA'
 ORDER BY games.year;
 
 
 -- List all the NOCs and the number of gold medals they have won, in decreasing order of the number of gold medals.
 
-SELECT countries.NOC, event_results.medal, COUNT(*) AS number_of_golds --Should I use DISTINCT on countries.NOC?
-FROM countries, event_results
-WHERE countries.id = event_results.country_id
+SELECT nocs.noc, COUNT(*) AS number_of_golds
+FROM nocs, event_results
+WHERE nocs.id = event_results.noc_id
 AND event_results.medal = 'Gold'
-GROUP BY countries.NOC;
--- ORDER BY decreasing num of golds
+GROUP BY nocs.noc
+ORDER BY number_of_golds DESC;
