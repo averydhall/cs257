@@ -1,0 +1,22 @@
+Name:
+    python3 olympics.py -- a CLI that executes specific SQL queries for the books database
+
+Synopsis:
+    python3 olympics.py -h
+    python3 olympics.py -a NOC
+    python3 olympics.py -g
+    python3 olympics.py -c
+
+Description:
+    python3 olympics.py has three uses that correspond with three respective flags, in addition to a
+    usage statement command. Each command uses psycopg2 to send queries to the books database and
+    receive and print the appropriate outputs.
+
+         -h --help      prints this usage statement
+
+     -a --athletes      lists the names of all the athletes from a specified NOC, entered in capital letters
+
+    -ng --nocgolds      lists all NOCs with one or more gold and their respective numbers of gold medals won
+
+    -ag --athgolds      lists all athletes with one or more gold and their respective numbers of gold medals won
+                        (limited to top 50 results)
