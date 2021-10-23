@@ -4,8 +4,8 @@ Name:
 Synopsis:
     python3 olympics.py -h
     python3 olympics.py -a NOC
-    python3 olympics.py -g
-    python3 olympics.py -c
+    python3 olympics.py -ng
+    python3 olympics.py -ag
 
 Description:
     python3 olympics.py has three uses that correspond with three respective flags, in addition to a
