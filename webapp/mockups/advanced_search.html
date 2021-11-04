@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!–– mockup3.hmtl - advanced search
+good to have a reset button
+-->
+<html>
+   <head>
+      <title>Advanced Search</title>
+      
+       <style> ul{list-style: none;}input{width:40px;}
+       </style>
+       
+      <meta charset="UTF-8">
+   </head>
+   <body>
+      <!––the idea is that if a category box is clicked, all the boxes in the category are clicked. If any of those boxes is unclicked, the category box is unclicked as well-->
+      <div class="container" style="overflow: scroll; height: 20%;">
+         <!–– these should all be dropdowns that start closed but maintain their status after a search -->
+         <ul> <!-- list of categories --> 
+             
+             <li>  <!-- first category: basics --> 
+              <input type="checkbox" id="option"><label for="option">Basics </label>
+               <ul>
+                  <li><label><input type="checkbox" class="subOption">Year </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                  <li><label><input type="checkbox" class="subOption">Name </label><input type="text" id="third_input"></li>
+                  <li><label><input type="checkbox" class="subOption">Position </label>
+                     <select name="positions" id="positions">
+                        <option value="any">-</option>
+                        <option value="PG">PG</option>
+                        <option value="SG">SG</option>
+                        <option value="SF">SF</option>
+                        <option value="PF">PF</option>
+                        <option value="C">C</option>
+                     </select></li>
+
+                  <li><label><input type="checkbox" class="subOption">Team </label>
+                     <select name="teams" id="teams">
+                        <option value="any">-</option>
+                        <option value="">GSW</option>
+                        <option value="">NYK</option>
+                        <option value="">BOS</option>
+                        <!-- this will be a long list. have to find all the teams that ever existed (in the db) via sql query. probably want to list extinct teams at the bottom -->
+                     </select></li>
+                   
+                   <li><label><input type="checkbox" class="subOption">Height </label>
+                    <select name="height" id="first_height">
+                        <option value="any">-</option>
+                        <option value="">5'3"</option>
+                        <option value="">5'4"</option>
+                        <option value="">5'5"</option>
+                        <option value="">5'6"</option>
+                        <option value="">5'7"</option>
+                        <option value="">5'8"</option>
+                        <option value="">5'9"</option>
+                        <option value="">5'10"</option>
+                        <option value="">5'11"</option>
+                        <option value="">6'0"</option>
+                        <option value="">6'1"</option>
+                        <option value="">6'1"</option>
+                        <option value="">6'2"</option>
+                        <option value="">6'3"</option>
+                        <option value="">6'4"</option>
+                        <option value="">6'5"</option>
+                        <option value="">6'6"</option>
+                        <option value="">6'7"</option>
+                        <option value="">6'8"</option>
+                        <option value="">6'9"</option>
+                        <option value="">6'10"</option>
+                        <option value="">6'11"</option>
+                        <option value="">7'0"</option>
+                        <option value="">7'1"</option>
+                        <option value="">7'2"</option>
+                        <option value="">7'3"</option>
+                        <option value="">7'4"</option>
+                        <option value="">7'5"</option>
+                        <option value="">7'6"</option>
+                        <option value="">7'7"</option>
+                     </select>
+                     <select name="height" id="second_height">
+                        <option value="any">-</option>
+                        <option value="">5'3"</option>
+                        <option value="">5'4"</option>
+                        <option value="">5'5"</option>
+                        <option value="">5'6"</option>
+                        <option value="">5'7"</option>
+                        <option value="">5'8"</option>
+                        <option value="">5'9"</option>
+                        <option value="">5'10"</option>
+                        <option value="">5'11"</option>
+                        <option value="">6'0"</option>
+                        <option value="">6'1"</option>
+                        <option value="">6'1"</option>
+                        <option value="">6'2"</option>
+                        <option value="">6'3"</option>
+                        <option value="">6'4"</option>
+                        <option value="">6'5"</option>
+                        <option value="">6'6"</option>
+                        <option value="">6'7"</option>
+                        <option value="">6'8"</option>
+                        <option value="">6'9"</option>
+                        <option value="">6'10"</option>
+                        <option value="">6'11"</option>
+                        <option value="">7'0"</option>
+                        <option value="">7'1"</option>
+                        <option value="">7'2"</option>
+                        <option value="">7'3"</option>
+                        <option value="">7'4"</option>
+                        <option value="">7'5"</option>
+                        <option value="">7'6"</option>
+                        <option value="">7'7"</option>
+                     </select></li>
+                   <li><label><input type="checkbox" class="subOption">Weight </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                   <li><label><input type="checkbox" class="subOption">Height </label></li>
+               </ul>
+              </li>
+          
+          
+              <li> <!-- second category: box score stats --> 
+                <input type="checkbox" id="option"><label for="option"> Box-score Stats </label>
+                  <ul>
+                      <li><label><input type="checkbox" class="subOption"> G </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> GS </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> MP </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> TS% </label><input type="text" id=""> to <input type="text" id=""></li>
+                  </ul>
+               </li>
+             
+               <li> <!-- third category: advanced stats --> 
+                <input type="checkbox" id="option"><label for="option"> Advanced Stats </label>
+                  <ul>
+                      <li><label><input type="checkbox" class="subOption"> G </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> GS </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> MP </label><input type="text" id=""> to <input type="text" id=""></li>
+                      <li><label><input type="checkbox" class="subOption"> TS% </label><input type="text" id=""> to <input type="text" id=""></li>
+                  </ul>
+               </li>
+            </ul> <!--end of category list-->
+      </div>
+   </body>
+</html>
+<!-- all checkboxes with categories
+   Biometric:
+   Height
+   Weight
+   Age
+   
+   Biographical: 
+   College
+   Birthdate 
+   birth city
+   Birth state
+   First year
+   Last year
+   
+   Basics(?):
+   Year
+   Name 
+   Position 
+   Team
+   
+   Counting/box score stats:
+   G
+   GS
+   MP (minutes played)
+   TS%
+   FG
+   FGA
+   FG%
+   3P 
+   3PA
+   3P%
+   2P
+   2PA
+   2P%
+   eFG%
+   FT
+   FTA
+   FT%
+   ORB
+   DRB
+   TRB
+   AST
+   STL
+   BLK
+   TOV
+   PF
+   PTS
+   
+   
+   Rate based:
+   3P Attempt Rate (3PAr)
+   Free Throw Rate (FTr)
+   ORB%
+   DRB%
+   TRB%
+   AST%
+   STL%
+   BLK%
+   TOV%
+   
+   
+   Advanced stats
+   PER 
+   OWS
+   DWS
+   WS
+   WS/48
+   OBPM
+   DBPM
+   BPM
+   VORP
+   USG%
+   
+    -->
