@@ -3,8 +3,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Players</title>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <title>Player Information</title>
 </head>
+
+<body>
+
+  <h1>Player Information</h1>
+
+  <form action="file:///Users/ahall/cs257/webapp/mockups/mockup1.html" method="get">
+  <label for="player">Start typing and select a player from the list:</label><br>
+    <input list="players" name="player" id="player">
+      <datalist id="players">
+        <option value="Chamberlain, Wilt">
+        <option value="Curry, Stephen">
+        <option value="Maravich, Pete">
+      </datalist>
+    <input type="submit">
+  </form>
+  <br>
+
+  <p>Results:</p>
+  <br>
+  <p>
+    <h2>Stephen Curry</h2>
+    2009-2021<br>
+    Golden State Warriors<br>
+    Age: 33<br>
+    College: Davidson<br>
+    Height: 6'3"<br>
+    Weight: 190lb<br>
+  </p>
+
+  <table>
+  <tr><th></th><th>Antlers?</th><th>Wings?</th><th>Noisy?</th></tr>
+  <tr><td>Crow</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>Moose</td><td>Yes</td><td>No</td><td>No</td></tr>
+  <tr><td>Moth</td><td>No</td><td>Yes</td><td>No</td></tr>
+  </table>
+
+
+</body>
 
 
 </html>

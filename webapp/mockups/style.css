@@ -1,0 +1,17 @@
+/*
+   For use with mockup1.html, mockup2.html, mockup3.html, mockup4.html
+   Avery Hall and Anders Shenholm
+*/
+html {
+    height: 100%;
+}
+
+body {
+    margin: 10px;
+    padding: 10px;
+    height: 100%;
+}
+
+table {
+    border: 2px solid black;
+}
