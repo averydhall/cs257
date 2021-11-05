@@ -5,7 +5,7 @@ good to have a reset button
 <html>
    <head>
       <title>Advanced Search</title>
-      
+      <link rel="stylesheet" href="style.css" type="text/css" />
        <style> ul{list-style: none;}input{width:40px;}
 
             table.GeneratedTable td, table.GeneratedTable, table.GeneratedTable th {
@@ -43,18 +43,25 @@ good to have a reset button
             }
 
        </style>
-       
+
       <meta charset="UTF-8">
    </head>
    <body>
-       
-       <h1>Advanced Search</h1>
+
+     <div class="header">
+       <div>
+         <a href="file:///Users/ahall/cs257/webapp/mockups/index.html"><img src="hoopdatalogo.png" height="90" width="110"></a>
+       </div>
+       <div>
+         <h1 class="head-text">Advanced Search</h1>
+       </div>
+     </div><br>
       <!––the idea is that if a category box is clicked, all the boxes in the category are clicked. If any of those boxes is unclicked, the category box is unclicked as well-->
       <div class="container" style="overflow: scroll; width: 25%; height: 400px; display: inline-block;">
          <!–– these should all be dropdowns that start closed but maintain their status after a search -->
-         <ul class="nav"> <!-- list of categories --> 
-             
-             <li>  <!-- first category: basics --> 
+         <ul class="nav"> <!-- list of categories -->
+
+             <li>  <!-- first category: basics -->
               <input type="checkbox" id="option"><label for="option">Basics </label>
                <ul class="option">
                   <li><label><input type="checkbox" class="subOption">Year </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
@@ -77,7 +84,7 @@ good to have a reset button
                         <option value="">BOS</option>
                         <!-- this will be a long list. have to find all the teams that ever existed (in the db) via sql query. probably want to list extinct teams at the bottom -->
                      </select></li>
-                   
+
                    <li><label><input type="checkbox" class="subOption">Height </label>
                     <select name="height" id="first_height">
                         <option value="any">-</option>
@@ -149,9 +156,9 @@ good to have a reset button
                    <li><label><input type="checkbox" class="subOption">Age </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                </ul>
               </li>
-          
-          
-              <li> <!-- second category: box score stats --> 
+
+
+              <li> <!-- second category: box score stats -->
                 <input type="checkbox" id="option"><label for="option">Box-score Stats</label>
                   <ul>
                       <li><label><input type="checkbox" class="subOption">G </label><input type="text" id=""> to <input type="text" id=""></li>
@@ -163,8 +170,8 @@ good to have a reset button
                       <li><label><input type="checkbox" class="subOption">. </label><input type="text" id=""> to <input type="text" id=""></li>
                   </ul>
                </li>
-             
-               <li> <!-- third category: advanced stats --> 
+
+               <li> <!-- third category: advanced stats -->
                 <input type="checkbox" id="option"><label for="option"> Advanced Stats </label>
                   <ul>
                       <li><label><input type="checkbox" class="subOption">PER </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
@@ -178,12 +185,12 @@ good to have a reset button
                       <li><label><input type="checkbox" class="subOption">VORP </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                       <li><label><input type="checkbox" class="subOption">USG% </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                   </ul>
- 
+
                </li>
             </ul> <!--end of category list-->
       </div>
-       
-       
+
+
        <!-- example output table -->
        <div style = "width: 70%; display: inline-block; overflow: scroll; float:right;">
         <p>this would be the output table if someone searched for "basics" and "box-score stats"</p>
@@ -1108,31 +1115,31 @@ good to have a reset button
 
 
 
-  
+
    </body>
 </html>
 <!-- all checkboxes with categories
 
-   
-   Biographical: 
+
+   Biographical:
    College
-   Birthdate 
+   Birthdate
    birth city
    Birth state
    First year
    Last year
-   
+
 
    28
    Basics(?):
    Year
-   Name 
-   Position 
+   Name
+   Position
    Team
    Height
    Weight
    Age
-   
+
    Counting/box score stats:
    G
    GS
@@ -1141,7 +1148,7 @@ good to have a reset button
    FG
    FGA
    FG%
-   3P 
+   3P
    3PA
    3P%
    2P
@@ -1160,8 +1167,8 @@ good to have a reset button
    TOV
    PF
    PTS
-   
-   
+
+
    Rate based:
    3P Attempt Rate (3PAr)
    Free Throw Rate (FTr)
@@ -1172,10 +1179,10 @@ good to have a reset button
    STL%
    BLK%
    TOV%
-   
-   
+
+
    Advanced stats
-   PER 
+   PER
    OWS
    DWS
    WS
@@ -1188,13 +1195,13 @@ good to have a reset button
 
 rosters:
 Year
-Name 
-Position 
+Name
+Position
 Team
 Height
 Weight
 Age
-   
+
            <!--
             .nav {
                 list-style: none;
@@ -1224,8 +1231,8 @@ Age
                 background-color: #6b0c36;
                 text-decoration: underline;
             }
-            
+
             /*--- DROPDOWN ---*/
-            
-           
+
+
     -->
