@@ -3,8 +3,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css" type="text/css" />
   <title>Rankings</title>
 </head>
 
+<body>
 
+<h1>Player Statistical Rankings</h1>
+
+<form>
+
+  <label for="teams">Select a team (or all-NBA):</label>
+  <select name="time-frames" id="time-frames">
+    <option value="Single year">All NBA</option>
+    <option value="Year range">Warriors</option>
+    <option value="All time">Suns</option>
+    <option value="All time">Celtics</option>
+    <option value="All time">Hornets</option>
+  </select><br><br>
+
+  <label for="time-frames">Select a time frame:</label>
+  <select name="time-frames" id="time-frames">
+    <option value="Single year">Single year</option>
+    <option value="Year range">Year range</option>
+    <option value="All time">All time</option>
+  </select>
+
+  <p>If year range selected, enter start and end year:</p>
+  <input type="integer" id="syear" name="syear">
+  <input type="integer" id="eyear" name="eyear"><br><br><br>
+
+  <input type="submit" value="Submit">
+
+</form><br><br>
+
+<div>
+  <table class="stat-rankings">
+    <tr>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+</body>
 </html>
