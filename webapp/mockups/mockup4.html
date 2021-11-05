@@ -14,34 +14,6 @@ good to have a reset button
                 padding: 5px;
                 background-color: white;
             }
-           .nav ul {
-                background-color: #fff; /* Adding a background makes the dropdown work properly in IE7+. Make this as close to your page's background as possible (i.e. white page == white background). */
-                background: rgba(255,255,255,0); /* But! Let's make the background fully transparent where we can, we don't actually want to see it if we can help it... */
-                list-style: none;
-                position: absolute;
-                left: -9999px; /* Hide off-screen when not needed (this is more accessible than display: none;) */
-            }
-            .nav ul li {
-                padding-top: 1px; /* Introducing a padding between the li and the a give the illusion spaced items */
-                float: none;
-            }
-            .nav ul a {
-                white-space: nowrap; /* Stop text wrapping and creating multi-line dropdown items */
-            }
-            .nav li:hover ul { /* Display the dropdown on hover */
-                left: 0; /* Bring back on-screen when needed */
-            }
-            .nav li:hover a { /* These create persistent hover states, meaning the top-most link stays 'hovered' even when your cursor has moved down the list. */
-                background-color: #6b0c36;
-                text-decoration: underline;
-            }
-            .nav li:hover ul a { /* The persistent hover state does however create a global style for links even before they're hovered. Here we undo these effects. */
-                text-decoration: none;
-            }
-            .nav li:hover ul li a:hover { /* Here we define the most explicit hover states--what happens when you hover each individual link. */
-                background-color: #333;
-            }
-
        </style>
 
       <meta charset="UTF-8">
@@ -50,7 +22,7 @@ good to have a reset button
 
      <div class="header">
        <div>
-         <a href="file:///Users/ahall/cs257/webapp/mockups/index.html"><img src="hoopdatalogo.png" height="90" width="110"></a>
+         <a href="index.html"><img src="hoopdatalogo.png" height="90" width="110"></a>
        </div>
        <div>
          <h1 class="head-text">Advanced Search</h1>
@@ -58,10 +30,10 @@ good to have a reset button
      </div><br>
       <!––the idea is that if a category box is clicked, all the boxes in the category are clicked. If any of those boxes is unclicked, the category box is unclicked as well-->
       <div class="container" style="overflow: scroll; width: 25%; height: 400px; display: inline-block;">
-         <!–– these should all be dropdowns that start closed but maintain their status after a search -->
-         <ul class="nav"> <!-- list of categories -->
-
-             <li>  <!-- first category: basics -->
+         <!–– these should all be dropdowns that start closed but maintain their status after a search. We'll do this with javascript-->
+         <ul class="nav"> <!-- list of categories --> 
+             
+             <li>  <!-- first category: basics --> 
               <input type="checkbox" id="option"><label for="option">Basics </label>
                <ul class="option">
                   <li><label><input type="checkbox" class="subOption">Year </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
@@ -84,7 +56,7 @@ good to have a reset button
                         <option value="">BOS</option>
                         <!-- this will be a long list. have to find all the teams that ever existed (in the db) via sql query. probably want to list extinct teams at the bottom -->
                      </select></li>
-
+                   
                    <li><label><input type="checkbox" class="subOption">Height </label>
                     <select name="height" id="first_height">
                         <option value="any">-</option>
@@ -156,9 +128,9 @@ good to have a reset button
                    <li><label><input type="checkbox" class="subOption">Age </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                </ul>
               </li>
-
-
-              <li> <!-- second category: box score stats -->
+          
+          
+              <li> <!-- second category: box score stats --> 
                 <input type="checkbox" id="option"><label for="option">Box-score Stats</label>
                   <ul>
                       <li><label><input type="checkbox" class="subOption">G </label><input type="text" id=""> to <input type="text" id=""></li>
@@ -170,8 +142,8 @@ good to have a reset button
                       <li><label><input type="checkbox" class="subOption">. </label><input type="text" id=""> to <input type="text" id=""></li>
                   </ul>
                </li>
-
-               <li> <!-- third category: advanced stats -->
+             
+               <li> <!-- third category: advanced stats --> 
                 <input type="checkbox" id="option"><label for="option"> Advanced Stats </label>
                   <ul>
                       <li><label><input type="checkbox" class="subOption">PER </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
@@ -185,7 +157,33 @@ good to have a reset button
                       <li><label><input type="checkbox" class="subOption">VORP </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                       <li><label><input type="checkbox" class="subOption">USG% </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
                   </ul>
-
+ 
+               </li>
+               <li> <!-- fourth category: rate based stats --> 
+                <input type="checkbox" id="option"><label for="option"> Rate-Based Stats </label>
+                  <ul>
+                      <li><label><input type="checkbox" class="subOption">3PAr </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      <li><label><input type="checkbox" class="subOption">FTr </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      <li><label><input type="checkbox" class="subOption">ORB% </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"> to <input type="text" id="second_input"></li>
+                      
+                  </ul>
+ 
+               </li>
+               <li> <!-- fifth category: biographical --> 
+                <input type="checkbox" id="option"><label for="option"> Biographical Info </label>
+                  <ul>
+                      <li><label><input type="checkbox" class="subOption">College </label><input type="text" id="first_input"> </li>
+                      <li><label><input type="checkbox" class="subOption">Birth City </label><input type="text" id="first_input"></li>
+                      <li><label><input type="checkbox" class="subOption">Birth State</label><input type="text" id="first_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"></li>
+                      <li><label><input type="checkbox" class="subOption">. </label><input type="text" id="first_input"></li>
+                      
+                  </ul>
+ 
                </li>
             </ul> <!--end of category list-->
       </div>
@@ -1233,6 +1231,32 @@ Age
             }
 
             /*--- DROPDOWN ---*/
-
+            .nav ul {
+                background-color: #fff; /* Adding a background makes the dropdown work properly in IE7+. Make this as close to your page's background as possible (i.e. white page == white background). */
+                background: rgba(255,255,255,0); /* But! Let's make the background fully transparent where we can, we don't actually want to see it if we can help it... */
+                list-style: none;
+                position: absolute;
+                left: -9999px; /* Hide off-screen when not needed (this is more accessible than display: none;) */
+            }
+            .nav ul li {
+                padding-top: 1px; /* Introducing a padding between the li and the a give the illusion spaced items */
+                float: none;
+            }
+            .nav ul a {
+                white-space: nowrap; /* Stop text wrapping and creating multi-line dropdown items */
+            }
+            .nav li:hover ul { /* Display the dropdown on hover */
+                left: 0; /* Bring back on-screen when needed */
+            }
+            .nav li:hover a { /* These create persistent hover states, meaning the top-most link stays 'hovered' even when your cursor has moved down the list. */
+                background-color: #6b0c36;
+                text-decoration: underline;
+            }
+            .nav li:hover ul a { /* The persistent hover state does however create a global style for links even before they're hovered. Here we undo these effects. */
+                text-decoration: none;
+            }
+            .nav li:hover ul li a:hover { /* Here we define the most explicit hover states--what happens when you hover each individual link. */
+                background-color: #333;
+            }
 
     -->
