@@ -33,6 +33,7 @@ for row in reader:
         event_id = len(events) + 1
         events[event_name] = event_id
         writer.writerow([event_id, event_name])
+original_data_file.close()
 events_file.close()
 
 # (3)  games_name -> event_id
@@ -42,15 +43,25 @@ reader = csv.reader(original_data_file)
 games_file = open('games.csv', 'w+')
 writer = csv.writer(games_file)
 heading_row = next(reader)
+unsorted_games = []
 for row in reader:
     games_name = row[8]
     games_year = row[9]
     games_season = row[10]
     games_city = row[11]
-    if games_name not in games:
-        games_id = len(games) + 1
-        games[games_name] = games_id
-        writer.writerow([games_id, games_year, games_season, games_city])
+    if games_name not in unsorted_games:
+        unsorted_games.append(games_name)
+        games[games_name] = [games_year, games_season, games_city]
+sorted_games = sorted(unsorted_games)
+id_count = 1
+for games_instance in sorted_games:
+    games_id = id_count
+    games[games_instance] = [games_id] + games[games_instance]
+    games_attributes = games[games_instance]
+    writer.writerow(games_attributes)
+    id_count += 1
+
+original_data_file.close()
 games_file.close()
 
 
@@ -67,6 +78,7 @@ for row in reader:
         sport_id = len(sports) + 1
         sports[sport_name] = sport_id
         writer.writerow([sport_id, sport_name])
+original_data_file.close()
 sports_file.close()
 
 
@@ -83,22 +95,39 @@ for row in reader:
         country_id = len(countries) + 1
         countries[country_name] = country_id
         writer.writerow([country_id, country_name])
-sports_file.close()
+original_data_file.close()
+countries_file.close()
 
 # (6) noc_name -> noc_id
 nocs = {}
-original_data_file = open('athlete_events.csv')
-reader = csv.reader(original_data_file)
+original_data_file_1 = open('noc_regions.csv')
+original_data_file_2 = open('athlete_events.csv')
+reader1 = csv.reader(original_data_file_1)
+reader2 = csv.reader(original_data_file_2)
 nocs_file = open('nocs.csv', 'w+')
 writer = csv.writer(nocs_file)
-heading_row = next(reader)
-for row in reader:
-    noc_name = row[7]
-    if noc_name not in nocs:
+
+heading_row1 = next(reader1)
+for row in reader1:
+    noc_abb = row[0]
+    full_name = row[1]
+    if noc_abb not in nocs:
         noc_id = len(nocs) + 1
-        nocs[noc_name] = noc_id
-        writer.writerow([noc_id, noc_name])
-sports_file.close()
+        nocs[noc_abb] = noc_id
+        writer.writerow([noc_id, noc_abb, full_name])
+original_data_file_1.close()
+
+heading_row2 = next(reader2)
+for row in reader2:
+    noc_abb = row[7]
+    full_name = row[6]
+    if noc_abb not in nocs:
+        noc_id = len(nocs) + 1
+        nocs[noc_abb] = noc_id
+        writer.writerow([noc_id, noc_abb, full_name])
+original_data_file_2.close()
+
+nocs_file.close()
 
 
 # (7) Linking table
@@ -111,13 +140,13 @@ for row in reader:
     athlete_id = row[0]
 
     games_name = row[8]
-    games_id = games[games_name]
+    games_id = games[games_name][0]
 
     country_name = row[6]
     country_id = countries[country_name]
 
-    noc_name = row[7]
-    noc_id = nocs[noc_name]
+    noc_abb = row[7]
+    noc_id = nocs[noc_abb]
 
     sport_name = row[12]
     sport_id = sports[sport_name]

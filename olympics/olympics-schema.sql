@@ -28,8 +28,9 @@ CREATE TABLE countries (
 );
 
 CREATE TABLE NOCs (
-  id INTEGER,
-  NOC text
+    id INTEGER,
+    NOC text,
+    full_name text
 );
 
 CREATE TABLE sports (
