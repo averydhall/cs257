@@ -1,0 +1,151 @@
+/*
+   For use with mockup1.html, mockup2.html, mockup3.html, mockup4.html
+   Avery Hall and Anders Shenholm
+*/
+html {
+    height: 100%;
+}
+
+body {
+    margin: 10px;
+    padding: 10px;
+    height: 100%;
+}
+
+table, td, th {
+    border: 1px solid black;
+    font-size: 18px;
+    padding: 5px;
+    background-color: white;
+}
+
+.stat-rankings {
+  border: 0px solid black;
+  font-size: 18px;
+  padding: 0px;
+}
+
+/*Player info*/
+
+img {
+  background-color: white;
+}
+
+
+.header {
+  display: flex;
+  justify-content: left;
+  width: 900px;
+}
+
+.head-text {
+  padding-left: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: left;
+  border: 1px solid black;
+  width: 650px;
+  background-color: lightgray;
+}
+
+
+.photo {
+  border: 0px dashed red;
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+.text {
+  font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 0px dashed blue;
+
+}
+
+.stats {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+/*Rosters*/
+#rosters_selections{
+    float: left;
+    display: block; 
+    padding-left: 50px; 
+    padding-top: 50px;
+}
+
+#roster_table{
+    float:left;
+    clear:both;
+    padding:50px;
+}
+
+/*Advanced Stats*/
+#advanced_stats_selections{
+    overflow-y: scroll; 
+    overflow-x: hidden;
+    height: 80vh;
+    display: inline-block;
+    position:absolute;
+    background-color: lightgray;
+}
+
+#advanced_stats_table{
+    width: 70%; 
+    display: inline-block; 
+    overflow: scroll; 
+    float:right;
+}
+
+
+.dropdown {
+    list-style: none;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /*float: left;  Clear floats */
+    width: 100%;
+    padding-left: 10px;
+    /*display: block;
+     Bring the dropdown above everything else--uncomment if needed.
+    position: relative;
+    z-index: 5;
+    */
+    
+}
+.dropdown li{
+
+}
+.dropdown li ul{
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+.dropdown li ul li{
+    list-style: none;
+    /*
+    position: relative;
+    display: block;
+    */
+}
+.text_input{
+    width: 40px;
+
+/*
+.dropdown a {
+    display: block;
+    padding: 5px;
+    color: #fff;
+    background-color: #333;
+    text-decoration: none;
+}
+.dropdown a:hover {
+    color: #fff;
+    background-color: #6b0c36;
+    text-decoration: underline;
+}
+*/

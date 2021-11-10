@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+  <title>Rankings</title>
+</head>
+
+<body>
+
+  <div class="header">
+    <div>
+      <a href="/"><img src="{{ url_for('static', filename='images/hoopdatalogo.png') }}" height="90" width="110"></a>
+    </div>
+    <div>
+      <h1 class="head-text">Player Statistical Rankings</h1>
+    </div>
+  </div><br><br>
+
+<form>
+
+  <label for="teams">Select a team (or all-NBA):</label>
+  <select name="time-frames" id="time-frames">
+    <option value="Single year">All NBA</option>
+    <option value="Year range">Warriors</option>
+    <option value="All time">Suns</option>
+    <option value="All time">Celtics</option>
+    <option value="All time">Hornets</option>
+  </select><br><br>
+
+  <label for="time-frames">Select a time frame:</label>
+  <select name="time-frames" id="time-frames">
+    <option value="Single year">Single year</option>
+    <option value="Year range">Year range</option>
+    <option value="All time">All time</option>
+  </select>
+
+  <p>If year range selected, enter start and end year:</p>
+  <input type="integer" id="syear" name="syear">
+  <input type="integer" id="eyear" name="eyear"><br><br><br>
+
+  <input type="submit" value="Submit">
+
+</form><br><br>
+
+<div>
+  <table class="stat-rankings">
+    <tr>
+      <td>
+        <ol>
+          <h3>Points</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <h3>Rebounds</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <h3>Assists</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <ol>
+          <h3>Blocks</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <h3>Steals</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+      <td>
+        <ol>
+          <h3>Turnovers</h3>
+          <li>Player1</li><li>Player2</li><li>Player3</li><li>Player4</li><li>Player5</li>
+        </ol>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+</body>
+</html>

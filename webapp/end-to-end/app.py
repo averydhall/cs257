@@ -17,9 +17,17 @@ app.register_blueprint(api.api, url_prefix='/api')
 def home():
     return flask.render_template('index.html')
 
-@app.route('/authors/') 
-def authors():
-    return flask.render_template('index.html')
+@app.route('/rosters/') 
+def rosters():
+    return flask.render_template('rosters.html')
+
+@app.route('/player_info/') 
+def player_info():
+    return flask.render_template('player_info.html')
+
+@app.route('/rankings/') 
+def rankings():
+    return flask.render_template('rankings.html')
 
 
 if __name__ == '__main__':

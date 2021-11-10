@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='books.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='books.js') }}" ></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-    <title>CS 257: Software Design</title>
-</head>
 
-<body>
-    <h1>CS 257: Books Sample Web App</h1>
-    <p>The appearance of this user interface is completely bare-bones, and
-    not suitable for a final product. The point here is only to illustrate a
-    handful of techniques in Javascript and Flask and PostgreSQL.</p>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+        <title>NBA Players</title>
+    </head>
 
-    <p>Authors <select id="author_selector"></select></p>
+    <div class="header">
+      <div>
+        <a href="/"><img src="{{ url_for('static', filename='images/hoopdatalogo.png') }}" height="90" width="110"></a>
+      </div>
+      <div>
+        <h1 class="head-text">Home</h1>
+      </div>
+    </div>
 
-    <p><table id="books_table"></table></p>
-</body>
+    <h2>Navigation:</h2>
+    <ol>
+      <li><a href="/player_info">Players</a></li>
+      <li><a href="/rankings">Rankings</a></li>
+      <li><a href="/rosters">Rosters</a></li>
+    </ol>
 </html>
