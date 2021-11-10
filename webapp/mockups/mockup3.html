@@ -5,19 +5,6 @@
    <head>
       <title>Rosters</title>
       <link rel="stylesheet" href="style.css" type="text/css" />
-       <style>
-           #rosters_selections{
-               float: left;
-           }
-           table.GeneratedTable td, table.GeneratedTable, table.GeneratedTable th {
-                border: 1px solid black;
-                font-size: 18px;
-                padding: 5px;
-                background-color: white;
-            }
-
-       </style>
-
       <meta charset="UTF-8">
    </head>
    <body>
@@ -30,7 +17,7 @@
          </div>
        </div>
 
-       <div id="rosters_selections" style="display: block; padding-left: 50px; padding-top: 50px;">
+       <div id="rosters_selections">
            <label>Team </label>
              <select name="teams" id="teams">
                 <option value="any">-</option>
@@ -50,7 +37,7 @@
              </select>
            <input type="submit">
        </div>
-       <div style="float:left; clear:both; padding:50px;">
+       <div id="roster_table">
            <label style="font-size:2em;"> 2002 Acme NBA Team </label>
             <table class="GeneratedTable">
               <thead>
