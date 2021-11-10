@@ -1,4 +1,4 @@
 password = ''
-database = 'books'
+database = 'players'
 user = 'andersshenholm'
 
