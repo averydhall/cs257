@@ -5,6 +5,7 @@
    <head>
       <title>Rosters</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+      <script type="text/javascript" src="{{ url_for('static', filename='basketball.js') }}" ></script>
       <meta charset="UTF-8">
    </head>
    <body>
@@ -17,10 +18,10 @@
          </div>
        </div>
 
-       <div id="rosters_selections">
+       <div >
            <label>Team </label>
-             <select name="teams" id="teams">
-                <option value="any">-</option>
+             <select id="team_selector" name="teams">
+                <option value="none">-</option>
                 <option value="">GSW</option>
                 <option value="">NYK</option>
                 <option value="">BOS</option>
@@ -28,13 +29,7 @@
              </select>
 
            <label>Year </label>
-             <select name="years" id="teams">
-                <option value="any">-</option>
-                <option value="">1950</option>
-                <option value="">1996</option>
-                <option value="">2017</option>
-                <!-- this will be a long list. should automate with js https://www.w3schools.com/jsref/coll_select_options.asp -->
-             </select>
+             <select id="year_selector" name="years"></select>
            <input type="submit">
        </div>
        <div id="roster_table">

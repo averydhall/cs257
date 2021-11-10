@@ -28,7 +28,7 @@ CREATE TABLE public.players (
     name text,
     first_year integer,
     last_year integer,
-    "position" text,
+    position text,
     height text,
     weight integer,
     birth_date text,

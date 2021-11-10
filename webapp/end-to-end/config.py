@@ -1,4 +1,4 @@
 password = ''
-database = 'players'
+database = "basketball"
 user = 'andersshenholm'
 
