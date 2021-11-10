@@ -4,53 +4,52 @@ Names:
 Anders Shenholm, Avery Hall
 
 Description:
-The bulk of the data tracks every season played by every player in the NBA from 1950 to 2017. Each season is described with player name, biometric information, team, position, and stats. There is also data that describes each player, including biometric info, birth date, birth state, birth city, first year in the league, last year in the league, and college. Users can search the database for any combination of these data via advanced search or make more general queries on pages rankings, rosters, and player info.
+The bulk of the data tracks every season played by every player in the NBA from 1950 to 2017. Each season is described with player name, biometric information, team, position, and stats. Users can view statistical rankings, rosters, and player info via three different pages on the site
 
-There will be a home page as well as four search pages with the extensions:
+There will be a home page as well as three search pages with the extensions:
 /rankings
 /rosters
 /player-info
-/advanced-search
 
 Some features:
-	A user can sort every table by a category (ascending or descending)
-	Every column in a table has an average in the bottom 
+A user can sort every table by a category (ascending or descending)
+Every column in a table has an average in the bottom
 
 Definitions:
-	Box-score stats: simple counting stats (points, rebounds, assists)
-	Advanced stats: stats calculated from box score stats (WS, PER, VORP)
+Box-score stats: simple counting stats (points, rebounds, assists)
+Advanced stats: stats calculated from box score stats (WS, PER, VORP)
 
+User stories
 
+As an NBA manager, I want to find out whether a player would be a good fit for my team’s offense by looking up their 3-point percentage over recent seasons
+Implementation: On the player info page, search by the name of a player. This will give a list of their seasons, including 3-point percentage for each.  
 
-USER STORIES
-********************
+As a fan of a certain team, I want to find out which players contributed most to the team’s scoring by getting a ranked list of players’ points averages for a specific season.
+Implementation: On the rankings page, select search by team, and search by single year. On the table given, sort by points averages (descending).
 
-STORY: As an NBA manager, I want to find out whether a player would be a good fit for my team’s offense by looking up their 3-point percentage over recent seasons. 
-IMPLEMENTATION: On the player info page, search by the name of a player. This will give a list of their seasons, including 3-point percentage for each.   
+As a superfan of Stephen Curry, I want to find out everything I can about him - such as his age, height, what college he went to, a picture of him, etc.
+Implementation: Navigate to the dedicated Player Info page, and search Stephen Curry’s name (site helps with autocomplete suggestions). This will return a customized player bio that includes the player’s years played, teams played for, age, height, weight, college, and a headshot.
 
-STORY: As a fan of a certain team, I want to find out which players contributed most to the team’s scoring by getting a ranked list of players’ points averages for a specific season. 
-IMPLEMENTATION: On the rankings page, select search by team, and search by single year. On the table given, sort by points averages (descending). 
+As a fan, I want to compile an (almost) all-time leaderboard of players in certain stat categories by searching historical seasons for box-score stats.
+Implementation: On the rankings page, choose search all-time and search all-nba, then select a stat. The page will return an ordered list of the seasons where players achieved the highest average in that stat.
 
-STORY: As a fan, I want to analyze the differences in basketball eras by comparing box-score stats from seasons in different years. 
-IMPLEMENTATION: On the advanced search page, search by season. You can then view averages in certain stats for each season you search. 
+Possibly Implementing with player info page:
+As someone who likes to talk smack on social media, I want to heckle a player on instagram by looking up the worst season of their career
+Implementation: On the player info page, search by player. This table provides lots of stats to cherry-pick. 
 
-STORY: As a fan, I want to compile an (almost) all-time leaderboard of players in certain stat categories by searching historical seasons for box-score stats. 
-IMPLEMENTATION: On the rankings page, choose search all-time and search all-nba, then select a stat. The page will return an ordered list of the seasons where players achieved the highest average in that stat. 
+Not implementing:
 
-STORY: As a YouTube content creator, I want to make a thesis-driven video about a team by collecting a broad range of advanced stats and picking some that support my argument. 
-IMPLEMENTATION: On the advanced search page, choose to search by team and season, and also choose to see output including all advanced stats.  
+As a fan, I want to analyze the differences in basketball eras by comparing box-score stats from seasons in different years.
+Implementation: On the advanced search page, search by season. You can then view averages in certain stats for each season you search.
 
-STORY: As someone who likes to talk smack on social media, I want to heckle a player on instagram by looking up the worst season of their career 
-IMPLEMENTATION: On the advanced search page, search by player. This table provides lots of stats to cherry-pick.  
+As a YouTube content creator, I want to make a thesis-driven video about a team by collecting a broad range of advanced stats and picking some that support my argument.
+Implementation: On the advanced search page, choose to search by team and season, and also choose to see output including all advanced stats. 
 
-STORY: As a basketball recruiter at the University of Indiana, I want make a compelling brochure by looking up the most impressive statistical seasons from players that attended the University 
-IMPLEMENTATION: On the advanced search page, search by college attended. Sort this table by points, rebounds, and other recognizable stats to find good-looking seasons. 
+As a basketball recruiter at the University of Indiana, I want make a compelling brochure by looking up the most impressive statistical seasons from players that attended the University
+Implementation: On the advanced search page, search by college attended. Sort this table by points, rebounds, and other recognizable stats to find good-looking seasons.
 
-STORY: As a local tourism director, I want to publish impressive fun facts by looking up the most impressive statistical seasons from players that were born in my state. 
-IMPLEMENTATION: On the advanced search page, search by birth state. Sort this table by points, rebounds, and other recognizable stats to find good-looking seasons. 
+As a local tourism director, I want to publish impressive fun facts by looking up the most impressive statistical seasons from players that were born in my state.
+Implementation: On the advanced search page, search by birth state. Sort this table by points, rebounds, and other recognizable stats to find good-looking seasons.
 
-STORY: As a high school basketball player that plays shooting guard, I can compare my box-score stats to similar professionals by searching for recent seasons by players that play my position. 
-IMPLEMENTATION: On the Advanced Search page, choose to search by player position and select shooting guard. On the stats dropdown, choose to output only box score stats. The resulting output will be a list of players that have played that position, a display that can be sorted after the fact using different parameters. 
-
-STORY: As a superfan of Stephen Curry, I want to find out everything I can about him - such as his age, height, what college he went to, a picture of him, etc. 
-IMPLEMENTATION: Navigate to the dedicated Player Info page, and search Stephen Curry’s name (site helps with autocomplete suggestions). This will return a customized player bio that includes the player’s years played, teams played for, age, height, weight, college, and a headshot. 
+As a high school basketball player that plays shooting guard, I can compare my box-score stats to similar professionals by searching for recent seasons by players that play my position.
+Implementation: On the Advanced Search page, choose to search by player position and select shooting guard. On the stats dropdown, choose to output only box score stats. The resulting output will be a list of players that have played that position, a display that can be sorted after the fact using different parameters.
