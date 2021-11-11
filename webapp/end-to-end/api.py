@@ -1,9 +1,8 @@
 '''
     api.py
-    Jeff Ondich, 25 April 2016
-    Updated 8 November 2021
+    Anders Shenholm 10, November 2021
 
-    Tiny Flask API to support the tiny books web application.
+    API for Hoopdata web app
 '''
 import sys
 import flask
@@ -25,9 +24,9 @@ def get_connection():
 def get_years():
     ''' Returns a list of the years in the db (in order)
 
-        Returns an empty list if there's any database failure.
+        Returns an empty list if there's any database failure. 
     '''
-    query = '''SELECT DISTINCT players.last_year FROM players ORDER BY players.last_year; '''
+    query = '''SELECT DISTINCT hogs.year FROM hogs ORDER BY hogs.year; '''
 
     year_list = []
     try:
