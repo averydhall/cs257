@@ -30,6 +30,7 @@ def get_years():
     try:
         connection = get_connection()
         cursor = connection.cursor()
+        #we use 2 argument .execute to avoid SQL injection
         cursor.execute(query, tuple())
         for row in cursor:
             year = {'year':row[0]}
@@ -65,6 +66,9 @@ def get_teams():
 
 @api.route('rosters/<team>/<year>')
 def get_roster(team, year):
+    ''' Returns basic info for a team's roster
+    '''
+    
     query = '''SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -93,4 +97,65 @@ def get_roster(team, year):
         print(e, file=sys.stderr)
 
     return json.dumps(roster)
+
+# --------------------- PLAYER_INFO ----------------------
+
+@api.route('/players') 
+
+def get_players():
+    ''' Finds all player names in db. Used to load player name search suggestions
+    '''
+    query = '''SELECT players.name FROM players ORDER BY players.name; '''
+
+    player_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, tuple())
+        for row in cursor:
+            player = {'player':row[0]}
+            player_list.append(player)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(player_list)
+
+
+@api.route('/player_info/<player_name>/bio') 
+def get_player_info_bio(player_name):
+    ''' Returns info needed for bio on player page
+    '''
+    
+    player_name = player_name.replace('-', ' ')
+    print(player_name)
+    
+    query = '''SELECT players.name,
+                players.first_year,
+                players.last_year,
+                players.position,
+                players.height,
+                players.weight,
+                players.birth_date,
+                players.college
+
+               FROM players
+               WHERE players.name ILIKE %s
+               '''
+    bio_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, (player_name,))
+        for row in cursor:
+            player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birth_date':row[6], 'college':row[7]}
+            bio_list.append(player)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(bio_list)
+
 
