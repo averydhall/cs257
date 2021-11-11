@@ -209,9 +209,38 @@ function loadPlayerSelector() {
 }
 
 function onPlayerInputChanged() {
-    //need to get stats for every season
+    //GETTING BIO PARAGRAPH
+    let player_url = player_input.value.split(' ').join('-');
     
-    //need to get bio paragraph 
+    let url = getAPIBaseURL() + '/player_info/bio/' + player_url;
+    fetch(url, {method: 'get'})
+    .then((response) => response.json())
+    
+    
+    .then(function(player_bio) {
+        let paragraphBody = '';
+        player = player_bio[0]
+            
+        paragraphBody += '<h2>' + player['name'] + '</h2>'
+            + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
+            + '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
+            
+            + '<p>Birthdate: ' + player['birth_date'] + '</p>'
+            + '<p>College: ' + player['college'] + '</p>';
+        
+            
+        // SETTING BIO PARAGRAPH
+        let player_bio_text = document.getElementById('player_bio_text');
+        if(player_bio_text){
+            player_bio_text.innerHTML = paragraphBody;  
+        }
+        
+            
+    })
+    
+    
+    //GETTING PLAYER STATS TABLE
+    /*
     let player_url = player_input.value.split(' ').join('-');
     
     let url = getAPIBaseURL() + '/player_info/' + player_url + '/bio';
@@ -231,12 +260,12 @@ function onPlayerInputChanged() {
             + '<p>College: ' + player['college'] + '</p>';
         
             
-        // Put the table body we just built inside the table that's already on the page.
+        // SETTING BIO PARAGRAPH
         let player_bio_text = document.getElementById('player_bio_text');
         if(player_bio_text){
             player_bio_text.innerHTML = paragraphBody;  
         }
         
             
-    })
+    })*/
 }

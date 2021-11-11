@@ -123,13 +123,11 @@ def get_players():
     return json.dumps(player_list)
 
 
-@api.route('/player_info/<player_name>/bio') 
+@api.route('/player_info/bio/<player_name>/') 
 def get_player_info_bio(player_name):
     ''' Returns info needed for bio on player page
     '''
-    
     player_name = player_name.replace('-', ' ')
-    print(player_name)
     
     query = '''SELECT players.name,
                 players.first_year,
@@ -157,5 +155,117 @@ def get_player_info_bio(player_name):
         print(e, file=sys.stderr)
 
     return json.dumps(bio_list)
+
+
+@api.route('/player_info/stats/<player_name>/') 
+def get_player_info_stats(player_name):
+    
+    player_name = player_name.replace('-', ' ')
+    query = '''SELECT 
+                year,
+                name,
+                position,
+                age,
+                team,
+                G,
+                GS,
+                MP,
+                PER,
+                TS_,
+                USG_,	
+                OWS,
+                DWS,
+                WS,	
+                WS_per_48,
+                OBPM,
+                DBPM,
+                BPM,
+                VORP,
+                FG,
+                FGA,
+                FG_,
+                threeP,
+                threePA,
+                threeP_,
+                twoP,
+                twoPA,
+                twoP_,
+                eFG_,
+                FT,
+                FTA,
+                FT_,
+                ORB,
+                DRB,
+                TRB,
+                AST,
+                STL,
+                BLK,
+                TOV,
+                PF,
+                PTS
+               FROM stats
+               WHERE stats.name ILIKE %s
+               '''
+    stats_list = []
+    print("trigger")
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, (player_name,))
+        for row in cursor:
+            player = {
+                'year':row[0],
+                'name':row[1],
+                'position':row[2],
+                'age':row[3],
+                'team':row[4],
+                'G':row[5],
+                'GS':row[6],
+                'MP':row[7],
+                'PER':row[8],
+                'TS_':row[9],
+                'USG_':row[10],	
+                'OWS':row[11],
+                'DWS':row[12],
+                'WS':row[13],	
+                'WS_per_48':row[14],
+                'OBPM':row[15],
+                'DBPM':row[16],
+                'BPM':row[17],
+                'VORP':row[18],
+                'FG':row[19],
+                'FGA':row[20],
+                'FG_':row[21],
+                'threeP':row[22],
+                'threePA':row[23],
+                'threeP_':row[24],
+                'twoP':row[25],
+                'twoPA':row[26],
+                'twoP_':row[27],
+                'eFG_':row[28],
+                'FT':row[29],
+                'FTA':row[30],
+                'FT_':row[31],
+                'ORB':row[32],
+                'DRB':row[33],
+                'TRB':row[34],
+                'AST':row[35],
+                'STL':row[36],
+                'BLK':row[37],
+                'TOV':row[38],
+                'PF':row[39],
+                'PTS':row[40]
+            }
+            
+            
+            
+            stats_list.append(player)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(stats_list)
+    
 
 
