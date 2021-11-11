@@ -85,7 +85,7 @@ def get_roster(team, year):
         cursor = connection.cursor()
         cursor.execute(query, (team, year))
         for row in cursor:
-            player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birthdate':row[6], 'college':row[7]}
+            player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birth_date':row[6], 'college':row[7]}
             roster.append(player)
         cursor.close()
         connection.close()

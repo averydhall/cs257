@@ -63,7 +63,10 @@ function loadYearSelector() {
         }
     })
 }
-    
+
+//things to add:
+//sort extinct teams to bottom of list
+//give time range for extinct times so people aren't searching for rosters that don't exist
 function loadTeamSelector() {
     
     let url = getAPIBaseURL() + '/teams';
@@ -101,6 +104,10 @@ function loadTeamSelector() {
     });
 }
 
+//Main funciton for loading rosters
+//Potential things to add:
+//Another table with stats for each player (option for box-score and advanced)
+//link player names to player info page
 function onRostersSelectorChanged() {
     //if value not null:
     
@@ -108,41 +115,56 @@ function onRostersSelectorChanged() {
     let team = team_selector.value;
     let year = year_selector.value;
     
-    let url = getAPIBaseURL() + '/' + team + '/' + year;
+    let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
     fetch(url, {method: 'get'})
+    
 
     // When the results come back, transform them from a JSON string into
     // a Javascript object (in this case, a list of author dictionaries).
     .then((response) => response.json())
     
     
-}
-    /*
-    let url = getAPIBaseURL() + '/' + authorID;
-
-    fetch(url, {method: 'get'})
-
-    .then((response) => response.json())
-
-    .then(function(books) {
+    .then(function(roster) {
         let tableBody = '';
-        for (let k = 0; k < books.length; k++) {
-            let book = books[k];
+    
+        //so we dont give header for teams that don't exist
+        if (roster.length != 0){
             tableBody += '<tr>'
-                            + '<td>' + book['title'] + '</td>'
-                            + '<td>' + book['publication_year'] + '</td>'
+                            + '<th>Name</th>'
+                            + '<th>Experience</th>'
+                            + '<th>Postion</th>'
+                            + '<th>Height</th>'
+                            + '<th>Weight</th>'
+                            + '<th>Birthdate</th>'
+                            + '<th>College</th>'
+                    + '</tr>\n';
+        }
+        
+        for (let k = 0; k < roster.length; k++) {
+            let player = roster[k];
+            let experience = year - player['first_year'] 
+            //experience measures how many previous seasons a player has played
+            
+            tableBody += '<tr>'
+                            //at some point we can add a link to player info page
+                            + '<td>' + player['name'] + '</td>'
+                            + '<td>' + experience + '</td>'
+                            + '<td>' + player['position'] + '</td>'
+                            + '<td>' + player['height'] + '</td>'
+                            + '<td>' + player['weight'] + '</td>'
+                            + '<td>' + player['birth_date'] + '</td>'
+                            + '<td>' + player['college'] + '</td>'
                             + '</tr>\n';
         }
 
         // Put the table body we just built inside the table that's already on the page.
-        let booksTable = document.getElementById('books_table');
-        if (booksTable) {
-            booksTable.innerHTML = tableBody;
+        let roster_table = document.getElementById('roster_table');
+        if(roster_table){
+            roster_table.innerHTML = tableBody;  
         }
+        
+            
     })
-
-    .catch(function(error) {
-        console.log(error);
-    });*/
-
+}
+    
 
