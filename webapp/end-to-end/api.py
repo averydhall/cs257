@@ -23,10 +23,8 @@ def get_connection():
 @api.route('/years') 
 def get_years():
     ''' Returns a list of the years in the db (in order)
-
-        Returns an empty list if there's any database failure. 
     '''
-    query = '''SELECT DISTINCT hogs.year FROM hogs ORDER BY hogs.year; '''
+    query = '''SELECT DISTINCT stats.year FROM stats ORDER BY stats.year DESC; '''
 
     year_list = []
     try:
@@ -43,26 +41,56 @@ def get_years():
 
     return json.dumps(year_list)
 
-@api.route('/books/author/<author_id>')
-def get_books_for_author(author_id):
-    query = '''SELECT books.id, books.title, books.publication_year
-               FROM books, authors, books_authors
-               WHERE books.id = books_authors.book_id
-                 AND authors.id = books_authors.author_id
-                 AND authors.id = %s
-               ORDER BY books.publication_year'''
-    book_list = []
+#improve this by listing extinct teams separately at bottom of list
+@api.route('/teams') 
+def get_teams():
+    ''' Returns a list of the teams in the db (in order)
+    '''
+    query = '''SELECT DISTINCT stats.team FROM stats ORDER BY stats.team; '''
+
+    team_list = []
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute(query, (author_id,))
+        cursor.execute(query, tuple())
         for row in cursor:
-            book = {'id':row[0], 'title':row[1], 'publication_year':row[2]}
-            book_list.append(book)
+            team = {'team':row[0]}
+            team_list.append(team)
         cursor.close()
         connection.close()
     except Exception as e:
         print(e, file=sys.stderr)
 
-    return json.dumps(book_list)
+    return json.dumps(team_list)
+
+@api.route('rosters/<team>/<year>')
+def get_roster(team, year):
+    query = '''SELECT players.name,
+                players.first_year,
+                players.last_year,
+                players.position,
+                players.height,
+                players.weight,
+                players.birth_date,
+                players.college
+
+               FROM players, stats
+               WHERE players.name = stats.name
+               AND stats.team LIKE %s
+               AND stats.year = %s
+               '''
+    roster = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, (team, year))
+        for row in cursor:
+            player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birthdate':row[6], 'college':row[7]}
+            roster.append(player)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(roster)
 

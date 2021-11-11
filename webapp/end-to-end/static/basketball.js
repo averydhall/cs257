@@ -1,12 +1,23 @@
 /*
  * basketball.js
  * Anders Shenholm 11/10/21
+ * Everything in here right now is for rosters page
  */
 
 window.onload = initialize;
 
 function initialize() {
-    loadYearsSelector();
+    loadYearSelector();
+    loadTeamSelector();
+    
+    let year_selector = document.getElementById('year_selector');
+    let team_selector = document.getElementById('team_selector');
+    if (year_selector) {
+        year_selector.onchange = onRostersSelectorChanged;
+    }
+    if (team_selector) {
+        team_selector.onchange = onRostersSelectorChanged;
+    }
 
 }
 
@@ -20,9 +31,9 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-//this shouldn't really be how we do this (we can just fill with certain years, we don't need a query)
-//I just have this here as an example/first step
-function loadYearsSelector() {
+
+//this should be a simple list of ints 1950 to 2017, not a query
+function loadYearSelector() {
     
     let url = getAPIBaseURL() + '/years';
 
@@ -51,6 +62,38 @@ function loadYearsSelector() {
             selector.innerHTML = selectorBody;
         }
     })
+}
+    
+function loadTeamSelector() {
+    
+    let url = getAPIBaseURL() + '/teams';
+
+    // Send the request to the books API /teams endpoint
+    fetch(url, {method: 'get'})
+
+    // When the results come back, transform them from a JSON string into
+    // a Javascript object (in this case, a list of author dictionaries).
+    .then((response) => response.json())
+
+    // Once you have your list of author dictionaries, use it to build
+    // an HTML table displaying the author names and lifespan.
+    .then(function(teams) {
+   
+        // Add the <option> elements to the <select> element
+        let selectorBody = '';
+        for (let k = 0; k < teams.length; k++) {
+            let team = teams[k];
+            selectorBody += '<option value="' + team['team'] + '">'
+                                + team['team'] + '</option>\n';
+        }
+        
+
+        let selector = document.getElementById('team_selector');
+        if (selector) {
+            selector.innerHTML = selectorBody;
+        }
+    })
+
 
     // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
@@ -58,9 +101,24 @@ function loadYearsSelector() {
     });
 }
 
-function onAuthorsSelectionChanged() {
-    let authorID = this.value; 
-    let url = getAPIBaseURL() + '/books/author/' + authorID;
+function onRostersSelectorChanged() {
+    //if value not null:
+    
+    //inherits these values from initialize i guess?
+    let team = team_selector.value;
+    let year = year_selector.value;
+    
+    let url = getAPIBaseURL() + '/' + team + '/' + year;
+    fetch(url, {method: 'get'})
+
+    // When the results come back, transform them from a JSON string into
+    // a Javascript object (in this case, a list of author dictionaries).
+    .then((response) => response.json())
+    
+    
+}
+    /*
+    let url = getAPIBaseURL() + '/' + authorID;
 
     fetch(url, {method: 'get'})
 
@@ -85,6 +143,6 @@ function onAuthorsSelectionChanged() {
 
     .catch(function(error) {
         console.log(error);
-    });
-}
+    });*/
+
 
