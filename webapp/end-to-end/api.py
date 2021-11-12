@@ -1,6 +1,7 @@
 '''
     api.py
-    Anders Shenholm 10, November 2021
+    Anders Shenholm and Avery Hall
+    10, November 2021
 
     API for Hoopdata web app
 '''
@@ -275,18 +276,18 @@ def get_ranking(category, team, year):
     team_string = team
     year_string = year
     #print(category + ", " + team + ", " + year)
-    query = '''SELECT stats.name, stats.%s
+    query = '''SELECT stats.name, stats.'''+ category_string +'''
                 FROM stats
                 WHERE stats.year = %s
                 AND stats.team = %s
-                GROUP BY stats.name, stats.%s
-                ORDER BY stats.%s DESC
+                GROUP BY stats.name, stats.'''+ category_string +'''
+                ORDER BY stats.'''+ category_string +''' DESC
                 LIMIT 5;'''
     ranking = []
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute(query, (category_string, year_string, team_string, category_string, category_string,))
+        cursor.execute(query, (year_string, team_string,))
         for row in cursor:
             player = {
                 'name':row[0],

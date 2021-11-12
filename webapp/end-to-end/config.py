@@ -1,3 +1,3 @@
 password = 'password'
-database = "basketball"
+database = 'data'
 user = 'averyh'
