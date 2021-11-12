@@ -375,9 +375,32 @@ function onPlayerInputChanged() {
     })
 }
 
+ptsTableBody = '';
+astTableBody = '';
+rebTableBody = '';
+stlTableBody = '';
+blkTableBody = '';
+tovTableBody = '';
+
+function pushRankingsTables(){
+    let full_table = '<table><tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr><table>';
+    
+    let ranking_table = document.getElementById('stat_rankings');
+      if(ranking_table){
+          ranking_table.innerHTML = full_table;
+      }
+    ptsTableBody = '';
+    astTableBody = '';
+    rebTableBody = '';
+    stlTableBody = '';
+    blkTableBody = '';
+    tovTableBody = '';
+
+}
+    
 function onRankingsSelectorChanged() {
 
-    let tableBody = '';
+    var fullTableBody = ''
     let team = team_selector.value;
     let year = year_selector.value;
 
@@ -386,11 +409,11 @@ function onRankingsSelectorChanged() {
     fetch(pts_url, {method: 'get'})
     .then((response) => response.json())
     .then(function(ranking) {
-        tableBody += '<table>' + '<th colspan="2"> Points </th>'
+        ptsTableBody += '<table>' + '<th colspan="2"> Points </th>'
         //so we dont give header for teams that don't exist
         for (let k = 0; k < ranking.length; k++) {
             let player = ranking[k];
-              tableBody += '<tr>'
+              ptsTableBody += '<tr>'
               + '<td>'
               + player['name']
               + '</td>'
@@ -399,19 +422,60 @@ function onRankingsSelectorChanged() {
               + '</td>'
               + '</tr>'
         }
-        tableBody += '</table>'
+        ptsTableBody += '</table>'
+        
+        if(ptsTableBody != '' && 
+           astTableBody != '' &&
+           rebTableBody != '' &&
+           stlTableBody != '' &&
+           blkTableBody != '' &&
+           tovTableBody != ''){
+            let full_table = pushRankingsTables();  
+        }
       })
+    
+        //making rebounds table
+      let trb_url = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
+      fetch(trb_url, {method: 'get'})
+      .then((response) => response.json())
+      .then(function(ranking) {
+          rebTableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
+        //so we dont give header for teams that don't exist
+        for (let k = 0; k < ranking.length; k++) {
+            let player = ranking[k];
+              rebTableBody += '<tr>'
+              + '<td>'
+              + player['name']
+              + '</td>'
+              + '<td>'
+              + player['stat_total']
+              + '</td>'
+              + '</tr>'
+        }
+        rebTableBody += '</table>'
+        
+        if(ptsTableBody != '' && 
+           astTableBody != '' &&
+           rebTableBody != '' &&
+           stlTableBody != '' &&
+           blkTableBody != '' &&
+           tovTableBody != ''){
+            let full_table = pushRankingsTables();  
+        }
+        
+          
+    })
 
         //making assists table
         let ast_url = getAPIBaseURL() + '/rankings/single-year/single-team/ast/' + team + '/' + year + '/';
         fetch(ast_url, {method: 'get'})
         .then((response) => response.json())
         .then(function(ranking) {
-            tableBody += '<table>' + '<th colspan="2"> Assists </th>'
+            astTableBody += '<table>' + '<th colspan="2"> Assists </th>'
             //so we dont give header for teams that don't exist
             for (let k = 0; k < ranking.length; k++) {
                 let player = ranking[k];
-                  tableBody += '<tr>'
+                  astTableBody += '<tr>'
                   + '<td>'
                   + player['name']
                   + '</td>'
@@ -420,7 +484,16 @@ function onRankingsSelectorChanged() {
                   + '</td>'
                   + '</tr>'
             }
-            tableBody += '</table>'
+            astTableBody += '</table>'
+
+            if(ptsTableBody != '' && 
+           astTableBody != '' &&
+           rebTableBody != '' &&
+           stlTableBody != '' &&
+           blkTableBody != '' &&
+           tovTableBody != ''){
+            let full_table = pushRankingsTables();  
+            }
           })
 
           //making steals table
@@ -428,32 +501,11 @@ function onRankingsSelectorChanged() {
           fetch(stl_url, {method: 'get'})
           .then((response) => response.json())
           .then(function(ranking) {
-              tableBody += '<table>' + '<th colspan="2"> Steals </th>'
-              //so we dont give header for teams that don't exist
-              for (let k = 0; k < ranking.length; k++) {
-                  let player = ranking[k];
-                    tableBody += '<tr>'
-                    + '<td>'
-                    + player['name']
-                    + '</td>'
-                    + '<td>'
-                    + player['stat_total']
-                    + '</td>'
-                    + '</tr>'
-              }
-              tableBody += '</table>'
-            })
-
-            //making blocks table
-            let blk_url = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
-            fetch(blk_url, {method: 'get'})
-            .then((response) => response.json())
-            .then(function(ranking) {
-                tableBody += '<table>' + '<th colspan="2"> Blocks </th>'
+              stlTableBody += '<table>' + '<th colspan="2"> Steals </th>'
                 //so we dont give header for teams that don't exist
                 for (let k = 0; k < ranking.length; k++) {
                     let player = ranking[k];
-                      tableBody += '<tr>'
+                      stlTableBody += '<tr>'
                       + '<td>'
                       + player['name']
                       + '</td>'
@@ -462,7 +514,47 @@ function onRankingsSelectorChanged() {
                       + '</td>'
                       + '</tr>'
                 }
-                tableBody += '</table>'
+                stlTableBody += '</table>'
+        
+                if(ptsTableBody != '' && 
+                   astTableBody != '' &&
+                   rebTableBody != '' &&
+                   stlTableBody != '' &&
+                   blkTableBody != '' &&
+                   tovTableBody != ''){
+                    let full_table = pushRankingsTables();  
+                }
+              
+            })
+
+            //making blocks table
+            let blk_url = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
+            fetch(blk_url, {method: 'get'})
+            .then((response) => response.json())
+            .then(function(ranking) {
+                blkTableBody += '<table>' + '<th colspan="2"> Blocks </th>'
+                //so we dont give header for teams that don't exist
+                for (let k = 0; k < ranking.length; k++) {
+                    let player = ranking[k];
+                      blkTableBody += '<tr>'
+                      + '<td>'
+                      + player['name']
+                      + '</td>'
+                      + '<td>'
+                      + player['stat_total']
+                      + '</td>'
+                      + '</tr>'
+                }
+                blkTableBody += '</table>'
+        
+                if(ptsTableBody != '' && 
+                   astTableBody != '' &&
+                   rebTableBody != '' &&
+                   stlTableBody != '' &&
+                   blkTableBody != '' &&
+                   tovTableBody != ''){
+                    let full_table = pushRankingsTables();  
+                }
               })
 
               //making turnovers table
@@ -470,51 +562,29 @@ function onRankingsSelectorChanged() {
               fetch(tov_url, {method: 'get'})
               .then((response) => response.json())
               .then(function(ranking) {
-                  tableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
-                  //so we dont give header for teams that don't exist
-                  for (let k = 0; k < ranking.length; k++) {
-                      let player = ranking[k];
-                        tableBody += '<tr>'
-                        + '<td>'
-                        + player['name']
-                        + '</td>'
-                        + '<td>'
-                        + player['stat_total']
-                        + '</td>'
-                        + '</tr>'
-                  }
-                  tableBody += '</table>'
+                tovTableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
+                //so we dont give header for teams that don't exist
+                for (let k = 0; k < ranking.length; k++) {
+                    let player = ranking[k];
+                      tovTableBody += '<tr>'
+                      + '<td>'
+                      + player['name']
+                      + '</td>'
+                      + '<td>'
+                      + player['stat_total']
+                      + '</td>'
+                      + '</tr>'
+                }
+                tovTableBody += '</table>'
+        
+                if(ptsTableBody != '' && 
+                   astTableBody != '' &&
+                   rebTableBody != '' &&
+                   stlTableBody != '' &&
+                   blkTableBody != '' &&
+                   tovTableBody != ''){
+                    let full_table = pushRankingsTables();  
+                }
                 })
-
-
-      //making rebounds table
-      let trb_url = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
-      fetch(trb_url, {method: 'get'})
-      .then((response) => response.json())
-      .then(function(ranking) {
-          tableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
-          //so we dont give header for teams that don't exist
-          for (let k = 0; k < ranking.length; k++) {
-              let player = ranking[k];
-                tableBody += '<tr>'
-                + '<td>'
-                + player['name']
-                + '</td>'
-                + '<td>'
-                + player['stat_total']
-                + '</td>'
-                + '</tr>'
-          }
-          tableBody += '</table>'
-
-
-
-
-      let ranking_table = document.getElementById('stat_rankings');
-      if(ranking_table){
-          ranking_table.innerHTML = tableBody;
-      }
-
-
-    })
+    
 }
