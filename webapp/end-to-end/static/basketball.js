@@ -1,6 +1,6 @@
 /*
  * basketball.js
- * Anders Shenholm 11/10/21
+ * Anders Shenholm, Avery Hall 11/10/21
  * Everything in here right now is for rosters page
  */
 
@@ -38,9 +38,8 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-// ----------------- ROSTERS -------------------
 
-//this should be a simple list of ints 1950 to 2017, not a query
+//this should be a simple list of ints 1950 to 2017, should just be in html
 function loadYearSelector() {
 
     let url = getAPIBaseURL() + '/years';
@@ -112,6 +111,8 @@ function loadTeamSelector() {
     });
 }
 
+
+// ----------------- ROSTERS -------------------
 //Main funciton for loading rosters
 //Potential things to add:
 //Another table with stats for each player (option for box-score and advanced)
@@ -145,7 +146,7 @@ function onRostersSelectorChanged() {
                             + '<th>Weight</th>'
                             + '<th>Birthdate</th>'
                             + '<th>College</th>'
-                    + '</tr>\n';
+                            + '</tr>\n';
         }
 
         for (let k = 0; k < roster.length; k++) {
@@ -209,11 +210,12 @@ function loadPlayerSelector() {
 }
 
 function onPlayerInputChanged() {
-    //GETTING BIO PARAGRAPH
+
     let player_url = player_input.value.split(' ').join('-');
 
-    let url = getAPIBaseURL() + '/player_info/bio/' + player_url;
-    fetch(url, {method: 'get'})
+    //GETTING BIO PARAGRAPH
+    let bio_url = getAPIBaseURL() + '/player_info/bio/' + player_url;
+    fetch(bio_url, {method: 'get'})
     .then((response) => response.json())
 
 
@@ -224,7 +226,6 @@ function onPlayerInputChanged() {
         paragraphBody += '<h2>' + player['name'] + '</h2>'
             + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
             + '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
-
             + '<p>Birthdate: ' + player['birth_date'] + '</p>'
             + '<p>College: ' + player['college'] + '</p>';
 
@@ -239,34 +240,124 @@ function onPlayerInputChanged() {
     })
 
 
-    //GETTING PLAYER STATS TABLE
-    /*
-    let player_url = player_input.value.split(' ').join('-');
-
-    let url = getAPIBaseURL() + '/player_info/' + player_url + '/bio';
-    fetch(url, {method: 'get'})
+    //GETTING PLAYER STATS TABLE - This could be adjusted to display stats in a dift order if we want. We could also cook up out own rate based stats by taking stat totals / games played
+    let stats_url = getAPIBaseURL() + '/player_info/stats/' + player_url;
+    fetch(stats_url, {method: 'get'})
     .then((response) => response.json())
 
+    .then(function(player_stats) {
 
-    .then(function(player_bio) {
-        let paragraphBody = '';
-        player = player_bio[0]
+        let tableBody = '';
 
-        paragraphBody += '<h2>' + player['name'] + '</h2>'
-            + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
-            + '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
+        if (player_stats.length != 0){
+            tableBody += '<tr>'
+                            + '<th>year</th>'
+                            + '<th>name</th>'
+                            + '<th>position</th>'
+                            + '<th>age</th>'
+                            + '<th>team</th>'
+                            + '<th>G</th>'
+                            + '<th>GS</th>'
+                            + '<th>MP</th>'
+                            + '<th>PER</th>'
+                            + '<th>TS%</th>'
+                            + '<th>USG%</th>'
+                            + '<th>OWS</th>'
+                            + '<th>DWS</th>'
+                            + '<th>WS</th>'
+                            + '<th>WS_per_48</th>'
+                            + '<th>OBPM</th>'
+                            + '<th>DBPM</th>'
+                            + '<th>BPM</th>'
+                            + '<th>VORP</th>'
+                            + '<th>FG</th>'
+                            + '<th>FGA</th>'
+                            + '<th>FG%</th>'
+                            + '<th>3P</th>'
+                            + '<th>3PA</th>'
+                            + '<th>3P%</th>'
+                            + '<th>2P</th>'
+                            + '<th>2PA</th>'
+                            + '<th>2P%</th>'
+                            + '<th>eFG%</th>'
+                            + '<th>FT</th>'
+                            + '<th>FTA</th>'
+                            + '<th>FT%</th>'
+                            + '<th>ORB</th>'
+                            + '<th>DRB</th>'
+                            + '<th>TRB</th>'
+                            + '<th>AST</th>'
+                            + '<th>STL</th>'
+                            + '<th>BLK</th>'
+                            + '<th>TOV</th>'
+                            + '<th>PF</th>'
+                            + '<th>PTS</th>'
+                            + '</tr>\n';
+        }
 
-            + '<p>Birthdate: ' + player['birth_date'] + '</p>'
-            + '<p>College: ' + player['college'] + '</p>';
+        for (let k = 0; k < player_stats.length; k++) {
+            let player_season = player_stats[k];
+
+            tableBody += '<tr>'
+                            //at some point we can add a link to player info page
+                            + '<td>' + player_season['year'] + '</td>'
+                            + '<td>' + player_season['name'] + '</td>'
+                            + '<td>' + player_season['position'] + '</td>'
+                            + '<td>' + player_season['age'] + '</td>'
+                            + '<td>' + player_season['team'] + '</td>'
+                            + '<td>' + player_season['G'] + '</td>'
+                            + '<td>' + player_season['GS'] + '</td>'
+                            + '<td>' + player_season['MP'] + '</td>'
+                            + '<td>' + player_season['PER'] + '</td>'
+                            + '<td>' + player_season['TS_'] + '</td>'
+                            + '<td>' + player_season['USG_'] + '</td>'
+                            + '<td>' + player_season['OWS'] + '</td>'
+                            + '<td>' + player_season['DWS'] + '</td>'
+                            + '<td>' + player_season['WS'] + '</td>'
+                            + '<td>' + player_season['WS_per_48'] + '</td>'
+                            + '<td>' + player_season['OBPM'] + '</td>'
+                            + '<td>' + player_season['DBPM'] + '</td>'
+                            + '<td>' + player_season['BPM'] + '</td>'
+                            + '<td>' + player_season['VORP'] + '</td>'
+                            + '<td>' + player_season['FG'] + '</td>'
+                            + '<td>' + player_season['FGA'] + '</td>'
+                            + '<td>' + player_season['FG_'] + '</td>'
+                            + '<td>' + player_season['threeP'] + '</td>'
+                            + '<td>' + player_season['threePA'] + '</td>'
+                            + '<td>' + player_season['threeP_'] + '</td>'
+                            + '<td>' + player_season['twoP'] + '</td>'
+                            + '<td>' + player_season['twoPA'] + '</td>'
+                            + '<td>' + player_season['twoP_'] + '</td>'
+                            + '<td>' + player_season['eFG_'] + '</td>'
+                            + '<td>' + player_season['FT'] + '</td>'
+                            + '<td>' + player_season['FTA'] + '</td>'
+                            + '<td>' + player_season['FT_'] + '</td>'
+                            + '<td>' + player_season['ORB'] + '</td>'
+                            + '<td>' + player_season['DRB'] + '</td>'
+                            + '<td>' + player_season['TRB'] + '</td>'
+                            + '<td>' + player_season['AST'] + '</td>'
+                            + '<td>' + player_season['STL'] + '</td>'
+                            + '<td>' + player_season['BLK'] + '</td>'
+                            + '<td>' + player_season['TOV'] + '</td>'
+                            + '<td>' + player_season['PF'] + '</td>'
+                            + '<td>' + player_season['PTS'] + '</td>'
+
+                            + '</tr>\n';
+
+            //'<h2>' + player['name'] + '</h2>'
+            //+ '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
+            //+ '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
+            //+ '<p>Birthdate: ' + player['birth_date'] + '</p>'
+            //+ '<p>College: ' + player['college'] + '</p>';
 
 
         // SETTING BIO PARAGRAPH
-        let player_bio_text = document.getElementById('player_bio_text');
+        let player_bio_text = document.getElementById('player_stats');
         if(player_bio_text){
-            player_bio_text.innerHTML = paragraphBody;
+            player_bio_text.innerHTML = tableBody;
         }
 
 
-    })*/
-
-// ----------------- RANKINGS -------------------
+        }
+    })
+}
