@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+  <script type="text/javascript" src="{{ url_for('static', filename='basketball.js') }}" ></script>
   <title>Rankings</title>
 </head>
 
@@ -18,31 +19,36 @@
     </div>
   </div><br><br>
 
-<form>
+    <label>Select a year:</label>
+      <select name="time-frames" id="year_selector">
+      </select><br>
+    <label>Select a team:</label>
+      <select name="time-frames" id="team_selector">
+      </select><br>
+    
+    <!--
+      <label for="teams">Select a team (or all-NBA):</label>
+      <select name="time-frames" class="time-frames">
+        <option value="Single year">All NBA</option>
+        <option value="Year range">Warriors</option>
+        <option value="All time">Suns</option>
+        <option value="All time">Celtics</option>
+        <option value="All time">Hornets</option>
+      </select><br><br>
 
-  <label for="teams">Select a team (or all-NBA):</label>
-  <select name="time-frames" id="time-frames">
-    <option value="Single year">All NBA</option>
-    <option value="Year range">Warriors</option>
-    <option value="All time">Suns</option>
-    <option value="All time">Celtics</option>
-    <option value="All time">Hornets</option>
-  </select><br><br>
+      <label for="time-frames">Select a time frame:</label>
+      <select name="time-frames" id="time-frames">
+        <option value="Single year">Single year</option>
+        <option value="Year range">Year range</option>
+        <option value="All time">All time</option>
+      </select>
 
-  <label for="time-frames">Select a time frame:</label>
-  <select name="time-frames" id="time-frames">
-    <option value="Single year">Single year</option>
-    <option value="Year range">Year range</option>
-    <option value="All time">All time</option>
-  </select>
+      <p>If year range selected, enter start and end year:</p>
+      <input type="integer" id="syear" name="syear">
+      <input type="integer" id="eyear" name="eyear"><br><br><br>
+    -->
 
-  <p>If year range selected, enter start and end year:</p>
-  <input type="integer" id="syear" name="syear">
-  <input type="integer" id="eyear" name="eyear"><br><br><br>
-
-  <input type="submit" value="Submit">
-
-</form><br><br>
+<br>
 
 <div>
   <table class="stat-rankings">

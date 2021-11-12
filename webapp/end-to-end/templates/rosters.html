@@ -18,17 +18,11 @@
          </div>
        </div>
 
-       <div >
-           <label>Team </label>
-             <select id="team_selector" name="teams">
-                <option value="none">-</option>
-                <option value="">GSW</option>
-                <option value="">NYK</option>
-                <option value="">BOS</option>
-                <!-- this will be a long list. have to find all the teams that ever existed (in the db) via sql query. probably want to list extinct teams at the bottom -->
-             </select>
+       <div>
+           <label for="team_selector">Team </label>
+             <select id="team_selector" name="teams"></select>
 
-           <label>Year </label>
+           <label for="year_selector">Year </label>
              <select id="year_selector" name="years"></select>
            <input type="submit">
        </div>

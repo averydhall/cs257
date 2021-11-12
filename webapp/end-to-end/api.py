@@ -65,6 +65,7 @@ def get_teams():
     return json.dumps(team_list)
 
 @api.route('rosters/<team>/<year>')
+#bug: some players are excluded because of stuff attached to their name string or possibly bad data
 def get_roster(team, year):
     ''' Returns basic info for a team's roster
     '''
@@ -79,7 +80,7 @@ def get_roster(team, year):
                 players.college
 
                FROM players, stats
-               WHERE players.name = stats.name
+               WHERE players.name ILIKE stats.name
                AND stats.team LIKE %s
                AND stats.year = %s
                '''
@@ -127,7 +128,7 @@ def get_players():
 def get_player_info_bio(player_name):
     ''' Returns info needed for bio on player page
     '''
-    player_name = player_name.replace('-', ' ')
+    player_name = player_name = '%' + player_name.replace('-', ' ') + '%';
     
     query = '''SELECT players.name,
                 players.first_year,
@@ -160,7 +161,7 @@ def get_player_info_bio(player_name):
 @api.route('/player_info/stats/<player_name>/') 
 def get_player_info_stats(player_name):
     
-    player_name = player_name.replace('-', ' ')
+    player_name = '%' + player_name.replace('-', ' ') + '%';
     query = '''SELECT 
                 year,
                 name,
@@ -205,9 +206,10 @@ def get_player_info_stats(player_name):
                 PTS
                FROM stats
                WHERE stats.name ILIKE %s
+               ORDER BY stats.year
                '''
     stats_list = []
-    print("trigger")
+
     try:
         connection = get_connection()
         cursor = connection.cursor()
