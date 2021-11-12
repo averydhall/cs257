@@ -1,4 +1,3 @@
-password = ''
+password = 'password'
 database = "basketball"
-user = 'andersshenholm'
-
+user = 'averyh'

@@ -20,7 +20,7 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
-@api.route('/years') 
+@api.route('/years')
 def get_years():
     ''' Returns a list of the years in the db (in order)
     '''
@@ -43,7 +43,7 @@ def get_years():
     return json.dumps(year_list)
 
 #improve this by listing extinct teams separately at bottom of list
-@api.route('/teams') 
+@api.route('/teams')
 def get_teams():
     ''' Returns a list of the teams in the db (in order)
     '''
@@ -68,7 +68,7 @@ def get_teams():
 def get_roster(team, year):
     ''' Returns basic info for a team's roster
     '''
-    
+
     query = '''SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -100,7 +100,7 @@ def get_roster(team, year):
 
 # --------------------- PLAYER_INFO ----------------------
 
-@api.route('/players') 
+@api.route('/players')
 
 def get_players():
     ''' Finds all player names in db. Used to load player name search suggestions
@@ -123,12 +123,12 @@ def get_players():
     return json.dumps(player_list)
 
 
-@api.route('/player_info/bio/<player_name>/') 
+@api.route('/player_info/bio/<player_name>/')
 def get_player_info_bio(player_name):
     ''' Returns info needed for bio on player page
     '''
     player_name = player_name.replace('-', ' ')
-    
+
     query = '''SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -157,11 +157,11 @@ def get_player_info_bio(player_name):
     return json.dumps(bio_list)
 
 
-@api.route('/player_info/stats/<player_name>/') 
+@api.route('/player_info/stats/<player_name>/')
 def get_player_info_stats(player_name):
-    
+
     player_name = player_name.replace('-', ' ')
-    query = '''SELECT 
+    query = '''SELECT
                 year,
                 name,
                 position,
@@ -172,10 +172,10 @@ def get_player_info_stats(player_name):
                 MP,
                 PER,
                 TS_,
-                USG_,	
+                USG_,
                 OWS,
                 DWS,
-                WS,	
+                WS,
                 WS_per_48,
                 OBPM,
                 DBPM,
@@ -207,7 +207,6 @@ def get_player_info_stats(player_name):
                WHERE stats.name ILIKE %s
                '''
     stats_list = []
-    print("trigger")
     try:
         connection = get_connection()
         cursor = connection.cursor()
@@ -224,10 +223,10 @@ def get_player_info_stats(player_name):
                 'MP':row[7],
                 'PER':row[8],
                 'TS_':row[9],
-                'USG_':row[10],	
+                'USG_':row[10],
                 'OWS':row[11],
                 'DWS':row[12],
-                'WS':row[13],	
+                'WS':row[13],
                 'WS_per_48':row[14],
                 'OBPM':row[15],
                 'DBPM':row[16],
@@ -256,9 +255,9 @@ def get_player_info_stats(player_name):
                 'PF':row[39],
                 'PTS':row[40]
             }
-            
-            
-            
+
+
+
             stats_list.append(player)
         cursor.close()
         connection.close()
@@ -266,6 +265,34 @@ def get_player_info_stats(player_name):
         print(e, file=sys.stderr)
 
     return json.dumps(stats_list)
-    
 
+@api.route('/rankings/single-year/single-team/<category>/<team>/<year>/')
+def get_ranking(category, team, year):
+    category_string = category
+    team_string = team
+    year_string = year
+    #print(category + ", " + team + ", " + year)
+    query = '''SELECT stats.name, stats.%s
+                FROM stats
+                WHERE stats.year = %s
+                AND stats.team = %s
+                GROUP BY stats.name, stats.%s
+                ORDER BY stats.%s DESC
+                LIMIT 5;'''
+    ranking = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, (category_string, year_string, team_string, category_string, category_string,))
+        for row in cursor:
+            player = {
+                'name':row[0],
+                'stat_total':row[1]
+            }
+            ranking.append(player)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
 
+    return json.dumps(ranking)
