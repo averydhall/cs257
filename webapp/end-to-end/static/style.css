@@ -42,12 +42,16 @@ img {
   padding-left: 20px;
 }
 
+#player_stats{
+    
+}
 .container {
-  display: flex;
+  display: inline-block
   justify-content: left;
   border: 1px solid black;
   /*width: fit-content;*/
   /* box-sizing: content-box;*/
+    
   background-color: lightgray;
   padding: 20px;
 }
@@ -84,7 +88,6 @@ img {
 #roster_table {
     float:left;
     clear:both;
-
 }
 
 /*Advanced Stats*/
@@ -104,50 +107,7 @@ img {
     float:right;
 }
 
-
-.dropdown {
-    list-style: none;
-    font-weight: bold;
-    margin-bottom: 10px;
-    /*float: left;  Clear floats */
-    width: 100%;
-    padding-left: 10px;
-    /*display: block;
-     Bring the dropdown above everything else--uncomment if needed.
-    position: relative;
-    z-index: 5;
-    */
-
-}
-.dropdown li{
-
-}
-.dropdown li ul{
-    padding-left: 20px;
-    padding-right: 20px;
-
-}
-.dropdown li ul li{
-    list-style: none;
-    /*
-    position: relative;
-    display: block;
-    */
-}
 .text_input{
     width: 40px;
 
-/*
-.dropdown a {
-    display: block;
-    padding: 5px;
-    color: #fff;
-    background-color: #333;
-    text-decoration: none;
-}
-.dropdown a:hover {
-    color: #fff;
-    background-color: #6b0c36;
-    text-decoration: underline;
-}
-*/
+
