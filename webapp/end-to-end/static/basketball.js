@@ -37,7 +37,7 @@ function initialize() {
     let playerInput = document.getElementById('player_input');
     let showAdvancedStats = document.getElementById('advanced-stats');
     /*loadAdvancedStatsCheckbox();*/
-    
+
     if (playerInput) {
         playerInput.onchange = onPlayerInputChanged;
     }
@@ -139,7 +139,6 @@ function loadTeamSelector() {
 //Another table with stats for each player (option for box-score and advanced)
 //link player names to player info page
 function onRostersSelectorChanged() {
-    //if value not null:
 
     //inherits these values from initialize i guess?
     let team = team_selector.value;
@@ -195,6 +194,9 @@ function onRostersSelectorChanged() {
 
 
     })
+
+    let showRosterTable = document.getElementById("roster_table");
+    showRosterTable.style.display = "block";
 }
 
 // ----------------- PLAYER_INFO -------------------
