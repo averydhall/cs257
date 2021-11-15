@@ -35,17 +35,17 @@ function initialize() {
 
     loadPlayerSelector();
     let playerInput = document.getElementById('player_input');
-
+    let showAdvancedStats = document.getElementById('advanced-stats');
+    /*loadAdvancedStatsCheckbox();*/
+    
     if (playerInput) {
         playerInput.onchange = onPlayerInputChanged;
     }
 
-    /*loadAdvancedStatsCheckbox();*/
-    let showAdvancedStats = document.getElementById('advanced-stats');
+    if (showAdvancedStats) {
+        showAdvancedStats.onchange = onPlayerInputChanged;
+    }
 
-    /*if (showAdvancedStats) {
-        showAdvancedStats.onchange = onShowAdvancedStatsChanged;
-    }*/
 }
 
 // Returns the base URL of the API, onto which endpoint
@@ -346,17 +346,6 @@ function onPlayerInputChanged() {
 
                             if (showAdvancedStats.checked) {
                               tableBody += '<td>' + player_season['PER'] + '</td>'
-                              + '<td>' + player_season['TS_'] + '</td>'
-                              + '<td>' + player_season['USG_'] + '</td>'
-                              + '<td>' + player_season['OWS'] + '</td>'
-                              + '<td>' + player_season['DWS'] + '</td>'
-                              + '<td>' + player_season['WS'] + '</td>'
-                              + '<td>' + player_season['WS_per_48'] + '</td>'
-                              + '<td>' + player_season['OBPM'] + '</td>'
-                              + '<td>' + player_season['DBPM'] + '</td>'
-                              + '<td>' + player_season['BPM'] + '</td>'
-                              + '<td>' + player_season['VORP'] + '</td>'
-                              + '<td>' + player_season['PER'] + '</td>'
                               + '<td>' + player_season['TS_'] + '</td>'
                               + '<td>' + player_season['USG_'] + '</td>'
                               + '<td>' + player_season['OWS'] + '</td>'
