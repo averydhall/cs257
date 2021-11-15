@@ -46,8 +46,10 @@ img {
   display: flex;
   justify-content: left;
   border: 1px solid black;
-  width: 650px;
+  /*width: fit-content;*/
+  /* box-sizing: content-box;*/
   background-color: lightgray;
+  padding: 20px;
 }
 
 
@@ -74,12 +76,12 @@ img {
 /*Rosters*/
 #rosters_selections{
     float: left;
-    display: block; 
-    padding-left: 50px; 
+    display: block;
+    padding-left: 50px;
     padding-top: 50px;
 }
 
-#roster_table{
+#roster_table {
     float:left;
     clear:both;
     padding:50px;
@@ -87,7 +89,7 @@ img {
 
 /*Advanced Stats*/
 #advanced_stats_selections{
-    overflow-y: scroll; 
+    overflow-y: scroll;
     overflow-x: hidden;
     height: 80vh;
     display: inline-block;
@@ -96,9 +98,9 @@ img {
 }
 
 #advanced_stats_table{
-    width: 70%; 
-    display: inline-block; 
-    overflow: scroll; 
+    width: 70%;
+    display: inline-block;
+    overflow: scroll;
     float:right;
 }
 
@@ -115,7 +117,7 @@ img {
     position: relative;
     z-index: 5;
     */
-    
+
 }
 .dropdown li{
 
@@ -123,7 +125,7 @@ img {
 .dropdown li ul{
     padding-left: 20px;
     padding-right: 20px;
-    
+
 }
 .dropdown li ul li{
     list-style: none;

@@ -25,14 +25,16 @@
     <div>
       <h1 class="head-text">Player Statistical Rankings</h1>
     </div>
-  </div><br><br>
+  </div><br>
 
-    <label>Select a year:</label>
+    <label>Team:</label>
+      <select name="time-frames" id="team_selector">
+      </select>
+
+    <label>Year:</label>
       <select name="time-frames" id="year_selector">
       </select><br>
-    <label>Select a team:</label>
-      <select name="time-frames" id="team_selector">
-      </select><br>
+
 
     <!--
       <label for="teams">Select a team (or all-NBA):</label>
@@ -59,7 +61,7 @@
 <br>
 
 <div>
-  <table id="stat_rankings">
+  <table id="stat_rankings" class="container">
     <!--
     <tr>
       <td>

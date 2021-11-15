@@ -35,7 +35,8 @@ def get_years():
         cursor.execute(query, tuple())
         for row in cursor:
             year = {'year':row[0]}
-            year_list.append(year)
+            if not year['year'] == None:
+                year_list.append(year)
         cursor.close()
         connection.close()
     except Exception as e:
@@ -57,7 +58,8 @@ def get_teams():
         cursor.execute(query, tuple())
         for row in cursor:
             team = {'team':row[0]}
-            team_list.append(team)
+            if not team['team'] == None:
+                team_list.append(team)
         cursor.close()
         connection.close()
     except Exception as e:
@@ -92,6 +94,9 @@ def get_roster(team, year):
         cursor.execute(query, (team, year))
         for row in cursor:
             player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birth_date':row[6], 'college':row[7]}
+            for item in player:
+                if player[item] == None:
+                    player[item] = "n/a"
             roster.append(player)
         cursor.close()
         connection.close()
@@ -150,6 +155,9 @@ def get_player_info_bio(player_name):
         cursor.execute(query, (player_name,))
         for row in cursor:
             player = {'name':row[0], 'first_year':row[1], 'last_year':row[2], 'position':row[3], 'height':row[4], 'weight':row[5], 'birth_date':row[6], 'college':row[7]}
+            for item in player:
+                if player[item] == None:
+                    player[item] = "n/a"
             bio_list.append(player)
         cursor.close()
         connection.close()
@@ -259,7 +267,9 @@ def get_player_info_stats(player_name):
                 'PF':row[39],
                 'PTS':row[40]
             }
-
+            for item in player:
+                if player[item] == None:
+                    player[item] = "n/a"
 
 
             stats_list.append(player)
