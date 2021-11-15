@@ -36,6 +36,7 @@ function initialize() {
     loadPlayerSelector();
     let playerInput = document.getElementById('player_input');
     let showAdvancedStats = document.getElementById('advanced-stats');
+    let showBoxScoreStats = document.getElementById('box-score-stats');
     /*loadAdvancedStatsCheckbox();*/
 
     if (playerInput) {
@@ -44,6 +45,9 @@ function initialize() {
 
     if (showAdvancedStats) {
         showAdvancedStats.onchange = onPlayerInputChanged;
+    }
+    if (showBoxScoreStats) {
+        showBoxScoreStats.onchange = onPlayerInputChanged;
     }
 
 }
@@ -62,39 +66,22 @@ function getAPIBaseURL() {
 
 //this should be a simple list of ints 1950 to 2017, should just be in html
 function loadYearSelector() {
+    let selectorBody = '';
+    for (let k = 0; k < 79; k++) {
+        let year = 2017 - k;
+        selectorBody += '<option value="' + year + '">'
+                            + year + '</option>\n';
+    }
 
-    let url = getAPIBaseURL() + '/years';
-
-    // Send the request to the books API /authors/ endpoint
-    fetch(url, {method: 'get'})
-
-    // When the results come back, transform them from a JSON string into
-    // a Javascript object (in this case, a list of author dictionaries).
-    .then((response) => response.json())
-
-    // Once you have your list of author dictionaries, use it to build
-    // an HTML table displaying the author names and lifespan.
-    .then(function(years) {
-
-        // Add the <option> elements to the <select> element
-        let selectorBody = '';
-        for (let k = 0; k < years.length; k++) {
-            let year = years[k];
-            selectorBody += '<option value="' + year['year'] + '">'
-                                + year['year'] + '</option>\n';
-        }
-
-
-        let selector = document.getElementById('year_selector');
-        if (selector) {
-            selector.innerHTML = selectorBody;
-        }
-    })
+    let selector = document.getElementById('year_selector');
+    if (selector) {
+        selector.innerHTML = selectorBody;
+    }
 }
 
 //things to add:
 //sort extinct teams to bottom of list
-//give time range for extinct times so people aren't searching for rosters that don't exist
+//give time range for extinct teams so people aren't searching for rosters that don't exist
 function loadTeamSelector() {
 
     let url = getAPIBaseURL() + '/teams';
@@ -279,6 +266,7 @@ function onPlayerInputChanged() {
 
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats');
+        let showBoxScoreStats = document.getElementById('box-score-stats');
 
         if (player_stats.length != 0){
             tableBody += '<tr>'
@@ -291,6 +279,30 @@ function onPlayerInputChanged() {
                             + '<th>GS</th>'
                             + '<th>MP</th>';
 
+                            if (showBoxScoreStats.checked) {
+                                tableBody += '<th>FG</th>'
+                                + '<th>FGA</th>'
+                                + '<th>FG%</th>'
+                                + '<th>3P</th>'
+                                + '<th>3PA</th>'
+                                + '<th>3P%</th>'
+                                + '<th>2P</th>'
+                                + '<th>2PA</th>'
+                                + '<th>2P%</th>'
+                                + '<th>eFG%</th>'
+                                + '<th>FT</th>'
+                                + '<th>FTA</th>'
+                                + '<th>FT%</th>'
+                                + '<th>ORB</th>'
+                                + '<th>DRB</th>'
+                                + '<th>TRB</th>'
+                                + '<th>AST</th>'
+                                + '<th>STL</th>'
+                                + '<th>BLK</th>'
+                                + '<th>TOV</th>'
+                                + '<th>PF</th>'
+                                + '<th>PTS</th>'
+                            }
                             if (showAdvancedStats.checked) {
                               tableBody += '<th>PER</th>'
                               + '<th>TS%</th>'
@@ -304,29 +316,6 @@ function onPlayerInputChanged() {
                               + '<th>BPM</th>'
                               + '<th>VORP</th>';
                             }
-
-                            tableBody += '<th>FG</th>'
-                            + '<th>FGA</th>'
-                            + '<th>FG%</th>'
-                            + '<th>3P</th>'
-                            + '<th>3PA</th>'
-                            + '<th>3P%</th>'
-                            + '<th>2P</th>'
-                            + '<th>2PA</th>'
-                            + '<th>2P%</th>'
-                            + '<th>eFG%</th>'
-                            + '<th>FT</th>'
-                            + '<th>FTA</th>'
-                            + '<th>FT%</th>'
-                            + '<th>ORB</th>'
-                            + '<th>DRB</th>'
-                            + '<th>TRB</th>'
-                            + '<th>AST</th>'
-                            + '<th>STL</th>'
-                            + '<th>BLK</th>'
-                            + '<th>TOV</th>'
-                            + '<th>PF</th>'
-                            + '<th>PTS</th>'
                             + '</tr>\n';
         }
 
@@ -339,11 +328,36 @@ function onPlayerInputChanged() {
                             //+ '<td>' + player_season['name'] + '</td>'
                             //+ '<td>' + player_season['position'] + '</td>'
                             + '<td>' + player_season['age'] + '</td>'
-                            + '<td>' + player_season['team'] + '</td>'
+                            + '<td class="team_in_player_stats"><a href=rosters.html}>' + player_season['team'] + '</a></td>'
                             + '<td>' + player_season['G'] + '</td>'
                             + '<td>' + player_season['GS'] + '</td>'
                             + '<td>' + player_season['MP'] + '</td>';
 
+            
+                            if (showBoxScoreStats.checked) {
+                                tableBody += '<td>' + player_season['FG'] + '</td>'
+                                + '<td>' + player_season['FGA'] + '</td>'
+                                + '<td>' + player_season['FG_'] + '</td>'
+                                + '<td>' + player_season['threeP'] + '</td>'
+                                + '<td>' + player_season['threePA'] + '</td>'
+                                + '<td>' + player_season['threeP_'] + '</td>'
+                                + '<td>' + player_season['twoP'] + '</td>'
+                                + '<td>' + player_season['twoPA'] + '</td>'
+                                + '<td>' + player_season['twoP_'] + '</td>'
+                                + '<td>' + player_season['eFG_'] + '</td>'
+                                + '<td>' + player_season['FT'] + '</td>'
+                                + '<td>' + player_season['FTA'] + '</td>'
+                                + '<td>' + player_season['FT_'] + '</td>'
+                                + '<td>' + player_season['ORB'] + '</td>'
+                                + '<td>' + player_season['DRB'] + '</td>'
+                                + '<td>' + player_season['TRB'] + '</td>'
+                                + '<td>' + player_season['AST'] + '</td>'
+                                + '<td>' + player_season['STL'] + '</td>'
+                                + '<td>' + player_season['BLK'] + '</td>'
+                                + '<td>' + player_season['TOV'] + '</td>'
+                                + '<td>' + player_season['PF'] + '</td>'
+                                + '<td>' + player_season['PTS'] + '</td>'
+                            }
                             //Advanced stats
 
                             if (showAdvancedStats.checked) {
@@ -360,29 +374,6 @@ function onPlayerInputChanged() {
                               + '<td>' + player_season['VORP'] + '</td>';
                             }
 
-
-                            tableBody += '<td>' + player_season['FG'] + '</td>'
-                            + '<td>' + player_season['FGA'] + '</td>'
-                            + '<td>' + player_season['FG_'] + '</td>'
-                            + '<td>' + player_season['threeP'] + '</td>'
-                            + '<td>' + player_season['threePA'] + '</td>'
-                            + '<td>' + player_season['threeP_'] + '</td>'
-                            + '<td>' + player_season['twoP'] + '</td>'
-                            + '<td>' + player_season['twoPA'] + '</td>'
-                            + '<td>' + player_season['twoP_'] + '</td>'
-                            + '<td>' + player_season['eFG_'] + '</td>'
-                            + '<td>' + player_season['FT'] + '</td>'
-                            + '<td>' + player_season['FTA'] + '</td>'
-                            + '<td>' + player_season['FT_'] + '</td>'
-                            + '<td>' + player_season['ORB'] + '</td>'
-                            + '<td>' + player_season['DRB'] + '</td>'
-                            + '<td>' + player_season['TRB'] + '</td>'
-                            + '<td>' + player_season['AST'] + '</td>'
-                            + '<td>' + player_season['STL'] + '</td>'
-                            + '<td>' + player_season['BLK'] + '</td>'
-                            + '<td>' + player_season['TOV'] + '</td>'
-                            + '<td>' + player_season['PF'] + '</td>'
-                            + '<td>' + player_season['PTS'] + '</td>'
 
                             + '</tr>\n';
 
