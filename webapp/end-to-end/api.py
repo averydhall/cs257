@@ -25,9 +25,10 @@ def get_connection():
 @api.route('/help')
 def get_help():
     contents = '';
-    with open("readme.txt", "r") as f:
-        for item in f:
-            contents += f.readline()
+    with open("api-help.txt", "r") as f:
+        for line in f:
+            contents += '</br>'
+            contents += line
         
     return contents
     

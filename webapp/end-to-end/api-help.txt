@@ -1,19 +1,4 @@
-REQUEST: /years
-
-RESPONSE: a JSON list of dictionaries, each of which represents one
-year in the database, sorted by recency. Each dictionary in this
-list will have the following fields.
-
-   year -- (INTEGER) year of the NBA season for which stats were collected
-
-EXAMPLE(S):
-    /teams
-
-       [{"year": 2017}, {"year": 2016}, {"year": 2015}, {"year": 2014},
-       {"year": 2013}, {"year": 2012}, {"year": 2011}, {"year": 2010},
-       ... {"year": 1951}, {"year": 1950}]
-
-       (output abbreviated)
+Usage info for HoopData API.
 
 
 REQUEST: /teams
