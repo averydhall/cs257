@@ -67,7 +67,7 @@ function getAPIBaseURL() {
 //this should be a simple list of ints 1950 to 2017, should just be in html
 function loadYearSelector() {
     let selectorBody = '';
-    for (let k = 0; k < 79; k++) {
+    for (let k = 0; k < 68; k++) {
         let year = 2017 - k;
         selectorBody += '<option value="' + year + '">'
                             + year + '</option>\n';
@@ -241,9 +241,10 @@ function onPlayerInputChanged() {
 
 
     .then(function(player_bio) {
+        
         let paragraphBody = '';
         player = player_bio[0]
-
+        
         paragraphBody += '<h2>' + player['name'] + '</h2>'
             + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
             + '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
@@ -254,6 +255,7 @@ function onPlayerInputChanged() {
         // SETTING BIO PARAGRAPH
         let player_bio_text = document.getElementById('player_bio_text');
         if(player_bio_text){
+            
             player_bio_text.innerHTML = paragraphBody;
         }
 

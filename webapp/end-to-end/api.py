@@ -21,29 +21,6 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
-@api.route('/years')
-def get_years():
-    ''' Returns a list of the years in the db (in order)
-    '''
-    query = '''SELECT DISTINCT stats.year FROM stats ORDER BY stats.year DESC; '''
-
-    year_list = []
-    try:
-        connection = get_connection()
-        cursor = connection.cursor()
-        #we use 2 argument .execute to avoid SQL injection
-        cursor.execute(query, tuple())
-        for row in cursor:
-            year = {'year':row[0]}
-            if not year['year'] == None:
-                year_list.append(year)
-        cursor.close()
-        connection.close()
-    except Exception as e:
-        print(e, file=sys.stderr)
-
-    return json.dumps(year_list)
-
 #improve this by listing extinct teams separately at bottom of list
 @api.route('/teams')
 def get_teams():
@@ -69,11 +46,15 @@ def get_teams():
 
 @api.route('rosters/<team>/<year>')
 #bug: some players are excluded because of stuff attached to their name string or possibly bad data
+#bug: players of the same name that played the same team are included when they shouldn't be
 def get_roster(team, year):
+    
     ''' Returns basic info for a team's roster
     '''
 
-    query = '''SELECT players.name,
+    query = '''
+                
+                SELECT players.name,
                 players.first_year,
                 players.last_year,
                 players.position,
@@ -83,8 +64,8 @@ def get_roster(team, year):
                 players.college
 
                FROM players, stats
-               WHERE players.name ILIKE stats.name
-               AND stats.team LIKE %s
+               WHERE stats.name ILIKE players.name
+               AND stats.team = %s
                AND stats.year = %s
                '''
     roster = []
@@ -134,8 +115,8 @@ def get_players():
 def get_player_info_bio(player_name):
     ''' Returns info needed for bio on player page
     '''
-    player_name = player_name = '%' + player_name.replace('-', ' ') + '%';
-
+    bio_list = []
+    player_name = player_name.replace('-', ' ').replace('*', '');
     query = '''SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -146,9 +127,9 @@ def get_player_info_bio(player_name):
                 players.college
 
                FROM players
-               WHERE players.name ILIKE %s
+               WHERE players.name = %s
                '''
-    bio_list = []
+
     try:
         connection = get_connection()
         cursor = connection.cursor()
@@ -163,14 +144,13 @@ def get_player_info_bio(player_name):
         connection.close()
     except Exception as e:
         print(e, file=sys.stderr)
-
+        
     return json.dumps(bio_list)
 
 
 @api.route('/player_info/stats/<player_name>/')
 def get_player_info_stats(player_name):
-
-    player_name = '%' + player_name.replace('-', ' ') + '%';
+    player_name = player_name.replace('-', ' ');
     query = '''SELECT
                 year,
                 name,
@@ -214,7 +194,7 @@ def get_player_info_stats(player_name):
                 PF,
                 PTS
                FROM stats
-               WHERE stats.name ILIKE %s
+               WHERE stats.name = %s
                ORDER BY stats.year
                '''
     stats_list = []

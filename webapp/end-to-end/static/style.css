@@ -54,12 +54,12 @@ h1 {
   padding-left: 20px;
   margin: 0px;
 }
-#player_stats{
+#player_stats_table{
     display: inline-block; 
     max-width: 60%;
     float:left;
     position: relative;
-    overflow: scroll;
+    overflow:auto;
     
 }
 
@@ -117,10 +117,6 @@ h1 {
     padding-top: 50px;
 }
 
-#roster_table {
-    float:left;
-    clear:both;
-}
 
 /*Advanced Stats*/
 #advanced_stats_selections{
