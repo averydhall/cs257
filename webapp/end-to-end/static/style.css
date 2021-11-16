@@ -15,9 +15,16 @@ body {
 table, td, th {
     border: 1px solid black;
     font-size: 18px;
-    padding: 5px;
+/*    padding: 5px;*/
     background-color: white;
+    border-collapse: separate;
+    border-spacing: 0;
 }
+
+table{
+    overflow: auto;
+}
+
 
 .stat-rankings {
   border: 0px solid black;
@@ -47,15 +54,37 @@ h1 {
   padding-left: 20px;
   margin: 0px;
 }
+#player_stats_table{
+    display: inline-block; 
+    max-width: 60%;
+    float:left;
+    position: relative;
+    overflow:auto;
+    
+}
+
+#player_stats td, th{
+    font-size: .76em;
+    
+}
 
 .container {
-  display: flex;
+  display: inline-block
   justify-content: left;
   border: 1px solid black;
   /*width: fit-content;*/
   /* box-sizing: content-box;*/
   background-color: lightgray;
   padding: 20px;
+}
+
+.flex-container{
+    display: flex;
+}
+.flex-item{
+/*    display: inline-block; */
+/*    float:top; */
+    flex: 1;
 }
 
 
@@ -77,6 +106,7 @@ h1 {
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
+
 }
 
 /*Rosters*/
@@ -87,11 +117,6 @@ h1 {
     padding-top: 50px;
 }
 
-#roster_table {
-    float:left;
-    clear:both;
-
-}
 
 /*Advanced Stats*/
 #advanced_stats_selections{
@@ -107,39 +132,10 @@ h1 {
     width: 70%;
     display: inline-block;
     overflow: scroll;
-    float:right;
+    float: right;
+/*    border-collapse: separate;*/
 }
 
-
-.dropdown {
-    list-style: none;
-    font-weight: bold;
-    margin-bottom: 10px;
-    /*float: left;  Clear floats */
-    width: 100%;
-    padding-left: 10px;
-    /*display: block;
-     Bring the dropdown above everything else--uncomment if needed.
-    position: relative;
-    z-index: 5;
-    */
-
-}
-.dropdown li{
-
-}
-.dropdown li ul{
-    padding-left: 20px;
-    padding-right: 20px;
-
-}
-.dropdown li ul li{
-    list-style: none;
-    /*
-    position: relative;
-    display: block;
-    */
-}
 .text_input{
     width: 40px;
 }
@@ -171,17 +167,4 @@ h1 {
         color: white;
     }
 
-/*
-.dropdown a {
-    display: block;
-    padding: 5px;
-    color: #fff;
-    background-color: #333;
-    text-decoration: none;
-}
-.dropdown a:hover {
-    color: #fff;
-    background-color: #6b0c36;
-    text-decoration: underline;
-}
-*/
+

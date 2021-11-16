@@ -39,9 +39,9 @@
   <label for="player_input">Start typing and select a player:</label><br>
   <input list="player_selector" id="player_input">
   <datalist id="player_selector"></datalist>
-  <input type="checkbox" id="box-score-stats" name="box-score-stats" value="yes" style="margin-left: 7em">
-  <label for="box-score-stats">Show box-score stats</label>
-  <input type="checkbox" id="advanced-stats" name="advanced-stats" value="yes" style="margin-left: 7em">
+  <input type="checkbox" id="box-score-stats" name="box-score-stats" value="yes" style="margin-left: 3em">
+  <label for="box-score-stats">Show box-score stats</label>   
+  <input type="checkbox" id="advanced-stats" name="advanced-stats" value="yes" style="margin-left: 3em">
   <label for="advanced-stats">Show advanced stats</label>
 
 
@@ -49,7 +49,8 @@
 
   <!--<p>Results:</p>-->
 
-    <div class="container">
+    <div class="container flex-container">
+        <div id="bio-container" class="flex-item">
           <div class="photo">
             <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="100" height="100" id="player_headshot" style="display:none";>
           </div>
@@ -57,11 +58,10 @@
             <p id="player_bio_text">
             </p>
           </div>
-          <div class="stats">
-            <table id="player_stats_table">
-              <th>Enter a player name...</th>
-            </table>
-          </div>
+      </div>
+      <div class="stats flex-item">
+        <table id="player_stats_table"></table>
+      </div>
     </div>
 
 
