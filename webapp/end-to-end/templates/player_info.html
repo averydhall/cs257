@@ -24,7 +24,16 @@
     <div>
       <h1 class="head-text">Player Information</h1>
     </div>
-  </div><br>
+  </div>
+
+  <ul class="horizontal-navbar">
+      <li><a href="/">Home</a></li>
+      <li><a href="/player_info">Player info</a></li>
+      <li><a href="/rankings">Player rankings</a></li>
+      <li><a href="/rosters">Team rosters</a></li>
+  </ul>
+
+  <br>
 
 
   <label for="player_input">Start typing and select a player:</label><br>
@@ -34,7 +43,7 @@
   <label for="box-score-stats">Show box-score stats</label>   
   <input type="checkbox" id="advanced-stats" name="advanced-stats" value="yes" style="margin-left: 3em">
   <label for="advanced-stats">Show advanced stats</label>
- 
+
 
   <br><br>
 
@@ -43,7 +52,7 @@
     <div class="container flex-container">
         <div id="bio-container" class="flex-item">
           <div class="photo">
-            <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="155" height="155">
+            <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="100" height="100" id="player_headshot" style="display:none";>
           </div>
           <div class="text">
             <p id="player_bio_text">

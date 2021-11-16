@@ -38,15 +38,21 @@ img {
   background-color: white;
 }
 
+h1 {
+  font-size: 40px;
+}
 
 .header {
   display: flex;
-  justify-content: left;
+  /* justify-content: bottom; */
   width: 900px;
+  padding-bottom: 5px;
 }
 
 .head-text {
+  padding-top: 30px;
   padding-left: 20px;
+  margin: 0px;
 }
 #player_stats{
     display: inline-block; 
