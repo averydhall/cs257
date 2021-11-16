@@ -173,7 +173,7 @@ function onRostersSelectorChanged() {
         }
         else{
           str = "No roster exists for the requested team and year";
-          tableBody+=str.bold();
+          tableBody += '<td>' + str.bold() + '</td>';
         }
 
 
@@ -398,7 +398,7 @@ function onPlayerInputChanged() {
       } //end of if statement
       else {
         str = "No season stats exist for the requested player";
-        tableBody += str.bold();
+        tableBody += '<td>' + str.bold() + '</td>';
       }
 
         // SETTING BIO PARAGRAPH
@@ -411,6 +411,9 @@ function onPlayerInputChanged() {
 
       let showPlayerStatsTable = document.getElementById("player_stats_table");
       showPlayerStatsTable.style.display = "block";
+
+      let showHeadshot = document.getElementById("player_headshot");
+      showHeadshot.style.display = "block";
 
     })
 }

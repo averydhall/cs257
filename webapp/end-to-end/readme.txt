@@ -9,12 +9,11 @@ FEATURES CURRENTLY WORKING:
 - Player statistical rankings by team and year
 
 FEATURES NOT YET WORKING:
+- No source for player photos yet
 - Team abbreviations listed in the Player Info result tables are formatted with
-  clickable blue hypertext but lead nowhere as of yet (will eventually link to
+  clickable hypertext but lead nowhere as of yet (will eventually link to
   appropriate Team Roster results pages)
-- Note: Most features from the unimplemented "Advanced Search" page mockup have been
-  newly integrated into "Player Info", so we have decided not to implement the
-  former)
+
 
 ADDITIONAL NOTES:
 
@@ -28,3 +27,7 @@ ADDITIONAL NOTES:
 - When using the Player Info page, note that in rare cases, players included in
   the database do not have data as a result of never playing but still occupying
   a roster spot
+
+- Most features from the unimplemented "Advanced Search" page mockup have been
+  newly integrated into "Player Info", so we have decided not to implement the
+  former)

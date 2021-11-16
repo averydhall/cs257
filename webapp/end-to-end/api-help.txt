@@ -1,0 +1,16 @@
+REQUEST: /teams
+
+RESPONSE: a JSON list of dictionaries, each of which represents one
+year in the database, sorted by recency. Each dictionary in this
+list will have the following fields.
+
+   year -- (TEXT) the author's last or family name
+   first_name -- (TEXT) the author's first or given name or names
+   birth_year -- (INTEGER) the year the author was born
+   death_year -- (INTEGER) the year the author died (or 'NULL' if still alive)
+
+EXAMPLE(S):
+    /teams
+
+       [{"year": 2017}, {"year": 2016}, {"year": 2015}, {"year": 2014},
+       ... {"year": 1951}, {"year": 1950}]
