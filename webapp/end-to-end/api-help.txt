@@ -1,16 +1,208 @@
-REQUEST: /teams
+REQUEST: /years
 
 RESPONSE: a JSON list of dictionaries, each of which represents one
 year in the database, sorted by recency. Each dictionary in this
 list will have the following fields.
 
-   year -- (TEXT) the author's last or family name
-   first_name -- (TEXT) the author's first or given name or names
-   birth_year -- (INTEGER) the year the author was born
-   death_year -- (INTEGER) the year the author died (or 'NULL' if still alive)
+   year -- (INTEGER) year of the NBA season for which stats were collected
 
 EXAMPLE(S):
     /teams
 
        [{"year": 2017}, {"year": 2016}, {"year": 2015}, {"year": 2014},
+       {"year": 2013}, {"year": 2012}, {"year": 2011}, {"year": 2010},
        ... {"year": 1951}, {"year": 1950}]
+
+       (output abbreviated)
+
+
+REQUEST: /teams
+
+RESPONSE: a JSON list of dictionaries, each of which represents one
+NBA team in the database (former and current), sorted alphabetically.
+Each dictionary in this list will have the following fields.
+
+  team -- (TEXT) the abbreviation for the NBA team
+
+EXAMPLE(S):
+   /teams
+
+      [{"team": "AND"}, {"team": "ATL"}, {"team": "BAL"}, {"team": "BLB"},
+      ... {"team": "WSB"}, {"team": "WSC"}]
+
+      (output abbreviated)
+
+
+REQUEST: /rosters/<team>/<year>
+
+RESPONSE: a JSON list of dictionaries which represents an NBA roster for a
+given team and year, each of whose dictionaries represents a single player on
+the roster, sorted alphabetically by last name. Each dictionary in this list
+will have the following fields.
+
+  name -- (TEXT) player's full name
+  first_year -- (INTEGER) first year playing in the NBA
+  last_year -- (INTEGER) last year playing in the NBA
+  position -- (TEXT) player's position
+  height -- (TEXT) player's height in feet
+  weight -- (INTEGER) player's weight in pounds
+  birth_date -- (TEXT) player's date of birth
+  college -- (TEXT) player's college
+
+EXAMPLE(S):
+   /rosters/LAL/2010
+
+      [{"name": "Shannon Brown", "first_year": 2007, "last_year": 2015,
+      "position": "G", "height": "6-4", "weight": 205, "birth_date":
+      "November 29, 1985", "college": "Michigan State University"}, {"name":
+      "Kobe Bryant", "first_year": 1997, "last_year": 2016, "position": "G-F",
+      "height": "6-6", "weight": 212, "birth_date": "August 23, 1978",
+      "college": "n/a"}, {"name": "Andrew Bynum", "first_year": 2006,
+      "last_year": 2014, "position": "C", "height": "7-0", "weight": 285,
+      "birth_date": "October 27, 1987", "college": "n/a"}
+      ... {"name": "Luke Walton", "first_year": 2004, "last_year": 2013,
+      "position": "F", "height": "6-8", "weight": 235, "birth_date": "March 28,
+      1980", "college": "University of Arizona"}]
+
+      (output abbreviated)
+
+
+REQUEST: /players
+
+RESPONSE: a JSON list of dictionaries, each of which represents one player in
+the database, sorted alphabetically by first name. Each dictionary in
+this list will have the following fields.
+
+   name -- (TEXT) full name of the player for which stats were collected
+
+
+EXAMPLE(S):
+    /player_info/bio/<player_name>/
+
+
+       [{"player": "A.C. Green"}, {"player": "A.J. Bramlett"}, {"player": "A.J.
+       English"}, {"player": "A.J. Guyton"}, {"player": "A.J. Hammons"},
+       {"player": "A.J. Price"}, {"player": "A.J. Wynder"}, {"player": "A.W.
+       Holt"}, {"player": "Aaron Brooks"}, {"player": "Aaron Gordon"},
+       ... {"player": "Zoran Planinic"}, {"player": "Zydrunas Ilgauskas"}]
+
+       (output abbreviated)
+
+
+REQUEST: /player_info/bio/<player_name>/
+
+RESPONSE: a JSON dictionary which represents one player, each of
+whose elements represents one piece of bio information about that player.
+Each dictionary in this list will have the following fields.
+
+  name -- (TEXT) player's full name
+  first_year -- (INTEGER) first year playing in the NBA
+  last_year -- (INTEGER) last year playing in the NBA
+  position -- (TEXT) player's position
+  height -- (TEXT) player's height in feet
+  weight -- (INTEGER) player's weight in pounds
+  birth_date -- (TEXT) player's date of birth
+  college -- (TEXT) player's college
+
+EXAMPLE(S):
+   /player_info/bio/Lebron_James/
+
+      [{"name": "LeBron James", "first_year": 2004, "last_year": 2018,
+      "position": "F-G", "height": "6-8", "weight": 250, "birth_date":
+      "December 30, 1984", "college": "n/a"}]
+
+
+REQUEST: /player_info/stats/<player_name>/
+
+RESPONSE: a JSON list of dictionaries which represents one player, each of whose
+dictionaries represents one statistical season of stats for that player. Each
+dictionary in this list will have the following fields.
+
+  year -- season year
+  name -- (TEXT) player name
+  position -- (TEXT) position
+  age -- (INTEGER) player age
+  team -- (TEXT) team abbreviation
+  G -- (INTEGER) games played
+  GS -- (INTEGER) games started
+  MP -- (INTEGER) minutes played
+  PER -- (FLOAT) player efficiency rating
+  TS_ -- (FLOAT) true shooting percentage
+  USG_ -- (FLOAT) usage percentage
+  OWS -- (FLOAT) offensive win shares
+  DWS -- (FLOAT) defensive win shares
+  WS -- (FLOAT) win shares
+  WS_per_48 -- (FLOAT) win shares per 48 minutes
+  OBPM -- (FLOAT) offensive box plus/minus
+  DBPM -- (FLOAT) defensive box plus/minus
+  BPM -- (FLOAT) box plus/minus
+  VORP -- (FLOAT) value over replacement player
+  FG -- (INTEGER) field goals made
+  FGA -- (INTEGER) field goals attempted
+  FG_ -- (FLOAT) field goal percentage
+  threeP -- (INTEGER) three pointers made
+  threePA -- (INTEGER) three pointers attempted
+  threeP_ -- (FLOAT) three point percentage
+  twoP -- (INTEGER) two point field goals made
+  twoPA -- (INTEGER) two point field goals attempted
+  twoP_ -- (FLOAT) two point field goal percentage
+  eFG_ -- (FLOAT) effective field goal percentage
+  FT -- (INTEGER) free throws made
+  FTA -- (INTEGER) free throws attempted
+  FT_ -- (FLOAT) free throw percentage
+  ORB -- (INTEGER) offensive rebounds
+  DRB -- (INTEGER) defensive rebounds
+  TRB -- (INTEGER) total rebounds
+  AST -- (INTEGER) assists
+  STL -- (INTEGER) steals
+  BLK -- (INTEGER) blocks
+  TOV -- (INTEGER) turnovers
+  PF -- (INTEGER) personal fouls
+  PTS -- (INTEGER) points
+
+EXAMPLE(S):
+    /player_info/stats/Dwyane_Wade/
+
+       [{"year": 2004, "name": "Dwyane Wade", "position": "PG", "age": 22,
+       "team": "MIA", "G": 61, "GS": 56, "MP": 2126, "PER": 17.6, "TS_": 0.53,
+       "USG_": 25.0, "OWS": 2.2, "DWS": 2.3, "WS": 4.6, "WS_per_48": 0.103,
+       "OBPM": 0.9, "DBPM": 0.4, "BPM": 1.3, "VORP": 1.8, "FG": 371, "FGA": 798,
+       "FG_": 0.465, "threeP": 16, "threePA": 53, "threeP_": 0.302, "twoP": 355,
+       "twoPA": 745, "twoP_": 0.477, "eFG_": 0.475, "FT": 233, "FTA": 312, "FT_":
+       0.747, "ORB": 85, "DRB": 162, "TRB": 247, "AST": 275, "STL": 86, "BLK":
+       34, "TOV": 196, "PF": 140, "PTS": 991} ... {"year": 2017, "name": "Dwyane
+       Wade", "position": "SG", "age": 35, "team": "CHI", "G": 60, "GS": 59,
+       "MP": 1792, "PER": 18.5, "TS_": 0.508, "USG_": 29.6, "OWS": 0.9, "DWS":
+       2.5, "WS": 3.4, "WS_per_48": 0.09, "OBPM": 0.4, "DBPM": 0.6, "BPM": 1.0,
+       "VORP": 1.4, "FG": 414, "FGA": 955, "FG_": 0.434, "threeP": 45, "threePA":
+       145, "threeP_": 0.31, "twoP": 369, "twoPA": 810, "twoP_": 0.456, "eFG_":
+       0.457, "FT": 223, "FTA": 281, "FT_": 0.794, "ORB": 64, "DRB": 207, "TRB":
+       271, "AST": 229, "STL": 86, "BLK": 41, "TOV": 138, "PF": 112, "PTS": 1096}]
+
+       (output abbreviated)
+
+
+REQUEST: /rankings/single-year/single-team/<category>/<team>/<year>/
+
+RESPONSE: a JSON list of five dictionaries that represents a single season, each
+of whose dictionaries represents one NBA player in the ranking list for a given
+stat category, sorted from greatest to least. Each dictionary in this list will
+have the following fields.
+
+  name -- (TEXT) name of the NBA player for which stat was collected
+  stat_total -- (INTEGER) corresponding quantity for player's stat total
+
+EXAMPLE(S):
+    /rankings/single-year/single-team/PTS/BOS/2008/
+
+      [{"name": "Paul Pierce", "stat_total": 1570}, {"name": "Kevin Garnett",
+      "stat_total": 1337}, {"name": "Ray Allen", "stat_total": 1273}, {"name":
+      "Rajon Rondo", "stat_total": 814}, {"name": "Eddie House", "stat_total":
+      584}]
+
+    /rankings/single-year/single-team/AST/PHO/2004/
+
+      [{"name": "Chris Paul", "stat_total": 663}, {"name": "Blake Griffin",
+      "stat_total": 309}, {"name": "Darren Collison", "stat_total": 297},
+      {"name": "Jamal Crawford", "stat_total": 223}, {"name": "Matt Barnes",
+      "stat_total": 125}]
