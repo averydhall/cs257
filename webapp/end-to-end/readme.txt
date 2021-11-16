@@ -1,16 +1,30 @@
-Avery Hall and Anders Shenholm
-HOOPDATA website draft
 
-Notes for grader (11/11/21 deadline)
+AUTHORS: Avery Hall and Anders Shenholm
 
-- When testing the Rosters and Rankings pages, it might be easiest to get data by
-  using a current team's abbreviation and a recent year, since many teams listed
-  only existed for some period in the past. Here are a few combinations that are
+DATA: basketball stats and player info between 1950-2017
+
+FEATURES CURRENTLY WORKING:
+- Player info search
+- Roster search by team and year
+- Player statistical rankings by team and year
+
+FEATURES NOT YET WORKING:
+- Team abbreviations listed in the Player Info result tables are formatted with
+  clickable blue hypertext but lead nowhere as of yet (will eventually link to
+  appropriate Team Roster results pages)
+- Note: Most features from the unimplemented "Advanced Search" page mockup have been
+  newly integrated into "Player Info", so we have decided not to implement the
+  former)
+
+ADDITIONAL NOTES:
+
+- When testing the Team Rosters and Player Rankings pages, several teams listed only
+  existed for some period in the past. Here are a few sample combinations that are
   sure to return a valid table on both pages, provided for ease of testing:
     1. CHI, 1996
     2. LAL, 2002
     3. GSW, 2015
 
-- When using the Player Info info, note that in rare cases, players included in
+- When using the Player Info page, note that in rare cases, players included in
   the database do not have data as a result of never playing but still occupying
   a roster spot

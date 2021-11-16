@@ -139,39 +139,43 @@ function onRostersSelectorChanged() {
     // a Javascript object (in this case, a list of author dictionaries).
     .then((response) => response.json())
 
-
     .then(function(roster) {
         let tableBody = '';
+        if (roster.length != 0) {
 
-        //so we dont give header for teams that don't exist
-        if (roster.length != 0){
-            tableBody += '<tr>'
-                            + '<th>Name</th>'
-                            + '<th>Experience</th>'
-                            + '<th>Postion</th>'
-                            + '<th>Height</th>'
-                            + '<th>Weight</th>'
-                            + '<th>Birthdate</th>'
-                            + '<th>College</th>'
-                            + '</tr>\n';
+              tableBody += '<tr>'
+                              + '<th>Name</th>'
+                              + '<th>Experience</th>'
+                              + '<th>Postion</th>'
+                              + '<th>Height</th>'
+                              + '<th>Weight</th>'
+                              + '<th>Birthdate</th>'
+                              + '<th>College</th>'
+                              + '</tr>\n';
+
+
+          for (let k = 0; k < roster.length; k++) {
+              let player = roster[k];
+              let experience = year - player['first_year']
+              //experience measures how many previous seasons a player has played
+
+              tableBody += '<tr>'
+                              //at some point we can add a link to player info page
+                              + '<td>' + player['name'] + '</td>'
+                              + '<td>' + experience + '</td>'
+                              + '<td>' + player['position'] + '</td>'
+                              + '<td>' + player['height'] + '</td>'
+                              + '<td>' + player['weight'] + '</td>'
+                              + '<td>' + player['birth_date'] + '</td>'
+                              + '<td>' + player['college'] + '</td>'
+                              + '</tr>\n';
+          }
+        }
+        else{
+          str = "No roster exists for the requested team and year";
+          tableBody+=str.bold();
         }
 
-        for (let k = 0; k < roster.length; k++) {
-            let player = roster[k];
-            let experience = year - player['first_year']
-            //experience measures how many previous seasons a player has played
-
-            tableBody += '<tr>'
-                            //at some point we can add a link to player info page
-                            + '<td>' + player['name'] + '</td>'
-                            + '<td>' + experience + '</td>'
-                            + '<td>' + player['position'] + '</td>'
-                            + '<td>' + player['height'] + '</td>'
-                            + '<td>' + player['weight'] + '</td>'
-                            + '<td>' + player['birth_date'] + '</td>'
-                            + '<td>' + player['college'] + '</td>'
-                            + '</tr>\n';
-        }
 
         // Put the table body we just built inside the table that's already on the page.
         let roster_table = document.getElementById('roster_table');
@@ -269,6 +273,7 @@ function onPlayerInputChanged() {
         let showBoxScoreStats = document.getElementById('box-score-stats');
 
         if (player_stats.length != 0){
+
             tableBody += '<tr>'
                             + '<th>Year</th>'
                             //+ '<th>name</th>'
@@ -317,7 +322,8 @@ function onPlayerInputChanged() {
                               + '<th>VORP</th>';
                             }
                             + '</tr>\n';
-        }
+
+
 
         for (let k = 0; k < player_stats.length; k++) {
             let player_season = player_stats[k];
@@ -333,7 +339,7 @@ function onPlayerInputChanged() {
                             + '<td>' + player_season['GS'] + '</td>'
                             + '<td>' + player_season['MP'] + '</td>';
 
-            
+
                             if (showBoxScoreStats.checked) {
                                 tableBody += '<td>' + player_season['FG'] + '</td>'
                                 + '<td>' + player_season['FGA'] + '</td>'
@@ -356,7 +362,7 @@ function onPlayerInputChanged() {
                                 + '<td>' + player_season['BLK'] + '</td>'
                                 + '<td>' + player_season['TOV'] + '</td>'
                                 + '<td>' + player_season['PF'] + '</td>'
-                                + '<td>' + player_season['PTS'] + '</td>'
+                                + '<td>' + player_season['PTS'] + '</td>';
                             }
                             //Advanced stats
 
@@ -384,14 +390,28 @@ function onPlayerInputChanged() {
             //+ '<p>College: ' + player['college'] + '</p>';
 
 
+
+
+
+        }
+
+      } //end of if statement
+      else {
+        str = "No season stats exist for the requested player";
+        tableBody += str.bold();
+      }
+
         // SETTING BIO PARAGRAPH
-        let player_bio_text = document.getElementById('player_stats');
+        let player_bio_text = document.getElementById('player_stats_table');
         if(player_bio_text){
             player_bio_text.innerHTML = tableBody;
         }
 
 
-        }
+
+      let showPlayerStatsTable = document.getElementById("player_stats_table");
+      showPlayerStatsTable.style.display = "block";
+
     })
 }
 
