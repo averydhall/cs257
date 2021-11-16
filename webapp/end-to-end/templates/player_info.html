@@ -40,19 +40,19 @@
 
   <!--<p>Results:</p>-->
 
-    <div class="container">
-            <div id="bio-container" style="display: inline-block; float:top; width:30%;">
-              <div class="photo">
-                <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="155" height="155">
-              </div>
-              <div class="text">
-                <p id="player_bio_text">
-                </p>
-              </div>
+    <div class="container flex-container">
+        <div id="bio-container" class="flex-item">
+          <div class="photo">
+            <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="155" height="155">
           </div>
-          <div class="stats">
-            <table id="player_stats"></table>
+          <div class="text">
+            <p id="player_bio_text">
+            </p>
           </div>
+      </div>
+      <div class="stats flex-item">
+        <table id="player_stats"></table>
+      </div>
     </div>
 
 

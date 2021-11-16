@@ -17,7 +17,14 @@ table, td, th {
     font-size: 18px;
 /*    padding: 5px;*/
     background-color: white;
+    border-collapse: separate;
+    border-spacing: 0;
 }
+
+table{
+    overflow: auto;
+}
+
 
 .stat-rankings {
   border: 0px solid black;
@@ -42,15 +49,17 @@ img {
   padding-left: 20px;
 }
 #player_stats{
-    overflow: scroll;
     display: inline-block; 
-    width:60%; 
-    height:100px;
+    max-width: 60%;
+    float:left;
+    position: relative;
     overflow: scroll;
+    
 }
 
 #player_stats td, th{
     font-size: .76em;
+    
 }
 
 .container {
@@ -59,9 +68,17 @@ img {
   border: 1px solid black;
   /*width: fit-content;*/
   /* box-sizing: content-box;*/
-    
   background-color: lightgray;
   padding: 20px;
+}
+
+.flex-container{
+    display: flex;
+}
+.flex-item{
+/*    display: inline-block; */
+/*    float:top; */
+    flex: 1;
 }
 
 
@@ -83,6 +100,7 @@ img {
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
+
 }
 
 /*Rosters*/
@@ -113,6 +131,7 @@ img {
     display: inline-block;
     overflow: scroll;
     float: right;
+/*    border-collapse: separate;*/
 }
 
 .text_input{
