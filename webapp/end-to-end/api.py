@@ -21,6 +21,17 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
+
+@api.route('/help')
+def get_help():
+    contents = '';
+    with open("readme.txt", "r") as f:
+        for item in f:
+            contents += f.readline()
+        
+    return contents
+    
+    
 #improve this by listing extinct teams separately at bottom of list
 @api.route('/teams')
 def get_teams():
