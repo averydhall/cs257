@@ -30,9 +30,9 @@
   <label for="player_input">Start typing and select a player:</label><br>
   <input list="player_selector" id="player_input">
   <datalist id="player_selector"></datalist>
-  <input type="checkbox" id="box-score-stats" name="box-score-stats" value="yes" style="margin-left: 7em">
+  <input type="checkbox" id="box-score-stats" name="box-score-stats" value="yes" style="margin-left: 3em">
   <label for="box-score-stats">Show box-score stats</label>   
-  <input type="checkbox" id="advanced-stats" name="advanced-stats" value="yes" style="margin-left: 7em">
+  <input type="checkbox" id="advanced-stats" name="advanced-stats" value="yes" style="margin-left: 3em">
   <label for="advanced-stats">Show advanced stats</label>
  
 
@@ -41,12 +41,14 @@
   <!--<p>Results:</p>-->
 
     <div class="container">
-          <div class="photo">
-            <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="155" height="155">
-          </div>
-          <div class="text">
-            <p id="player_bio_text">
-            </p>
+            <div id="bio-container" style="display: inline-block; float:top; width:30%;">
+              <div class="photo">
+                <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="155" height="155">
+              </div>
+              <div class="text">
+                <p id="player_bio_text">
+                </p>
+              </div>
           </div>
           <div class="stats">
             <table id="player_stats"></table>
