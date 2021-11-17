@@ -26,7 +26,7 @@ table{
 }
 
 
-.stat-rankings {
+.rankings-table {
   border: 0px solid black;
   font-size: 18px;
   padding: 0px;
@@ -54,7 +54,7 @@ h1 {
   padding-left: 20px;
   margin: 0px;
 }
-#player_stats_table{
+#player-stats-table{
     display: inline-block; 
     max-width: 60%;
     float:left;
@@ -63,7 +63,7 @@ h1 {
     
 }
 
-#player_stats td, th{
+#player-stats td, th{
     font-size: .76em;
     
 }

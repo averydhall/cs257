@@ -62,7 +62,7 @@ this list will have the following fields.
 
 
 EXAMPLE(S):
-    /player_info/bio/<player_name>/
+    /player-info/bio/<player_name>/
 
 
        [{"player": "A.C. Green"}, {"player": "A.J. Bramlett"}, {"player": "A.J.
@@ -74,7 +74,7 @@ EXAMPLE(S):
        (output abbreviated)
 
 
-REQUEST: /player_info/bio/<player_name>/
+REQUEST: /player-info/bio/<player_name>/
 
 RESPONSE: a JSON dictionary which represents one player, each of
 whose elements represents one piece of bio information about that player.
@@ -90,14 +90,14 @@ Each dictionary in this list will have the following fields.
   college -- (TEXT) player's college
 
 EXAMPLE(S):
-   /player_info/bio/Lebron_James/
+   /player-info/bio/LeBron-James/
 
       [{"name": "LeBron James", "first_year": 2004, "last_year": 2018,
       "position": "F-G", "height": "6-8", "weight": 250, "birth_date":
       "December 30, 1984", "college": "n/a"}]
 
 
-REQUEST: /player_info/stats/<player_name>/
+REQUEST: /player-info/stats/<player_name>/
 
 RESPONSE: a JSON list of dictionaries which represents one player, each of whose
 dictionaries represents one statistical season of stats for that player. Each
@@ -146,7 +146,7 @@ dictionary in this list will have the following fields.
   PTS -- (INTEGER) points
 
 EXAMPLE(S):
-    /player_info/stats/Dwyane_Wade/
+    /player-info/stats/Dwyane_Wade/
 
        [{"year": 2004, "name": "Dwyane Wade", "position": "PG", "age": 22,
        "team": "MIA", "G": 61, "GS": 56, "MP": 2126, "PER": 17.6, "TS_": 0.53,

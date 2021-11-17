@@ -20,9 +20,9 @@ def home():
 def rosters():
     return flask.render_template('rosters.html')
 
-@app.route('/player_info/')
+@app.route('/player-info/')
 def player_info():
-    return flask.render_template('player_info.html')
+    return flask.render_template('player-info.html')
 
 @app.route('/rankings/')
 def rankings():

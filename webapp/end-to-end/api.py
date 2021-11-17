@@ -98,7 +98,7 @@ def get_roster(team, year):
 
     return json.dumps(roster)
 
-# --------------------- PLAYER_INFO ----------------------
+# --------------------- PLAYER-INFO ----------------------
 
 @api.route('/players')
 
@@ -123,7 +123,7 @@ def get_players():
     return json.dumps(player_list)
 
 
-@api.route('/player_info/bio/<player_name>/')
+@api.route('/player-info/bio/<player_name>/')
 def get_player_info_bio(player_name):
     ''' Returns info needed for bio on player page
     '''
@@ -160,7 +160,7 @@ def get_player_info_bio(player_name):
     return json.dumps(bio_list)
 
 
-@api.route('/player_info/stats/<player_name>/')
+@api.route('/player-info/stats/<player_name>/')
 def get_player_info_stats(player_name):
     player_name = player_name.replace('-', ' ');
     query = '''SELECT

@@ -10,8 +10,8 @@ function initialize() {
     loadYearSelector();
     loadTeamSelector();
 
-    let yearSelector = document.getElementById('year_selector');
-    let teamSelector = document.getElementById('team_selector');
+    let yearSelector = document.getElementById('year-selector');
+    let teamSelector = document.getElementById('team-selector');
     //if(yearSelector)
     current_url = window.location.href
 
@@ -34,7 +34,7 @@ function initialize() {
     }
 
     loadPlayerSelector();
-    let playerInput = document.getElementById('player_input');
+    let playerInput = document.getElementById('player-input');
     let showAdvancedStats = document.getElementById('advanced-stats');
     let showBoxScoreStats = document.getElementById('box-score-stats');
     /*loadAdvancedStatsCheckbox();*/
@@ -73,7 +73,7 @@ function loadYearSelector() {
                             + year + '</option>\n';
     }
 
-    let selector = document.getElementById('year_selector');
+    let selector = document.getElementById('year-selector');
     if (selector) {
         selector.innerHTML = selectorBody;
     }
@@ -106,7 +106,7 @@ function loadTeamSelector() {
         }
 
 
-        let selector = document.getElementById('team_selector');
+        let selector = document.getElementById('team-selector');
         if (selector) {
             selector.innerHTML = selectorBody;
         }
@@ -128,8 +128,10 @@ function loadTeamSelector() {
 function onRostersSelectorChanged() {
 
     //inherits these values from initialize i guess?
-    let team = team_selector.value;
-    let year = year_selector.value;
+    let yearSelector = document.getElementById('year-selector');
+    let teamSelector = document.getElementById('team-selector');
+    let team = teamSelector.value;
+    let year = yearSelector.value;
 
     let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
     fetch(url, {method: 'get'})
@@ -178,7 +180,7 @@ function onRostersSelectorChanged() {
 
 
         // Put the table body we just built inside the table that's already on the page.
-        let roster_table = document.getElementById('roster_table');
+        let roster_table = document.getElementById('roster-table');
         if(roster_table){
             roster_table.innerHTML = tableBody;
         }
@@ -186,11 +188,11 @@ function onRostersSelectorChanged() {
 
     })
 
-    let showRosterTable = document.getElementById("roster_table");
-    showRosterTable.style.display = "block";
+//    let showRosterTable = document.getElementById("roster_table");
+//    showRosterTable.style.display = "block";
 }
 
-// ----------------- PLAYER_INFO -------------------
+// ----------------- PLAYER-INFO -------------------
 
 /*function onShowAdvancedStatsChanged() {
 
@@ -223,7 +225,7 @@ function loadPlayerSelector() {
         }
 
 
-        let selector = document.getElementById('player_selector');
+        let selector = document.getElementById('player-selector');
         if (selector) {
             selector.innerHTML = selectorBody;
         }
@@ -231,11 +233,11 @@ function loadPlayerSelector() {
 }
 
 function onPlayerInputChanged() {
-
-    let player_url = player_input.value.split(' ').join('-');
+    let playerInput = document.getElementById('player-input');
+    let player_url = playerInput.value.split(' ').join('-');
 
     //GETTING BIO PARAGRAPH
-    let bio_url = getAPIBaseURL() + '/player_info/bio/' + player_url;
+    let bio_url = getAPIBaseURL() + '/player-info/bio/' + player_url;
     fetch(bio_url, {method: 'get'})
     .then((response) => response.json())
 
@@ -253,9 +255,8 @@ function onPlayerInputChanged() {
 
 
         // SETTING BIO PARAGRAPH
-        let player_bio_text = document.getElementById('player_bio_text');
+        let player_bio_text = document.getElementById('player-bio-text');
         if(player_bio_text){
-            
             player_bio_text.innerHTML = paragraphBody;
         }
 
@@ -263,8 +264,8 @@ function onPlayerInputChanged() {
     })
 
 
-    //GETTING PLAYER STATS TABLE - This could be adjusted to display stats in a dift order if we want. We could also cook up out own rate based stats by taking stat totals / games played
-    let stats_url = getAPIBaseURL() + '/player_info/stats/' + player_url;
+    //GETTING PLAYER STATS TABLE
+    let stats_url = getAPIBaseURL() + '/player-info/stats/' + player_url;
     fetch(stats_url, {method: 'get'})
     .then((response) => response.json())
 
@@ -273,9 +274,10 @@ function onPlayerInputChanged() {
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats');
         let showBoxScoreStats = document.getElementById('box-score-stats');
-
+        
+        //checking that a player has stats
         if (player_stats.length != 0){
-
+            //adding table headers
             tableBody += '<tr>'
                             + '<th style="position: sticky; left:0; border-right: 2px solid black;">Year</th>'
                             //+ '<th>name</th>'
@@ -329,7 +331,7 @@ function onPlayerInputChanged() {
 
         for (let k = 0; k < player_stats.length; k++) {
             let player_season = player_stats[k];
-
+            //adding table data
             tableBody += '<tr>'
                             //at some point we can add a link to player info page
                             + '<td style="position: sticky; left:0; border-right: 1px solid black;">' + player_season['year'] + '</td>'
@@ -385,15 +387,6 @@ function onPlayerInputChanged() {
 
                             + '</tr>\n';
 
-            //'<h2>' + player['name'] + '</h2>'
-            //+ '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
-            //+ '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
-            //+ '<p>Birthdate: ' + player['birth_date'] + '</p>'
-            //+ '<p>College: ' + player['college'] + '</p>';
-
-
-
-
 
         }
 
@@ -403,19 +396,11 @@ function onPlayerInputChanged() {
         tableBody += '<td>' + str.bold() + '</td>';
       }
 
-        // SETTING BIO PARAGRAPH
-        let player_bio_text = document.getElementById('player_stats_table');
-        if(player_bio_text){
-            player_bio_text.innerHTML = tableBody;
+        // SETTING STATS TABLE
+        let player_stats_table = document.getElementById('player-stats-table');
+        if(player_stats_table){
+            player_stats_table.innerHTML = tableBody;
         }
-
-
-
-      let showPlayerStatsTable = document.getElementById("player_stats_table");
-      showPlayerStatsTable.style.display = "block";
-
-      let showHeadshot = document.getElementById("player_headshot");
-      showHeadshot.style.display = "block";
 
     })
 }
@@ -430,7 +415,7 @@ tovTableBody = '';
 function pushRankingsTables(){
     let full_table = '<table><tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr><table>';
 
-    let ranking_table = document.getElementById('stat_rankings');
+    let ranking_table = document.getElementById('rankings-table');
       if(ranking_table){
           ranking_table.innerHTML = full_table;
       }
@@ -446,8 +431,10 @@ function pushRankingsTables(){
 function onRankingsSelectorChanged() {
 
     var fullTableBody = ''
-    let team = team_selector.value;
-    let year = year_selector.value;
+    let yearSelector = document.getElementById('year-selector');
+    let teamSelector = document.getElementById('team-selector');
+    let team = teamSelector.value;
+    let year = yearSelector.value;
 
     //making points table
     let pts_url = getAPIBaseURL() + '/rankings/single-year/single-team/pts/' + team + '/' + year + '/';
