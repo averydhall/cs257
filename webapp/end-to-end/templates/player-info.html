@@ -49,19 +49,17 @@
 
   <!--<p>Results:</p>-->
 
-    <div class="container flex-container">
-        <div id="bio-container" class="flex-item">
-          <div class="photo">
-            <img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="100" height="100" id="player-headshot" style="display:none";>
-          </div>
-          <div class="text">
+    <div class="container" id="player-info-container">
+        <div id="bio-container">
+            <!--<div class="photo"><img src="{{ url_for('static', filename='images/PlayerHeadshot.png') }}" width="100" height="100" id="player-headshot" style="display:none";></div>-->
+          <div>
             <p id="player-bio-text">
             </p>
           </div>
-      </div>
-      <div class="stats flex-item">
-        <table id="player-stats-table"></table>
-      </div>
+        </div>
+        <div id="player-stats-container">
+          <table id="player-stats-table"></table>
+        </div>
     </div>
 
 

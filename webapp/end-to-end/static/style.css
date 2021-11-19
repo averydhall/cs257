@@ -2,6 +2,9 @@
    For use with mockup1.html, mockup2.html, mockup3.html, mockup4.html
    Avery Hall and Anders Shenholm
 */
+
+/*General*/
+
 html {
     height: 100%;
 }
@@ -12,31 +15,25 @@ body {
     height: 100%;
 }
 
+table{
+    overflow: auto;
+}
+
 table, td, th {
     border: 1px solid black;
     font-size: 18px;
-/*    padding: 5px;*/
     background-color: white;
     border-collapse: separate;
     border-spacing: 0;
 }
 
-table{
-    overflow: auto;
+
+.container {
+  border: 1px solid black;
+  background-color: lightgray;
+  padding: 20px;
 }
 
-
-.rankings-table {
-  border: 0px solid black;
-  font-size: 18px;
-  padding: 0px;
-}
-
-/*Player info*/
-
-img {
-  background-color: white;
-}
 
 h1 {
   font-size: 40px;
@@ -44,7 +41,6 @@ h1 {
 
 .header {
   display: flex;
-  /* justify-content: bottom; */
   width: 900px;
   padding-bottom: 5px;
 }
@@ -54,71 +50,67 @@ h1 {
   padding-left: 20px;
   margin: 0px;
 }
+
+/*Player info*/
+#player-info-container{
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+}
+
+
+
 #player-stats-table{
-    display: inline-block; 
-    max-width: 60%;
-    float:left;
-    position: relative;
-    overflow:auto;
+    
     
 }
-
-#player-stats td, th{
-    font-size: .76em;
-    
+#player-stats-table td, th{
+    font-size: .8em;
 }
 
-.container {
-  display: inline-block
-  justify-content: left;
-  border: 1px solid black;
-  /*width: fit-content;*/
-  /* box-sizing: content-box;*/
-  background-color: lightgray;
-  padding: 20px;
+#player-stats-container{
+    width: auto;
+    overflow: scroll;
+    float: left;
 }
 
-.flex-container{
-    display: flex;
-}
-.flex-item{
-/*    display: inline-block; */
-/*    float:top; */
-    flex: 1;
-}
-
-
-.photo {
-  border: 0px dashed red;
-  padding-top: 10px;
-  padding-left: 15px;
-}
-
-.text {
-  font-size: 16px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border: 0px dashed blue;
-
-}
-
-.stats {
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-bottom: 10px;
+#bio-container{
+    width: 250px;
 
 }
 
 /*Rosters*/
-#rosters_selections{
+
+
+
+/* Nav bar */
+
+ul.horizontal-navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+ul.horizontal-navbar li {
     float: left;
+}
+
+ul.horizontal-navbar li a {
     display: block;
-    padding-left: 50px;
-    padding-top: 50px;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.horizontal-navbar li a:hover {
+    background-color: #555;
+    color: white;
 }
 
 
-/*Advanced Stats*/
+/*Advanced Stats
 #advanced_stats_selections{
     overflow-y: scroll;
     overflow-x: hidden;
@@ -133,38 +125,7 @@ h1 {
     display: inline-block;
     overflow: scroll;
     float: right;
-/*    border-collapse: separate;*/
+/*    border-collapse: separate;
 }
-
-.text_input{
-    width: 40px;
-}
-
-    /* Nav bar */
-
-    ul.horizontal-navbar {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #f1f1f1;
-    }
-
-    ul.horizontal-navbar li {
-        float: left;
-    }
-
-    ul.horizontal-navbar li a {
-        display: block;
-        color: black;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    ul.horizontal-navbar li a:hover {
-        background-color: #555;
-        color: white;
-    }
-
+*/
 
