@@ -1,0 +1,67 @@
+Taking from player_data.csv:
+
+To load:
+CREATE DATABASE basketball; 
+psql -U my_user_name basketball < basketball.sql
+
+
+
+CREATE TABLE players(
+name text,
+first_year integer,
+last_year integer,
+position text,
+height text,
+weight integer,
+birth_date text,
+college text
+);
+
+CREATE TABLE stats(
+        year integer,
+        name text,
+        position text,
+        age integer,
+        team text,
+        G integer,	
+        GS integer,
+        MP integer,
+        PER float,
+        TS_ float,
+        USG_ float,	
+        OWS float,
+        DWS float,
+        WS float,	
+        WS_per_48 float,
+        OBPM float,
+        DBPM float,
+        BPM float,
+        VORP float,
+        FG integer,
+        FGA integer,
+        FG_ float,
+        threeP integer,
+        threePA integer,
+        threeP_ float,
+        twoP integer,
+        twoPA integer,
+        twoP_ float,
+        eFG_ float,
+        FT integer,
+        FTA integer,
+        FT_ float,
+        ORB integer,
+        DRB integer,
+        TRB integer,
+        AST integer,
+        STL integer,
+        BLK integer,
+        TOV integer,
+        PF integer,
+        PTS integer
+);
+
+then
+\copy stats FROM 'data/scraps/seasons_stats.csv' DELIMITER ',' CSV NULL AS ''
+
+
