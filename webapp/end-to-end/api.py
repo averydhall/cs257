@@ -57,8 +57,7 @@ def get_teams():
     return json.dumps(team_list)
 
 @api.route('rosters/<team>/<year>')
-#bug: some players are excluded because of stuff attached to their name string or possibly bad data
-#bug: players of the same name that played the same team are included when they shouldn't be
+#CONCAT with asterisk is there so that players who have an asterisk by their name (all star season) are included
 def get_roster(team, year):
     
     ''' Returns basic info for a team's roster
@@ -81,9 +80,11 @@ def get_roster(team, year):
                FROM players, stats
                WHERE (-1 + stats.year - CAST(RIGHT(players.birth_date, 4) AS int) = stats.age
                OR stats.year - CAST(RIGHT(players.birth_date, 4) AS int) = stats.age)
-               AND stats.name ILIKE players.name
+               AND (stats.name = players.name
+               OR stats.name = CONCAT(players.name, '*'))
                AND stats.team = %s
                AND stats.year = %s
+               ORDER BY stats.pts DESC
                '''
     #player age and birthdate
     roster = []
@@ -169,6 +170,10 @@ def get_player_info_bio(player_name):
 @api.route('/player-info/stats/<player_name>/')
 def get_player_info_stats(player_name):
     player_name = player_name.replace('-', ' ');
+    asterisk_name = player_name;
+    asterisk_name += '*';
+    #asterisk_name accounts for all-star seasons, where stats.name includes an extra asterisk
+    
     query = '''SELECT
                 year,
                 name,
@@ -212,7 +217,8 @@ def get_player_info_stats(player_name):
                 PF,
                 PTS
                FROM stats
-               WHERE stats.name = %s
+               WHERE (stats.name = %s
+               OR stats.name = %s)
                ORDER BY stats.year
                '''
     stats_list = []
@@ -220,7 +226,7 @@ def get_player_info_stats(player_name):
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute(query, (player_name,))
+        cursor.execute(query, (player_name, asterisk_name))
         for row in cursor:
             player = {
                 'year':row[0],
@@ -280,22 +286,19 @@ def get_player_info_stats(player_name):
 
 @api.route('/rankings/single-year/single-team/<category>/<team>/<year>/')
 def get_ranking(category, team, year):
-    category_string = category
-    team_string = team
-    year_string = year
     #print(category + ", " + team + ", " + year)
-    query = '''SELECT stats.name, stats.'''+ category_string +'''
+    query = '''SELECT stats.name, stats.'''+ category +'''
                 FROM stats
                 WHERE stats.year = %s
                 AND stats.team = %s
-                GROUP BY stats.name, stats.'''+ category_string +'''
-                ORDER BY stats.'''+ category_string +''' DESC
+                GROUP BY stats.name, stats.'''+ category +'''
+                ORDER BY stats.'''+ category +''' DESC
                 LIMIT 5;'''
     ranking = []
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute(query, (year_string, team_string,))
+        cursor.execute(query, (year, team))
         for row in cursor:
             player = {
                 'name':row[0],
