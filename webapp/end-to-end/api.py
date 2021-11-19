@@ -62,6 +62,8 @@ def get_teams():
 def get_roster(team, year):
     
     ''' Returns basic info for a team's roster
+        The birthdate comparison is addressing a bug where players with the
+        same name as a player on the roster that played some other year would show up
     '''
 
     query = '''
@@ -74,12 +76,16 @@ def get_roster(team, year):
                 players.weight,
                 players.birth_date,
                 players.college
+                 
 
                FROM players, stats
-               WHERE stats.name ILIKE players.name
+               WHERE (-1 + stats.year - CAST(RIGHT(players.birth_date, 4) AS int) = stats.age
+               OR stats.year - CAST(RIGHT(players.birth_date, 4) AS int) = stats.age)
+               AND stats.name ILIKE players.name
                AND stats.team = %s
                AND stats.year = %s
                '''
+    #player age and birthdate
     roster = []
     try:
         connection = get_connection()
