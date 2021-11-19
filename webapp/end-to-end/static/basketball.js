@@ -7,15 +7,19 @@
 window.onload = initialize;
 
 function initialize() {
+    //year, team selectors are for rosters, rankings
     loadYearSelector();
     loadTeamSelector();
+    //player selector is for player-info
+    loadPlayerSelector();
 
+    
+    //setting rosters and rankings to respond to input change
     let yearSelector = document.getElementById('year-selector');
     let teamSelector = document.getElementById('team-selector');
-    //if(yearSelector)
-    current_url = window.location.href
-
-    if(current_url.includes("rosters")){
+    currentUrl = window.location.href
+    
+    if(currentUrl.includes("rosters")){
       if (yearSelector) {
           yearSelector.onchange = onRostersSelectorChanged;
       }
@@ -24,7 +28,7 @@ function initialize() {
       }
     }
 
-    if(current_url.includes("rankings")){
+    if(currentUrl.includes("rankings")){
       if (yearSelector) {
           yearSelector.onchange = onRankingsSelectorChanged;
       }
@@ -33,12 +37,11 @@ function initialize() {
       }
     }
 
-    loadPlayerSelector();
+    //setting player-info to respond to input change
     let playerInput = document.getElementById('player-input');
     let showAdvancedStats = document.getElementById('advanced-stats');
     let showBoxScoreStats = document.getElementById('box-score-stats');
-    /*loadAdvancedStatsCheckbox();*/
-
+    
     if (playerInput) {
         playerInput.onchange = onPlayerInputChanged;
     }
@@ -62,7 +65,6 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-/*function loadAdvancedStatsCheckbox() {}*/
 
 //this should be a simple list of ints 1950 to 2017, should just be in html
 function loadYearSelector() {
@@ -180,26 +182,18 @@ function onRostersSelectorChanged() {
 
 
         // Put the table body we just built inside the table that's already on the page.
-        let roster_table = document.getElementById('roster-table');
-        if(roster_table){
-            roster_table.innerHTML = tableBody;
+        let rosterTable = document.getElementById('roster-table');
+        if(rosterTable){
+            rosterTable.innerHTML = tableBody;
         }
 
 
     })
 
-//    let showRosterTable = document.getElementById("roster_table");
-//    showRosterTable.style.display = "block";
 }
 
 // ----------------- PLAYER-INFO -------------------
 
-/*function onShowAdvancedStatsChanged() {
-
-  let showAS_Status = showAdvancedStats
-
-
-}*/
 
 function loadPlayerSelector() {
 
@@ -234,18 +228,18 @@ function loadPlayerSelector() {
 
 function onPlayerInputChanged() {
     let playerInput = document.getElementById('player-input');
-    let player_url = playerInput.value.split(' ').join('-');
+    let playerUrl = playerInput.value.split(' ').join('-');
 
     //GETTING BIO PARAGRAPH
-    let bio_url = getAPIBaseURL() + '/player-info/bio/' + player_url;
-    fetch(bio_url, {method: 'get'})
+    let bioUrl = getAPIBaseURL() + '/player-info/bio/' + playerUrl;
+    fetch(bioUrl, {method: 'get'})
     .then((response) => response.json())
 
 
-    .then(function(player_bio) {
+    .then(function(playerBio) {
         
         let paragraphBody = '';
-        player = player_bio[0]
+        player = playerBio[0]
         
         paragraphBody += '<h2>' + player['name'] + '</h2>'
             + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
@@ -255,9 +249,9 @@ function onPlayerInputChanged() {
 
 
         // SETTING BIO PARAGRAPH
-        let player_bio_text = document.getElementById('player-bio-text');
-        if(player_bio_text){
-            player_bio_text.innerHTML = paragraphBody;
+        let playerBioText = document.getElementById('player-bio-text');
+        if(playerBioText){
+            playerBioText.innerHTML = paragraphBody;
         }
 
 
@@ -265,18 +259,18 @@ function onPlayerInputChanged() {
 
 
     //GETTING PLAYER STATS TABLE
-    let stats_url = getAPIBaseURL() + '/player-info/stats/' + player_url;
-    fetch(stats_url, {method: 'get'})
+    let statsUrl = getAPIBaseURL() + '/player-info/stats/' + playerUrl;
+    fetch(statsUrl, {method: 'get'})
     .then((response) => response.json())
 
-    .then(function(player_stats) {
+    .then(function(playerStats) {
 
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats');
         let showBoxScoreStats = document.getElementById('box-score-stats');
         
         //checking that a player has stats
-        if (player_stats.length != 0){
+        if (playerStats.length != 0){
             //adding table headers
             tableBody += '<tr>'
                             + '<th style="position: sticky; left:0; border: 1px solid black;">Year</th>'
@@ -329,59 +323,59 @@ function onPlayerInputChanged() {
 
 
 
-        for (let k = 0; k < player_stats.length; k++) {
-            let player_season = player_stats[k];
+        for (let k = 0; k < playerStats.length; k++) {
+            let playerSeason = playerStats[k];
             //adding table data
             tableBody += '<tr>'
                             //at some point we can add a link to player info page
-                            + '<td style="position: sticky; left:0; border-right: 1px solid black;">' + player_season['year'] + '</td>'
-                            //+ '<td>' + player_season['name'] + '</td>'
-                            //+ '<td>' + player_season['position'] + '</td>'
-                            + '<td>' + player_season['age'] + '</td>'
-                            + '<td class="team_in_player_stats"><a href=rosters.html}>' + player_season['team'] + '</a></td>'
-                            + '<td>' + player_season['G'] + '</td>'
-                            + '<td>' + player_season['GS'] + '</td>'
-                            + '<td>' + player_season['MP'] + '</td>';
+                            + '<td style="position: sticky; left:0; border-right: 1px solid black;">' + playerSeason['year'] + '</td>'
+                            //+ '<td>' + playerSeason['name'] + '</td>'
+                            //+ '<td>' + playerSeason['position'] + '</td>'
+                            + '<td>' + playerSeason['age'] + '</td>'
+                            + '<td class="team-in-player-stats"><a href=rosters.html}>' + playerSeason['team'] + '</a></td>'
+                            + '<td>' + playerSeason['G'] + '</td>'
+                            + '<td>' + playerSeason['GS'] + '</td>'
+                            + '<td>' + playerSeason['MP'] + '</td>';
 
 
                             if (showBoxScoreStats.checked) {
-                                tableBody += '<td>' + player_season['FG'] + '</td>'
-                                + '<td>' + player_season['FGA'] + '</td>'
-                                + '<td>' + player_season['FG_'] + '</td>'
-                                + '<td>' + player_season['threeP'] + '</td>'
-                                + '<td>' + player_season['threePA'] + '</td>'
-                                + '<td>' + player_season['threeP_'] + '</td>'
-                                + '<td>' + player_season['twoP'] + '</td>'
-                                + '<td>' + player_season['twoPA'] + '</td>'
-                                + '<td>' + player_season['twoP_'] + '</td>'
-                                + '<td>' + player_season['eFG_'] + '</td>'
-                                + '<td>' + player_season['FT'] + '</td>'
-                                + '<td>' + player_season['FTA'] + '</td>'
-                                + '<td>' + player_season['FT_'] + '</td>'
-                                + '<td>' + player_season['ORB'] + '</td>'
-                                + '<td>' + player_season['DRB'] + '</td>'
-                                + '<td>' + player_season['TRB'] + '</td>'
-                                + '<td>' + player_season['AST'] + '</td>'
-                                + '<td>' + player_season['STL'] + '</td>'
-                                + '<td>' + player_season['BLK'] + '</td>'
-                                + '<td>' + player_season['TOV'] + '</td>'
-                                + '<td>' + player_season['PF'] + '</td>'
-                                + '<td>' + player_season['PTS'] + '</td>';
+                                tableBody += '<td>' + playerSeason['FG'] + '</td>'
+                                + '<td>' + playerSeason['FGA'] + '</td>'
+                                + '<td>' + playerSeason['FG_'] + '</td>'
+                                + '<td>' + playerSeason['threeP'] + '</td>'
+                                + '<td>' + playerSeason['threePA'] + '</td>'
+                                + '<td>' + playerSeason['threeP_'] + '</td>'
+                                + '<td>' + playerSeason['twoP'] + '</td>'
+                                + '<td>' + playerSeason['twoPA'] + '</td>'
+                                + '<td>' + playerSeason['twoP_'] + '</td>'
+                                + '<td>' + playerSeason['eFG_'] + '</td>'
+                                + '<td>' + playerSeason['FT'] + '</td>'
+                                + '<td>' + playerSeason['FTA'] + '</td>'
+                                + '<td>' + playerSeason['FT_'] + '</td>'
+                                + '<td>' + playerSeason['ORB'] + '</td>'
+                                + '<td>' + playerSeason['DRB'] + '</td>'
+                                + '<td>' + playerSeason['TRB'] + '</td>'
+                                + '<td>' + playerSeason['AST'] + '</td>'
+                                + '<td>' + playerSeason['STL'] + '</td>'
+                                + '<td>' + playerSeason['BLK'] + '</td>'
+                                + '<td>' + playerSeason['TOV'] + '</td>'
+                                + '<td>' + playerSeason['PF'] + '</td>'
+                                + '<td>' + playerSeason['PTS'] + '</td>';
                             }
                             //Advanced stats
 
                             if (showAdvancedStats.checked) {
-                              tableBody += '<td>' + player_season['PER'] + '</td>'
-                              + '<td>' + player_season['TS_'] + '</td>'
-                              + '<td>' + player_season['USG_'] + '</td>'
-                              + '<td>' + player_season['OWS'] + '</td>'
-                              + '<td>' + player_season['DWS'] + '</td>'
-                              + '<td>' + player_season['WS'] + '</td>'
-                              + '<td>' + player_season['WS_per_48'] + '</td>'
-                              + '<td>' + player_season['OBPM'] + '</td>'
-                              + '<td>' + player_season['DBPM'] + '</td>'
-                              + '<td>' + player_season['BPM'] + '</td>'
-                              + '<td>' + player_season['VORP'] + '</td>';
+                              tableBody += '<td>' + playerSeason['PER'] + '</td>'
+                              + '<td>' + playerSeason['TS_'] + '</td>'
+                              + '<td>' + playerSeason['USG_'] + '</td>'
+                              + '<td>' + playerSeason['OWS'] + '</td>'
+                              + '<td>' + playerSeason['DWS'] + '</td>'
+                              + '<td>' + playerSeason['WS'] + '</td>'
+                              + '<td>' + playerSeason['WS_per_48'] + '</td>'
+                              + '<td>' + playerSeason['OBPM'] + '</td>'
+                              + '<td>' + playerSeason['DBPM'] + '</td>'
+                              + '<td>' + playerSeason['BPM'] + '</td>'
+                              + '<td>' + playerSeason['VORP'] + '</td>';
                             }
 
 
@@ -397,9 +391,9 @@ function onPlayerInputChanged() {
       }
 
         // SETTING STATS TABLE
-        let player_stats_table = document.getElementById('player-stats-table');
-        if(player_stats_table){
-            player_stats_table.innerHTML = tableBody;
+        let playerStatsTable = document.getElementById('player-stats-table');
+        if(playerStatsTable){
+            playerStatsTable.innerHTML = tableBody;
         }
 
     })
@@ -413,11 +407,11 @@ blkTableBody = '';
 tovTableBody = '';
 
 function pushRankingsTables(){
-    let full_table = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
+    let fullTable = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
 
-    let ranking_table = document.getElementById('rankings-table');
-      if(ranking_table){
-          ranking_table.innerHTML = full_table;
+    let rankingTable = document.getElementById('rankings-table');
+      if(rankingTable){
+          rankingTable.innerHTML = fullTable;
       }
     ptsTableBody = '';
     astTableBody = '';
@@ -429,16 +423,14 @@ function pushRankingsTables(){
 }
 
 function onRankingsSelectorChanged() {
-
-    var fullTableBody = ''
     let yearSelector = document.getElementById('year-selector');
     let teamSelector = document.getElementById('team-selector');
     let team = teamSelector.value;
     let year = yearSelector.value;
 
     //making points table
-    let pts_url = getAPIBaseURL() + '/rankings/single-year/single-team/pts/' + team + '/' + year + '/';
-    fetch(pts_url, {method: 'get'})
+    let ptsUrl = getAPIBaseURL() + '/rankings/single-year/single-team/pts/' + team + '/' + year + '/';
+    fetch(ptsUrl, {method: 'get'})
     .then((response) => response.json())
     .then(function(ranking) {
         ptsTableBody += '<table>' + '<th colspan="2"> Points </th>'
@@ -467,13 +459,13 @@ function onRankingsSelectorChanged() {
            stlTableBody != '' &&
            blkTableBody != '' &&
            tovTableBody != ''){
-            let full_table = pushRankingsTables();
+            let fullTable = pushRankingsTables();
         }
       })
 
         //making rebounds table
-      let trb_url = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
-      fetch(trb_url, {method: 'get'})
+      let trbUrl = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
+      fetch(trbUrl, {method: 'get'})
       .then((response) => response.json())
       .then(function(ranking) {
         rebTableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
@@ -504,15 +496,15 @@ function onRankingsSelectorChanged() {
            stlTableBody != '' &&
            blkTableBody != '' &&
            tovTableBody != ''){
-            let full_table = pushRankingsTables();
+            let fullTable = pushRankingsTables();
         }
 
 
     })
 
         //making assists table
-        let ast_url = getAPIBaseURL() + '/rankings/single-year/single-team/ast/' + team + '/' + year + '/';
-        fetch(ast_url, {method: 'get'})
+        let astUrl = getAPIBaseURL() + '/rankings/single-year/single-team/ast/' + team + '/' + year + '/';
+        fetch(astUrl, {method: 'get'})
         .then((response) => response.json())
         .then(function(ranking) {
             astTableBody += '<table>' + '<th colspan="2"> Assists </th>'
@@ -541,14 +533,14 @@ function onRankingsSelectorChanged() {
            stlTableBody != '' &&
            blkTableBody != '' &&
            tovTableBody != ''){
-            let full_table = pushRankingsTables();
+            let fullTable = pushRankingsTables();
             }
             
           })
 
           //making steals table
-          let stl_url = getAPIBaseURL() + '/rankings/single-year/single-team/stl/' + team + '/' + year + '/';
-          fetch(stl_url, {method: 'get'})
+          let stlUrl = getAPIBaseURL() + '/rankings/single-year/single-team/stl/' + team + '/' + year + '/';
+          fetch(stlUrl, {method: 'get'})
           .then((response) => response.json())
           .then(function(ranking) {
               stlTableBody += '<table>' + '<th colspan="2"> Steals </th>'
@@ -577,14 +569,14 @@ function onRankingsSelectorChanged() {
                    stlTableBody != '' &&
                    blkTableBody != '' &&
                    tovTableBody != ''){
-                    let full_table = pushRankingsTables();
+                    let fullTable = pushRankingsTables();
                 }
 
             })
 
             //making blocks table
-            let blk_url = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
-            fetch(blk_url, {method: 'get'})
+            let blkUrl = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
+            fetch(blkUrl, {method: 'get'})
             .then((response) => response.json())
             .then(function(ranking) {
                 blkTableBody += '<table>' + '<th colspan="2"> Blocks </th>'
@@ -612,13 +604,13 @@ function onRankingsSelectorChanged() {
                    stlTableBody != '' &&
                    blkTableBody != '' &&
                    tovTableBody != ''){
-                    let full_table = pushRankingsTables();
+                    let fullTable = pushRankingsTables();
                 }
               })
 
               //making turnovers table
-              let tov_url = getAPIBaseURL() + '/rankings/single-year/single-team/tov/' + team + '/' + year + '/';
-              fetch(tov_url, {method: 'get'})
+              let tovUrl = getAPIBaseURL() + '/rankings/single-year/single-team/tov/' + team + '/' + year + '/';
+              fetch(tovUrl, {method: 'get'})
               .then((response) => response.json())
               .then(function(ranking) {
                 tovTableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
@@ -647,7 +639,7 @@ function onRankingsSelectorChanged() {
                    stlTableBody != '' &&
                    blkTableBody != '' &&
                    tovTableBody != ''){
-                    let full_table = pushRankingsTables();
+                    let fullTable = pushRankingsTables();
                 }
                 })
 

@@ -13,7 +13,7 @@ import psycopg2
 
 api = flask.Blueprint('api', __name__)
 
-def get_connection():
+def getConnection():
     ''' Returns a connection to the database described in the
         config module. May raise an exception as described in the
         documentation for psycopg2.connect. '''
@@ -23,7 +23,7 @@ def get_connection():
 
 
 @api.route('/help')
-def get_help():
+def getHelp():
     contents = '';
     with open("api-help.txt", "r") as f:
         for line in f:
@@ -35,14 +35,14 @@ def get_help():
     
 #improve this by listing extinct teams separately at bottom of list
 @api.route('/teams')
-def get_teams():
+def getTeams():
     ''' Returns a list of the teams in the db (in order)
     '''
     query = '''SELECT DISTINCT stats.team FROM stats ORDER BY stats.team; '''
 
     team_list = []
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, tuple())
         for row in cursor:
@@ -58,7 +58,7 @@ def get_teams():
 
 @api.route('rosters/<team>/<year>')
 #CONCAT with asterisk is there so that players who have an asterisk by their name (all star season) are included
-def get_roster(team, year):
+def getRoster(team, year):
     
     ''' Returns basic info for a team's roster
         The birthdate comparison is addressing a bug where players with the
@@ -89,7 +89,7 @@ def get_roster(team, year):
     #player age and birthdate
     roster = []
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, (team, year))
         for row in cursor:
@@ -109,14 +109,14 @@ def get_roster(team, year):
 
 @api.route('/players')
 
-def get_players():
+def getPlayers():
     ''' Finds all player names in db. Used to load player name search suggestions
     '''
     query = '''SELECT players.name FROM players ORDER BY players.name; '''
 
     player_list = []
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, tuple())
         for row in cursor:
@@ -131,7 +131,7 @@ def get_players():
 
 
 @api.route('/player-info/bio/<player_name>/')
-def get_player_info_bio(player_name):
+def getPlayerInfoBio(player_name):
     ''' Returns info needed for bio on player page
     '''
     bio_list = []
@@ -150,7 +150,7 @@ def get_player_info_bio(player_name):
                '''
 
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, (player_name,))
         for row in cursor:
@@ -168,7 +168,7 @@ def get_player_info_bio(player_name):
 
 
 @api.route('/player-info/stats/<player_name>/')
-def get_player_info_stats(player_name):
+def getPlayerInfoStats(player_name):
     player_name = player_name.replace('-', ' ');
     asterisk_name = player_name;
     asterisk_name += '*';
@@ -224,7 +224,7 @@ def get_player_info_stats(player_name):
     stats_list = []
 
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, (player_name, asterisk_name))
         for row in cursor:
@@ -285,7 +285,7 @@ def get_player_info_stats(player_name):
     return json.dumps(stats_list)
 
 @api.route('/rankings/single-year/single-team/<category>/<team>/<year>/')
-def get_ranking(category, team, year):
+def getRanking(category, team, year):
     #print(category + ", " + team + ", " + year)
     query = '''SELECT stats.name, stats.'''+ category +'''
                 FROM stats
@@ -296,7 +296,7 @@ def get_ranking(category, team, year):
                 LIMIT 5;'''
     ranking = []
     try:
-        connection = get_connection()
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute(query, (year, team))
         for row in cursor:
