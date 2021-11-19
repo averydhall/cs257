@@ -19,12 +19,17 @@ table{
     overflow: auto;
 }
 
-table, td, th {
+td, th{
     border: 1px solid black;
     font-size: 18px;
     background-color: white;
-    border-collapse: separate;
-    border-spacing: 0;
+}
+
+table{
+   border-collapse: separate;
+   border-spacing: 0; 
+   border: 1px solid black;    
+    
 }
 
 
@@ -80,6 +85,24 @@ h1 {
 
 /*Rosters*/
 
+/*Rankings*/
+
+
+#rankings-table table td{
+    border:0;
+}
+
+#rankings-table table th{
+    border:0;
+}
+
+#rankings-table table{
+    border:0;
+}
+
+#rankings-table p{
+    padding:10px
+}
 
 
 /* Nav bar */

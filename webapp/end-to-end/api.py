@@ -300,11 +300,12 @@ def get_ranking(category, team, year):
         cursor = connection.cursor()
         cursor.execute(query, (year, team))
         for row in cursor:
-            player = {
-                'name':row[0],
-                'stat_total':row[1]
-            }
-            ranking.append(player)
+            if(row[1]):
+                player = {
+                    'name':row[0],
+                    'stat_total':row[1]
+                }
+                ranking.append(player)
         cursor.close()
         connection.close()
     except Exception as e:
