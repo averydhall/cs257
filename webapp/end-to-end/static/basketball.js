@@ -176,8 +176,8 @@ function onRostersSelectorChanged() {
           }
         }
         else{
-          str = "No roster exists for the requested team and year";
-          tableBody += '<td>' + str.bold() + '</td>';
+          
+          tableBody += "<td><b>This team didn't exist this year</b></td>";
         }
 
 
@@ -405,20 +405,29 @@ rebTableBody = '';
 stlTableBody = '';
 blkTableBody = '';
 tovTableBody = '';
+teamExists = false;
 
 function pushRankingsTables(){
     let fullTable = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
-
+    
     let rankingTable = document.getElementById('rankings-table');
       if(rankingTable){
-          rankingTable.innerHTML = fullTable;
+          if (teamExists === false){
+                rankingTable.innerHTML = "<td><b>This team didn't exist this year</b></td>";
+          }
+          else{
+              rankingTable.innerHTML = fullTable;
+          }
       }
+    
+    //reinitialize global variables for the next time onRankingsSelectorChanged is called
     ptsTableBody = '';
     astTableBody = '';
     rebTableBody = '';
     stlTableBody = '';
     blkTableBody = '';
     tovTableBody = '';
+    teamExists = false;
 
 }
 
@@ -435,7 +444,7 @@ function onRankingsSelectorChanged() {
     .then(function(ranking) {
         ptsTableBody += '<table>' + '<th colspan="2"> Points </th>'
         if (ranking[0]){
-            //so we dont give header for teams that don't exist
+            teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
             for (let k = 0; k < ranking.length; k++) {
                 let player = ranking[k];
                   ptsTableBody += '<tr>'
@@ -470,7 +479,7 @@ function onRankingsSelectorChanged() {
       .then(function(ranking) {
         rebTableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
         if (ranking[0]){
-            //so we dont give header for teams that don't exist
+            teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
             for (let k = 0; k < ranking.length; k++) {
                 let player = ranking[k];
                   rebTableBody += '<tr>'
@@ -509,7 +518,7 @@ function onRankingsSelectorChanged() {
         .then(function(ranking) {
             astTableBody += '<table>' + '<th colspan="2"> Assists </th>'
             if(ranking[0]){
-                //so we dont give header for teams that don't exist
+                teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
                 for (let k = 0; k < ranking.length; k++) {
                     let player = ranking[k];
                       astTableBody += '<tr>'
@@ -545,7 +554,7 @@ function onRankingsSelectorChanged() {
           .then(function(ranking) {
               stlTableBody += '<table>' + '<th colspan="2"> Steals </th>'
               if(ranking[0]){
-                //so we dont give header for teams that don't exist
+                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
                     for (let k = 0; k < ranking.length; k++) {
                         let player = ranking[k];
                           stlTableBody += '<tr>'
@@ -581,6 +590,7 @@ function onRankingsSelectorChanged() {
             .then(function(ranking) {
                 blkTableBody += '<table>' + '<th colspan="2"> Blocks </th>'
                 if(ranking[0]){
+                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
                     for (let k = 0; k < ranking.length; k++) {
                         let player = ranking[k];
                           blkTableBody += '<tr>'
@@ -615,7 +625,7 @@ function onRankingsSelectorChanged() {
               .then(function(ranking) {
                 tovTableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
                   if (ranking[0]){
-                    //so we dont give header for teams that don't exist
+                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
                     for (let k = 0; k < ranking.length; k++) {
                         let player = ranking[k];
                           tovTableBody += '<tr>'

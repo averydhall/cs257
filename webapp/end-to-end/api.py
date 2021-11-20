@@ -286,7 +286,6 @@ def getPlayerInfoStats(player_name):
 
 @api.route('/rankings/single-year/single-team/<category>/<team>/<year>/')
 def getRanking(category, team, year):
-    #print(category + ", " + team + ", " + year)
     query = '''SELECT stats.name, stats.'''+ category +'''
                 FROM stats
                 WHERE stats.year = %s
