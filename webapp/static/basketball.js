@@ -7,30 +7,30 @@
 window.onload = initialize;
 
 //initialize runs every time a new page loads
-//a new page loads when a user navigates to a different page 
+//a new page loads when a user navigates to a different page
 //or changes search selections in rankings, rosters, or player_info
 function initialize() {
-    // ------- loading roster page ------- 
+    // ------- loading roster page -------
     loadRostersTeamSelector();
     loadRostersYearSelector();
-    
+
     //setting rosters to change url as input changes
     let rostersYearSelector = document.getElementById('rosters-year-selector');
     let rostersTeamSelector = document.getElementById('rosters-team-selector');
-    
+
       if (rostersYearSelector) {
           rostersYearSelector.onchange = updateRostersUrl;
       }
       if (rostersTeamSelector) {
           rostersTeamSelector.onchange = updateRostersUrl;
       }
-    
-     
+
+
     // ------- loading rankings page --------
     loadRankingsTeamSelector();
     loadRankingsYearSelector();
-    
-    
+
+
     //setting rankings to change url as input changes
     let rankingsYearSelector = document.getElementById('rankings-year-selector');
     let rankingsTeamSelector = document.getElementById('rankings-team-selector');
@@ -41,20 +41,20 @@ function initialize() {
       if (rankingsTeamSelector) {
           rankingsTeamSelector.onchange = updateRankingsUrl;
       }
-    
-    
+
+
     // ------- loading player-info page --------
     loadPlayerSelector();
     //setting player-info to respond to input change
     let playerInput = document.getElementById('player-input');
     let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
     let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-    
+
     //setting player-info to change url as input changes
     if (playerInput) {
         playerInput.onchange = updatePlayerInfoUrl;
     }
-    
+
     //telling player-info to re-fill table as different options are selected
     if (showAdvancedStats) {
         showAdvancedStats.onchange = fillPlayerInfoTable;
@@ -118,7 +118,7 @@ function loadRostersYearSelector() {
 
     }
     //
-    
+
 }
 
 //this function runs every time rosters is loaded
@@ -134,10 +134,10 @@ function loadRostersTeamSelector() {
 //          let selectorBody = '';
 //          selectorBody += '<option value="BOS">Boston Celtics - BOS 1950-2017</option>'
 //          selectorBody += '<option value="ATL">Atlanta Hawks - ATL 1969-2017</option>'
-//          
+//
 //          selector.innerHTML = selectorBody;
 //          fillRostersTable();
-        
+
         let url = getAPIBaseURL() + '/teams';
 
         // Send the request to the books API /teams endpoint
@@ -154,10 +154,10 @@ function loadRostersTeamSelector() {
             selectorBody += '<option selected disabled hidden> - </option>';
             // Add the <option> elements to the <select> element
             let selectedTeam = selector.getAttribute('class');
-            
+
             for (let k = 0; k < teams.length; k++) {
                 let team = teams[k];
-                //setting selectedTeam as the selected option 
+                //setting selectedTeam as the selected option
                 if (team['team'] === selectedTeam){
                     selectorBody += '<option value="' + team['team'] + '" selected>'
                                         + team['team'] + '</option>\n';
@@ -185,7 +185,7 @@ function loadRostersTeamSelector() {
         .catch(function(error) {
             console.log(error);
         });
-    }   
+    }
 }
 
 //this function changes the url if the user selection changes
@@ -197,18 +197,18 @@ function updateRostersUrl(){
 
 //this function generates rosters and sets them in roster-table html element
 //right now, this function is called in loadRostersTeamSelector because this is the only place it works
-//in initialize, loadRostersTeamSelector is the last function to complete, 
+//in initialize, loadRostersTeamSelector is the last function to complete,
 //so calling a fillRostersTable works because all the selected values are set
 //the same is the case with rankings
 function fillRostersTable() {
 
     let year = document.getElementById('rosters-year-selector').value;
     let team = document.getElementById('rosters-team-selector').value;
-    
+
 //    if (team != ' - ' || year != ' - '){
 //want to check so we aren't unnecesarily executing a bunch of code
 //when we call fillRostersTable from load year selector
-    
+
         let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
         fetch(url, {method: 'get'})
 
@@ -219,8 +219,27 @@ function fillRostersTable() {
         .then((response) => response.json())
 
         .then(function(roster) {
+
+            let selectorYear = document.getElementById('rosters-year-selector');
+            let selectedYear = selectorYear.getAttribute('class');
+
+            let selectorTeam = document.getElementById('rosters-team-selector');
+            let selectedTeam = selectorTeam.getAttribute('class');
+
+
+
             let tableBody = '';
-            if (roster.length != 0) {
+
+            if ((selectedYear == '-') || (selectedTeam == '-')
+                      || ((selectedYear == null) && (selectedTeam == null))) {
+              tableBody += "<td><b>Select a team and year...</b></td>";
+            }
+
+            else if (roster.length == 0) {
+              tableBody += "<td><b>This team didn't exist this year</b></td>";
+            }
+
+            else {
 
                   tableBody += '<tr>'
                                   + '<th>Name</th>'
@@ -250,9 +269,8 @@ function fillRostersTable() {
                                   + '</tr>\n';
               }
             }
-            else{
-              tableBody += "<td><b>This team didn't exist this year</b></td>";
-            }
+
+
 
 
             // Put the table body we just built inside the table that's already on the page.
@@ -263,7 +281,7 @@ function fillRostersTable() {
 
 
         })
-    
+
 
 }
 
@@ -284,6 +302,7 @@ tovTableBody = '';
 
 //if !teamExists (based on selections), we indicate that there is no data to show
 teamExists = false;
+validRankingsSearch = true;
 
 
 //this function runs every time rankings is loaded
@@ -318,7 +337,7 @@ function loadRankingsYearSelector() {
 //        fillRostersTable();
     }
     //
-    
+
 }
 
 //this function runs every time rankings is loaded
@@ -344,10 +363,10 @@ function loadRankingsTeamSelector() {
             selectorBody += '<option selected disabled hidden> - </option>';
             // Add the <option> elements to the <select> element
             let selectedTeam = selector.getAttribute('class');
-            
+
             for (let k = 0; k < teams.length; k++) {
                 let team = teams[k];
-                //setting selectedTeam as the selected option 
+                //setting selectedTeam as the selected option
                 if (team['team'] === selectedTeam){
                     selectorBody += '<option value="' + team['team'] + '" selected>'
                                         + team['team'] + '</option>\n';
@@ -375,23 +394,26 @@ function loadRankingsTeamSelector() {
         .catch(function(error) {
             console.log(error);
         });
-    }   
+    }
 }
 
 //this function takes rankings from fillRankingsTable and puts them on the page
 function pushRankingsTables(){
     let fullTable = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
-    
+
     let rankingTable = document.getElementById('rankings-table');
       if(rankingTable){
-          if (teamExists === false){
+          if(validRankingsSearch === false){
+               rankingTable.innerHTML = "<td><b>Select a valid team and year</b></td>";
+          }
+          else if (validRankingsSearch === true && teamExists === false){
                 rankingTable.innerHTML = "<td><b>This team didn't exist this year</b></td>";
           }
           else{
               rankingTable.innerHTML = fullTable;
           }
-      }
-    
+}
+
     //reinitialize global variables for the next time fillRankingsTable is called
     ptsTableBody = '';
     astTableBody = '';
@@ -400,6 +422,7 @@ function pushRankingsTables(){
     blkTableBody = '';
     tovTableBody = '';
     teamExists = false;
+    validRankingsSearch = true;
 
 }
 //this function changes the url if the user selection changes
@@ -407,7 +430,7 @@ function updateRankingsUrl(){
     let year = document.getElementById('rankings-year-selector').value;
     let team = document.getElementById('rankings-team-selector').value;
     window.location.href = '/rankings/' + team + '/' + year;
-    
+
 }
 
 //this function generates ranking lists
@@ -418,221 +441,236 @@ function fillRankingsTable() {
     let team = teamSelector.value;
     let year = yearSelector.value;
 
-    //making points table
-    let ptsUrl = getAPIBaseURL() + '/rankings/single-year/single-team/pts/' + team + '/' + year + '/';
-    fetch(ptsUrl, {method: 'get'})
-    .then((response) => response.json())
-    .then(function(ranking) {
-        ptsTableBody += '<table>' + '<th colspan="2"> Points </th>'
-        if (ranking[0]){
-            teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-            for (let k = 0; k < ranking.length; k++) {
-                let player = ranking[k];
-                  ptsTableBody += '<tr>'
-                  + '<td>'
-                  + player['name']
-                  + '</td>'
-                  + '<td>'
-                  + player['stat_total']
-                  + '</td>'
-                  + '</tr>'
-            }
-        }
-        else{
-            ptsTableBody += '<tr><td colspan="2">No Data</td></tr>'
-        }
-        ptsTableBody += '</table>'
 
-        if(ptsTableBody != '' &&
-           astTableBody != '' &&
-           rebTableBody != '' &&
-           stlTableBody != '' &&
-           blkTableBody != '' &&
-           tovTableBody != ''){
-            let fullTable = pushRankingsTables();
-        }
-      })
+    let selectedYear = yearSelector.getAttribute('class');
+    let selectedTeam = teamSelector.getAttribute('class');
 
-        //making rebounds table
-      let trbUrl = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
-      fetch(trbUrl, {method: 'get'})
+    let tableBody = '';
+
+    if ((selectedYear == '-') || (selectedTeam == '-')
+              || ((selectedYear == null) && (selectedTeam == null))) {
+      validRankingsSearch = false
+      pushRankingsTables();
+    }
+
+    else {
+
+      //making points table
+      let ptsUrl = getAPIBaseURL() + '/rankings/single-year/single-team/pts/' + team + '/' + year + '/';
+      fetch(ptsUrl, {method: 'get'})
       .then((response) => response.json())
       .then(function(ranking) {
-        rebTableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
-        if (ranking[0]){
-            teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-            for (let k = 0; k < ranking.length; k++) {
-                let player = ranking[k];
-                  rebTableBody += '<tr>'
-                  + '<td>'
-                  + player['name']
-                  + '</td>'
-                  + '<td>'
-                  + player['stat_total']
-                  + '</td>'
-                  + '</tr>'
-            }
-            
-        }
-        else{
-            rebTableBody += '<tr><td colspan="2">No Data</td></tr>'
-        }
-        rebTableBody += '</table>'  
-        
+          ptsTableBody += '<table>' + '<th colspan="2"> Points </th>'
+          if (ranking[0]){
+              teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+              for (let k = 0; k < ranking.length; k++) {
+                  let player = ranking[k];
+                    ptsTableBody += '<tr>'
+                    + '<td>'
+                    + player['name']
+                    + '</td>'
+                    + '<td>'
+                    + player['stat_total']
+                    + '</td>'
+                    + '</tr>'
+              }
+          }
+          else{
+              ptsTableBody += '<tr><td colspan="2">No Data</td></tr>'
+          }
+          ptsTableBody += '</table>'
 
-        if(ptsTableBody != '' &&
-           astTableBody != '' &&
-           rebTableBody != '' &&
-           stlTableBody != '' &&
-           blkTableBody != '' &&
-           tovTableBody != ''){
-            let fullTable = pushRankingsTables();
-        }
+          if(ptsTableBody != '' &&
+             astTableBody != '' &&
+             rebTableBody != '' &&
+             stlTableBody != '' &&
+             blkTableBody != '' &&
+             tovTableBody != ''){
+              let fullTable = pushRankingsTables();
+          }
+        })
 
-
-    })
-
-        //making assists table
-        let astUrl = getAPIBaseURL() + '/rankings/single-year/single-team/ast/' + team + '/' + year + '/';
-        fetch(astUrl, {method: 'get'})
+          //making rebounds table
+        let trbUrl = getAPIBaseURL() + '/rankings/single-year/single-team/trb/' + team + '/' + year + '/';
+        fetch(trbUrl, {method: 'get'})
         .then((response) => response.json())
         .then(function(ranking) {
-            astTableBody += '<table>' + '<th colspan="2"> Assists </th>'
-            if(ranking[0]){
-                teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-                for (let k = 0; k < ranking.length; k++) {
-                    let player = ranking[k];
-                      astTableBody += '<tr>'
-                      + '<td>'
-                      + player['name']
-                      + '</td>'
-                      + '<td>'
-                      + player['stat_total']
-                      + '</td>'
-                      + '</tr>'
-                }
-            }
-            else{
-                astTableBody += '<tr><td colspan="2">No Data</td></tr>'
-            }
-            astTableBody += '</table>'
+          rebTableBody += '<table>' + '<th colspan="2"> Rebounds </th>'
+          if (ranking[0]){
+              teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+              for (let k = 0; k < ranking.length; k++) {
+                  let player = ranking[k];
+                    rebTableBody += '<tr>'
+                    + '<td>'
+                    + player['name']
+                    + '</td>'
+                    + '<td>'
+                    + player['stat_total']
+                    + '</td>'
+                    + '</tr>'
+              }
 
-            if(ptsTableBody != '' &&
-           astTableBody != '' &&
-           rebTableBody != '' &&
-           stlTableBody != '' &&
-           blkTableBody != '' &&
-           tovTableBody != ''){
-            let fullTable = pushRankingsTables();
-            }
-            
-          })
+          }
+          else{
+              rebTableBody += '<tr><td colspan="2">No Data</td></tr>'
+          }
+          rebTableBody += '</table>'
 
-          //making steals table
-          let stlUrl = getAPIBaseURL() + '/rankings/single-year/single-team/stl/' + team + '/' + year + '/';
-          fetch(stlUrl, {method: 'get'})
+
+          if(ptsTableBody != '' &&
+             astTableBody != '' &&
+             rebTableBody != '' &&
+             stlTableBody != '' &&
+             blkTableBody != '' &&
+             tovTableBody != ''){
+              let fullTable = pushRankingsTables();
+          }
+
+
+      })
+
+          //making assists table
+          let astUrl = getAPIBaseURL() + '/rankings/single-year/single-team/ast/' + team + '/' + year + '/';
+          fetch(astUrl, {method: 'get'})
           .then((response) => response.json())
           .then(function(ranking) {
-              stlTableBody += '<table>' + '<th colspan="2"> Steals </th>'
+              astTableBody += '<table>' + '<th colspan="2"> Assists </th>'
               if(ranking[0]){
-                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-                    for (let k = 0; k < ranking.length; k++) {
-                        let player = ranking[k];
-                          stlTableBody += '<tr>'
-                          + '<td>'
-                          + player['name']
-                          + '</td>'
-                          + '<td>'
-                          + player['stat_total']
-                          + '</td>'
-                          + '</tr>'
-                    }
-                }
-                else{
-                    stlTableBody += '<tr><td colspan="2">No Data</td></tr>'
-                }
-                stlTableBody += '</table>'
+                  teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+                  for (let k = 0; k < ranking.length; k++) {
+                      let player = ranking[k];
+                        astTableBody += '<tr>'
+                        + '<td>'
+                        + player['name']
+                        + '</td>'
+                        + '<td>'
+                        + player['stat_total']
+                        + '</td>'
+                        + '</tr>'
+                  }
+              }
+              else{
+                  astTableBody += '<tr><td colspan="2">No Data</td></tr>'
+              }
+              astTableBody += '</table>'
 
-                if(ptsTableBody != '' &&
-                   astTableBody != '' &&
-                   rebTableBody != '' &&
-                   stlTableBody != '' &&
-                   blkTableBody != '' &&
-                   tovTableBody != ''){
-                    let fullTable = pushRankingsTables();
-                }
+              if(ptsTableBody != '' &&
+             astTableBody != '' &&
+             rebTableBody != '' &&
+             stlTableBody != '' &&
+             blkTableBody != '' &&
+             tovTableBody != ''){
+              let fullTable = pushRankingsTables();
+              }
 
             })
 
-            //making blocks table
-            let blkUrl = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
-            fetch(blkUrl, {method: 'get'})
+            //making steals table
+            let stlUrl = getAPIBaseURL() + '/rankings/single-year/single-team/stl/' + team + '/' + year + '/';
+            fetch(stlUrl, {method: 'get'})
             .then((response) => response.json())
             .then(function(ranking) {
-                blkTableBody += '<table>' + '<th colspan="2"> Blocks </th>'
+                stlTableBody += '<table>' + '<th colspan="2"> Steals </th>'
                 if(ranking[0]){
-                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-                    for (let k = 0; k < ranking.length; k++) {
-                        let player = ranking[k];
-                          blkTableBody += '<tr>'
-                          + '<td>'
-                          + player['name']
-                          + '</td>'
-                          + '<td>'
-                          + player['stat_total']
-                          + '</td>'
-                          + '</tr>'
-                    }
-                }
-                else{
-                        blkTableBody += '<tr><td colspan="2">No Data</td></tr>'
-                    }
-                blkTableBody += '</table>'
+                      teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+                      for (let k = 0; k < ranking.length; k++) {
+                          let player = ranking[k];
+                            stlTableBody += '<tr>'
+                            + '<td>'
+                            + player['name']
+                            + '</td>'
+                            + '<td>'
+                            + player['stat_total']
+                            + '</td>'
+                            + '</tr>'
+                      }
+                  }
+                  else{
+                      stlTableBody += '<tr><td colspan="2">No Data</td></tr>'
+                  }
+                  stlTableBody += '</table>'
 
-                if(ptsTableBody != '' &&
-                   astTableBody != '' &&
-                   rebTableBody != '' &&
-                   stlTableBody != '' &&
-                   blkTableBody != '' &&
-                   tovTableBody != ''){
-                    let fullTable = pushRankingsTables();
-                }
+                  if(ptsTableBody != '' &&
+                     astTableBody != '' &&
+                     rebTableBody != '' &&
+                     stlTableBody != '' &&
+                     blkTableBody != '' &&
+                     tovTableBody != ''){
+                      let fullTable = pushRankingsTables();
+                  }
+
               })
 
-              //making turnovers table
-              let tovUrl = getAPIBaseURL() + '/rankings/single-year/single-team/tov/' + team + '/' + year + '/';
-              fetch(tovUrl, {method: 'get'})
+              //making blocks table
+              let blkUrl = getAPIBaseURL() + '/rankings/single-year/single-team/blk/' + team + '/' + year + '/';
+              fetch(blkUrl, {method: 'get'})
               .then((response) => response.json())
               .then(function(ranking) {
-                tovTableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
-                  if (ranking[0]){
-                    teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
-                    for (let k = 0; k < ranking.length; k++) {
-                        let player = ranking[k];
-                          tovTableBody += '<tr>'
-                          + '<td>'
-                          + player['name']
-                          + '</td>'
-                          + '<td>'
-                          + player['stat_total']
-                          + '</td>'
-                          + '</tr>'
-                    }
-                }
-                else{
-                    tovTableBody += '<tr><td colspan="2">No Data</td></tr>'
-                }
-                tovTableBody += '</table>'
+                  blkTableBody += '<table>' + '<th colspan="2"> Blocks </th>'
+                  if(ranking[0]){
+                      teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+                      for (let k = 0; k < ranking.length; k++) {
+                          let player = ranking[k];
+                            blkTableBody += '<tr>'
+                            + '<td>'
+                            + player['name']
+                            + '</td>'
+                            + '<td>'
+                            + player['stat_total']
+                            + '</td>'
+                            + '</tr>'
+                      }
+                  }
+                  else{
+                          blkTableBody += '<tr><td colspan="2">No Data</td></tr>'
+                      }
+                  blkTableBody += '</table>'
 
-                if(ptsTableBody != '' &&
-                   astTableBody != '' &&
-                   rebTableBody != '' &&
-                   stlTableBody != '' &&
-                   blkTableBody != '' &&
-                   tovTableBody != ''){
-                    let fullTable = pushRankingsTables();
-                }
+                  if(ptsTableBody != '' &&
+                     astTableBody != '' &&
+                     rebTableBody != '' &&
+                     stlTableBody != '' &&
+                     blkTableBody != '' &&
+                     tovTableBody != ''){
+                      let fullTable = pushRankingsTables();
+                  }
                 })
+
+                //making turnovers table
+                let tovUrl = getAPIBaseURL() + '/rankings/single-year/single-team/tov/' + team + '/' + year + '/';
+                fetch(tovUrl, {method: 'get'})
+                .then((response) => response.json())
+                .then(function(ranking) {
+                  tovTableBody += '<table>' + '<th colspan="2"> Turnovers </th>'
+                    if (ranking[0]){
+                      teamExists = true; //this is in every method - marking that the team exists (has some stats to display)
+                      for (let k = 0; k < ranking.length; k++) {
+                          let player = ranking[k];
+                            tovTableBody += '<tr>'
+                            + '<td>'
+                            + player['name']
+                            + '</td>'
+                            + '<td>'
+                            + player['stat_total']
+                            + '</td>'
+                            + '</tr>'
+                      }
+                  }
+                  else{
+                      tovTableBody += '<tr><td colspan="2">No Data</td></tr>'
+                  }
+                  tovTableBody += '</table>'
+
+                  if(ptsTableBody != '' &&
+                     astTableBody != '' &&
+                     rebTableBody != '' &&
+                     stlTableBody != '' &&
+                     blkTableBody != '' &&
+                     tovTableBody != ''){
+                      let fullTable = pushRankingsTables();
+                  }
+                  })
+      }
 
 }
 
@@ -683,10 +721,10 @@ function fillPlayerInfoTable() {
 
 
     .then(function(playerBio) {
-        
+
         let paragraphBody = '';
         player = playerBio[0]
-        
+
         paragraphBody += '<h2>' + player['name'] + '</h2>'
             + '<p>' + player['position'] + ', ' + player['height'] + ', ' + player['weight'] + 'lbs </p>'
             + '<p>Time in league:\n ' + player['first_year'] + '-' + player['last_year'] + '</p>'
@@ -714,7 +752,7 @@ function fillPlayerInfoTable() {
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
         let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-        
+
         //checking that a player has stats
         if (playerStats.length != 0){
             //adding table headers
@@ -779,7 +817,7 @@ function fillPlayerInfoTable() {
                             //+ '<td>' + playerSeason['position'] + '</td>'
                             + '<td>' + playerSeason['age'] + '</td>'
                             //this is a link to the roster the player was on
-                            + '<td class="team-in-player-stats"><a href="/rosters/' + playerSeason['team'] + '/' + playerSeason['year'] + '">' + 
+                            + '<td class="team-in-player-stats"><a href="/rosters/' + playerSeason['team'] + '/' + playerSeason['year'] + '">' +
                             playerSeason['team'] + '</a></td>'
                             + '<td>' + playerSeason['G'] + '</td>'
                             + '<td>' + playerSeason['GS'] + '</td>'
@@ -851,7 +889,5 @@ function updatePlayerInfoUrl(){
     let player = document.getElementById('player-input').value;
     player = player.replace(' ', '-')
     window.location.href = '/player-info/' + player;
-    
+
 }
-
-

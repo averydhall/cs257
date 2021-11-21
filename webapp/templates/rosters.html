@@ -13,8 +13,8 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
       <script type="text/javascript" src="{{ url_for('static', filename='basketball.js') }}" ></script>
       <meta charset="UTF-8">
-       
-       
+
+
    </head>
    <body>
        <div class="header">
@@ -37,6 +37,7 @@
 
        <div>
            <label for="rosters-team-selector">Team </label>
+
            {% if teamName %}
               <select id="rosters-team-selector" name="teams" class={{teamName}}></select>
             {% else %}
@@ -49,13 +50,13 @@
             {% else %}
               <select id="rosters-year-selector" name="years"></select>
             {% endif %}
-           
-           
-           
+
+
+
        </div>
        <br>
        <div class="container">
-           <table id="roster-table"><th>Select a team and year...</th></table>   
+           <table id="roster-table"></table>   
        </div>
     </body>
 
