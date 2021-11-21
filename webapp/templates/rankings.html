@@ -35,14 +35,20 @@
   </ul>
 
   <br>
+    
+    <label for="rankings-team-selector">Team </label>
+       {% if teamName %}
+          <select id="rankings-team-selector" name="teams" class={{teamName}}></select>
+        {% else %}
+          <select id="rankings-team-selector" name="teams"></select>
+        {% endif %}
 
-    <label>Team:</label>
-      <select name="time-frames" id="team-selector">
-      </select>
-
-    <label>Year:</label>
-      <select name="time-frames" id="year-selector">
-      </select><br>
+       <label for="rankings-year-selector">Year </label>
+       {% if year %}
+          <select id="rankings-year-selector" name="years" class={{year}}></select>
+        {% else %}
+          <select id="rankings-year-selector" name="years"></select>
+        {% endif %}
 
 
     <!--
