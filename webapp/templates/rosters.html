@@ -13,6 +13,8 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
       <script type="text/javascript" src="{{ url_for('static', filename='basketball.js') }}" ></script>
       <meta charset="UTF-8">
+       
+       
    </head>
    <body>
        <div class="header">
@@ -20,7 +22,7 @@
            <a href="/"><img src="{{ url_for('static', filename='images/hoopdatalogo.png') }}" height="90" width="110"></a>
          </div>
          <div>
-           <h1 class="head-text">Rosters</h1>
+             <h1 class="head-text">Rosters</h1>
          </div>
        </div>
 
@@ -35,10 +37,21 @@
 
        <div>
            <label for="team-selector">Team </label>
-             <select id="team-selector" name="teams"></select>
+           {% if teamName %}
+              <select id="team-selector" name="teams" class={{teamName}}></select>
+            {% else %}
+              <select id="team-selector" name="teams"></select>
+            {% endif %}
 
            <label for="year-selector">Year </label>
-             <select id="year-selector" name="years"></select>
+           {% if year %}
+              <select id="year-selector" name="years" class={{year}}></select>
+            {% else %}
+              <select id="year-selector" name="years"></select>
+            {% endif %}
+           
+           
+           
        </div>
        <br>
        <div class="container">

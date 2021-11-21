@@ -17,8 +17,15 @@ def home():
     return flask.render_template('index.html')
 
 @app.route('/rosters/')
-def rosters():
+def rostersNoSelections():
     return flask.render_template('rosters.html')
+    
+@app.route('/rosters/<team_name>/<year>/')
+def rosters(team_name, year):
+    return flask.render_template('rosters.html', teamName = team_name, year = year)
+    
+
+    
 
 @app.route('/player-info/')
 def player_info():

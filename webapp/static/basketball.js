@@ -6,13 +6,16 @@
 
 window.onload = initialize;
 
+//initialize runs every time a new page loads
+//a new page loads when a user navigates to a different page 
+//or changes search selections in rankings, rosters, or player_info
 function initialize() {
     //year, team selectors are for rosters, rankings
-    loadYearSelector();
     loadTeamSelector();
+    loadYearSelector();
+    
     //player selector is for player-info
     loadPlayerSelector();
-
     
     //setting rosters and rankings to respond to input change
     let yearSelector = document.getElementById('year-selector');
@@ -27,6 +30,7 @@ function initialize() {
           teamSelector.onchange = onRostersSelectorChanged;
       }
     }
+     
 
     if(currentUrl.includes("rankings")){
       if (yearSelector) {
@@ -66,77 +70,116 @@ function getAPIBaseURL() {
 }
 
 
-//this should be a simple list of ints 1950 to 2017, should just be in html
+//this function runs every time rosters or rankings is loaded
+//it takes the year from the url (either generated from selections or entered manually)
+//then it assembles the list of year options, selecting by default the year in the url
 function loadYearSelector() {
-    let selectorBody = '';
-    for (let k = 0; k < 68; k++) {
-        let year = 2017 - k;
-        selectorBody += '<option value="' + year + '">'
-                            + year + '</option>\n';
-    }
-
     let selector = document.getElementById('year-selector');
-    if (selector) {
+    //so this doesn't run on player-info page
+    if(selector){
+        let selectorBody = '';
+        let selectedYear = document.getElementById('year-selector').getAttribute('class');
+        for (let k = 0; k < 68; k++) {
+            let year = 2017 - k;
+            if (year == parseInt(selectedYear)){
+                selectorBody += '<option value="' + year + '"selected>'
+                                    + year + '</option>\n';
+
+                var validYear = true;
+            }
+            else{
+                selectorBody += '<option value="' + year + '">'
+                                    + year + '</option>\n';
+            }
+        }
+        //if not a valid year in url, let the user know
+        if(!validYear){
+            alert("bad url")
+        }
+
         selector.innerHTML = selectorBody;
     }
+    //
+    
 }
 
-//things to add:
-//sort extinct teams to bottom of list
-//give time range for extinct teams so people aren't searching for rosters that don't exist
+//this function runs every time rosters or rankings is loaded
+//it takes the team from the url (either generated from selections or entered manually)
+//then it assembles the list of team options, selecting by default the team in the url
 function loadTeamSelector() {
+    let selector = document.getElementById('team-selector');
+    //so this doesn't run on player-info page
+    if (selector) {
+        let url = getAPIBaseURL() + '/teams';
 
-    let url = getAPIBaseURL() + '/teams';
+        // Send the request to the books API /teams endpoint
+        fetch(url, {method: 'get'})
 
-    // Send the request to the books API /teams endpoint
-    fetch(url, {method: 'get'})
+        // When the results come back, transform them from a JSON string into
+        // a Javascript object (in this case, a list of author dictionaries).
+        .then((response) => response.json())
 
-    // When the results come back, transform them from a JSON string into
-    // a Javascript object (in this case, a list of author dictionaries).
-    .then((response) => response.json())
+        // Once you have your list of author dictionaries, use it to build
+        // an HTML table displaying the author names and lifespan.
+        .then(function(teams) {
+            // Add the <option> elements to the <select> element
+            let selectedTeam = document.getElementById('team-selector').getAttribute('class');
+            let selectorBody = '';
+            for (let k = 0; k < teams.length; k++) {
+                let team = teams[k];
+                //setting selectedTeam as the selected option 
+                if (team['team'] === selectedTeam){
+                    selectorBody += '<option value="' + team['team'] + '" selected>'
+                                        + team['team'] + '</option>\n';
+                    //checking that the team is valid
+                    var validTeam = true;
 
-    // Once you have your list of author dictionaries, use it to build
-    // an HTML table displaying the author names and lifespan.
-    .then(function(teams) {
-
-        // Add the <option> elements to the <select> element
-        let selectorBody = '';
-        for (let k = 0; k < teams.length; k++) {
-            let team = teams[k];
-            selectorBody += '<option value="' + team['team'] + '">'
-                                + team['team'] + '</option>\n';
-        }
-
-
-        let selector = document.getElementById('team-selector');
-        if (selector) {
+                }
+                else{
+                    selectorBody += '<option value="' + team['team'] + '">'
+                                        + team['team'] + '</option>\n';
+                }
+            }
+            //if not a valid team in url, let the user know
+            if(!validTeam){
+                alert("bad url")
+            }
             selector.innerHTML = selectorBody;
-        }
-    })
+            //this is the only place i can put rosterquery so it runs correctly
+            rosterQuery();
 
+        })
 
-    // Log the error if anything went wrong during the fetch.
-    .catch(function(error) {
-        console.log(error);
-    });
+        // Log the error if anything went wrong during the fetch.
+        .catch(function(error) {
+            console.log(error);
+        });
+    }   
 }
+
+
 
 
 // ----------------- ROSTERS -------------------
-//Main funciton for loading rosters
 //Potential things to add:
 //Another table with stats for each player (option for box-score and advanced)
 //link player names to player info page
-function onRostersSelectorChanged() {
+function onRostersSelectorChanged(){
+    let year = document.getElementById('year-selector').value;
+    let team = document.getElementById('team-selector').value;
+    window.location.assign('/rosters/' + team + '/' + year);
+}
 
-    //inherits these values from initialize i guess?
-    let yearSelector = document.getElementById('year-selector');
-    let teamSelector = document.getElementById('team-selector');
-    let team = teamSelector.value;
-    let year = yearSelector.value;
-
+function rosterQuery() {
+    
+    let year = document.getElementById('year-selector').value;
+    let team = document.getElementById('team-selector').value;
+    
+    alert(team)
+    
     let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
     fetch(url, {method: 'get'})
+    
 
 
     // When the results come back, transform them from a JSON string into
@@ -189,8 +232,10 @@ function onRostersSelectorChanged() {
 
 
     })
+    
 
 }
+
 
 // ----------------- PLAYER-INFO -------------------
 
