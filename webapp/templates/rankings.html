@@ -35,7 +35,7 @@
   </ul>
 
   <br>
-
+    <div>
     <label for="rankings-team-selector">Team </label>
        {% if teamName %}
           <select id="rankings-team-selector" name="teams" class={{teamName}}></select>
@@ -49,6 +49,7 @@
         {% else %}
           <select id="rankings-year-selector" name="years"></select>
         {% endif %}
+    </div>
 
 
     <!--
