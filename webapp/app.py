@@ -17,7 +17,7 @@ def home():
     return flask.render_template('index.html')
 
 @app.route('/rosters/')
-def rostersNoSelections():
+def rosters_no_selections():
     return flask.render_template('rosters.html')
     
 @app.route('/rosters/<team_name>/<year>/')
@@ -26,18 +26,21 @@ def rosters(team_name, year):
 
 
 @app.route('/rankings/')
-def rankingsNoSelections():
+def rankings_no_selections():
     return flask.render_template('rankings.html')
 
 @app.route('/rankings/<team_name>/<year>/')
 def rankings(team_name, year):
     return flask.render_template('rankings.html', teamName = team_name, year = year)
 
-    
 
 @app.route('/player-info/')
-def player_info():
+def player_info_no_selections():
     return flask.render_template('player-info.html')
+
+@app.route('/player-info/<player_name>/')
+def player_info(player_name):
+    return flask.render_template('player-info.html', playerName = player_name)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('An NBA player statistics application, including API & DB')

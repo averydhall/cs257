@@ -14,16 +14,15 @@ function initialize() {
     loadRostersTeamSelector();
     loadRostersYearSelector();
     
-    //setting rosters to respond to input change
+    //setting rosters to change url as input changes
     let rostersYearSelector = document.getElementById('rosters-year-selector');
     let rostersTeamSelector = document.getElementById('rosters-team-selector');
     
-    currentUrl = window.location.href
       if (rostersYearSelector) {
-          rostersYearSelector.onchange = onRostersSelectorChanged;
+          rostersYearSelector.onchange = updateRostersUrl;
       }
       if (rostersTeamSelector) {
-          rostersTeamSelector.onchange = onRostersSelectorChanged;
+          rostersTeamSelector.onchange = updateRostersUrl;
       }
     
      
@@ -32,36 +31,39 @@ function initialize() {
     loadRankingsYearSelector();
     
     
-    //setting rankings to respond to input change
+    //setting rankings to change url as input changes
     let rankingsYearSelector = document.getElementById('rankings-year-selector');
     let rankingsTeamSelector = document.getElementById('rankings-team-selector');
-    
-    currentUrl = window.location.href
+
       if (rankingsYearSelector) {
-          rankingsYearSelector.onchange = onRankingsSelectorChanged;
+          rankingsYearSelector.onchange = updateRankingsUrl;
       }
       if (rankingsTeamSelector) {
-          rankingsTeamSelector.onchange = onRankingsSelectorChanged;
+          rankingsTeamSelector.onchange = updateRankingsUrl;
       }
     
     
-    //player selector is for player-info
+    // ------- loading player-info page --------
     loadPlayerSelector();
     //setting player-info to respond to input change
     let playerInput = document.getElementById('player-input');
-    let showAdvancedStats = document.getElementById('advanced-stats');
-    let showBoxScoreStats = document.getElementById('box-score-stats');
+    let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
+    let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
     
+    //setting player-info to change url as input changes
     if (playerInput) {
-        playerInput.onchange = onPlayerInputChanged;
+        playerInput.onchange = updatePlayerInfoUrl;
     }
-
+    
+    //telling player-info to re-fill table as different options are selected
     if (showAdvancedStats) {
-        showAdvancedStats.onchange = onPlayerInputChanged;
+        showAdvancedStats.onchange = fillPlayerInfoTable;
     }
     if (showBoxScoreStats) {
-        showBoxScoreStats.onchange = onPlayerInputChanged;
+        showBoxScoreStats.onchange = fillPlayerInfoTable;
     }
+    //once player page is loaded, fill the table
+    fillPlayerInfoTable()
 //
 //    //alert("in initialize")
 
@@ -113,7 +115,7 @@ function loadRostersYearSelector() {
         }
         //alert("in year selector")
         selector.innerHTML = selectorBody;
-//        rosterQuery();
+
     }
     //
     
@@ -134,7 +136,7 @@ function loadRostersTeamSelector() {
 //          selectorBody += '<option value="ATL">Atlanta Hawks - ATL 1969-2017</option>'
 //          
 //          selector.innerHTML = selectorBody;
-//          rosterQuery();
+//          fillRostersTable();
         
         let url = getAPIBaseURL() + '/teams';
 
@@ -173,9 +175,9 @@ function loadRostersTeamSelector() {
                 ////alert("bad url")
             }
             selector.innerHTML = selectorBody;
-            //this is the only place i can put rosterquery so it runs correctly
+            //this is the only place i can put fillRostersTable so it runs correctly
             //alert("in team selector")
-            rosterQuery();
+            fillRostersTable();
 
         })
 
@@ -187,27 +189,26 @@ function loadRostersTeamSelector() {
 }
 
 //this function changes the url if the user selection changes
-function onRostersSelectorChanged(){
+function updateRostersUrl(){
     let year = document.getElementById('rosters-year-selector').value;
     let team = document.getElementById('rosters-team-selector').value;
     window.location.href = '/rosters/' + team + '/' + year;
 }
 
 //this function generates rosters and sets them in roster-table html element
-//right now, this function is called in onRostersSelectorChanged because this is the only place it works
-//in initialize onRostersSelectorChanged is the last function to complete, 
-//so calling a rosterQuery works because all the selected values are set
+//right now, this function is called in loadRostersTeamSelector because this is the only place it works
+//in initialize, loadRostersTeamSelector is the last function to complete, 
+//so calling a fillRostersTable works because all the selected values are set
 //the same is the case with rankings
-function rosterQuery() {
-    //alert("rosterQuery run")
+function fillRostersTable() {
+
     let year = document.getElementById('rosters-year-selector').value;
     let team = document.getElementById('rosters-team-selector').value;
     
 //    if (team != ' - ' || year != ' - '){
 //want to check so we aren't unnecesarily executing a bunch of code
-//when we call rosterQuery from load year selector
+//when we call fillRostersTable from load year selector
     
-         //alert("real rosterQuery run")
         let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
         fetch(url, {method: 'get'})
 
@@ -314,7 +315,7 @@ function loadRankingsYearSelector() {
         }
         //alert("in year selector")
         selector.innerHTML = selectorBody;
-//        rosterQuery();
+//        fillRostersTable();
     }
     //
     
@@ -364,9 +365,9 @@ function loadRankingsTeamSelector() {
                 ////alert("bad url")
             }
             selector.innerHTML = selectorBody;
-            //this is the only place i can put rosterquery so it runs correctly
+            //this is the only place i can put fillRostersTable so it runs correctly
             //alert("in team selector")
-            rankingsQuery();
+            fillRankingsTable();
 
         })
 
@@ -377,7 +378,7 @@ function loadRankingsTeamSelector() {
     }   
 }
 
-//this function takes rankings from rankingsQuery and puts them on the page
+//this function takes rankings from fillRankingsTable and puts them on the page
 function pushRankingsTables(){
     let fullTable = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
     
@@ -391,7 +392,7 @@ function pushRankingsTables(){
           }
       }
     
-    //reinitialize global variables for the next time onRankingsSelectorChanged is called
+    //reinitialize global variables for the next time fillRankingsTable is called
     ptsTableBody = '';
     astTableBody = '';
     rebTableBody = '';
@@ -402,7 +403,7 @@ function pushRankingsTables(){
 
 }
 //this function changes the url if the user selection changes
-function onRankingsSelectorChanged(){
+function updateRankingsUrl(){
     let year = document.getElementById('rankings-year-selector').value;
     let team = document.getElementById('rankings-team-selector').value;
     window.location.href = '/rankings/' + team + '/' + year;
@@ -411,7 +412,7 @@ function onRankingsSelectorChanged(){
 
 //this function generates ranking lists
 //it passes ranking lists to pushRankingsTables
-function rankingsQuery() {
+function fillRankingsTable() {
     let yearSelector = document.getElementById('rankings-year-selector');
     let teamSelector = document.getElementById('rankings-team-selector');
     let team = teamSelector.value;
@@ -671,7 +672,7 @@ function loadPlayerSelector() {
     })
 }
 
-function onPlayerInputChanged() {
+function fillPlayerInfoTable() {
     let playerInput = document.getElementById('player-input');
     let playerUrl = playerInput.value.split(' ').join('-');
 
@@ -711,8 +712,8 @@ function onPlayerInputChanged() {
     .then(function(playerStats) {
 
         let tableBody = '';
-        let showAdvancedStats = document.getElementById('advanced-stats');
-        let showBoxScoreStats = document.getElementById('box-score-stats');
+        let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
+        let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
         
         //checking that a player has stats
         if (playerStats.length != 0){
@@ -846,5 +847,11 @@ function onPlayerInputChanged() {
     })
 }
 
+function updatePlayerInfoUrl(){
+    let player = document.getElementById('player-input').value;
+    player = player.replace(' ', '-')
+    window.location.href = '/player-info/' + player;
+    
+}
 
 
