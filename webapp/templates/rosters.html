@@ -36,13 +36,22 @@
        <br>
 
        <div>
+<!-- datalist option
+           <label for="rosters-team-selector">Start typing and select a team:</label><br>
+           <datalist id="rosters-team-list"></datalist>
+            {% if teamName %}
+              <input id="rosters-team-selector" list="rosters-team-list" value="{{teamName}}">
+            {% else %}
+              <input id="rosters-team-selector" list="rosters-team-list" >
+            {% endif %}
+-->
            <label for="rosters-team-selector">Team </label>
-
            {% if teamName %}
               <select id="rosters-team-selector" name="teams" class={{teamName}}></select>
             {% else %}
               <select id="rosters-team-selector" name="teams"></select>
             {% endif %}
+           
 
            <label for="rosters-year-selector">Year </label>
            {% if year %}
