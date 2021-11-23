@@ -19,23 +19,28 @@ table{
     overflow: auto;
 }
 
-td, th{
+td, th, tr{
     border: 1px solid black;
     font-size: 18px;
     background-color: white;
+    padding: 3px;
+    text-align: center;
 }
+
 
 table{
    border-collapse: separate;
-   border-spacing: 0; 
-   border: 1px solid black;    
-    
+   border-spacing: 0;
+   border: 1px solid black;
+
 }
 
 
+
+
 .container {
-  border: 1px solid black;
-  background-color: lightgray;
+  border: 0px solid black;
+  background-color: #bcdbdf;
   padding: 20px;
 }
 
@@ -59,17 +64,18 @@ h1 {
 /*Player info*/
 #player-info-container{
   display: grid;
-  grid-template-columns: 1fr 2.5fr;
+  grid-template-columns: 1fr 4.5fr;
 }
 
 
 
 #player-stats-table{
-    
-    
+  border-collapse: collapse;
+  border: 2px solid black;
+
 }
 #player-stats-table td, th{
-    font-size: .8em;
+    font-size: 0.9em;
 }
 
 #player-stats-container{
@@ -112,7 +118,7 @@ ul.horizontal-navbar {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #bcdbdf;
 }
 
 ul.horizontal-navbar li {
@@ -128,8 +134,24 @@ ul.horizontal-navbar li a {
 }
 
 ul.horizontal-navbar li a:hover {
-    background-color: #555;
+    background-color: #40a8c4;
     color: white;
+}
+
+.first-color {
+	background: #00204a;
+}
+
+.second-color {
+	background: #005792;
+}
+
+.third-color {
+	background: #00bbf0;
+}
+
+.fourth-color {
+	background: #fdb44b;
 }
 
 
@@ -151,4 +173,3 @@ ul.horizontal-navbar li a:hover {
 /*    border-collapse: separate;
 }
 */
-
