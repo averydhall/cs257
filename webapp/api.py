@@ -29,10 +29,10 @@ def getHelp():
         for line in f:
             contents += '</br>'
             contents += line
-        
+
     return contents
-    
-    
+
+
 #improve this by listing extinct teams separately at bottom of list
 @api.route('/teams')
 def getTeams():
@@ -59,14 +59,14 @@ def getTeams():
 @api.route('rosters/<team>/<year>')
 #CONCAT with asterisk is there so that players who have an asterisk by their name (all star season) are included
 def getRoster(team, year):
-    
+
     ''' Returns basic info for a team's roster
         The birthdate comparison is addressing a bug where players with the
         same name as a player on the roster that played some other year would show up
     '''
 
     query = '''
-                
+
                 SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -75,7 +75,7 @@ def getRoster(team, year):
                 players.weight,
                 players.birth_date,
                 players.college
-                 
+
 
                FROM players, stats
                WHERE (-1 + stats.year - CAST(RIGHT(players.birth_date, 4) AS int) = stats.age
@@ -163,7 +163,7 @@ def getPlayerInfoBio(player_name):
         connection.close()
     except Exception as e:
         print(e, file=sys.stderr)
-        
+
     return json.dumps(bio_list)
 
 
@@ -173,7 +173,7 @@ def getPlayerInfoStats(player_name):
     asterisk_name = player_name;
     asterisk_name += '*';
     #asterisk_name accounts for all-star seasons, where stats.name includes an extra asterisk
-    
+
     query = '''SELECT
                 year,
                 name,
@@ -311,3 +311,27 @@ def getRanking(category, team, year):
         print(e, file=sys.stderr)
 
     return json.dumps(ranking)
+
+
+#This endpoint does not get used in the current iteration of the website,
+# but it was left in this api due to its potential usefulness for future
+# development.
+@api.route('/team-selector-info')
+def getTeamSelectorInfo():
+    query = '''SELECT stats.team, MIN(stats.year), MAX(stats.year)
+                FROM stats
+                GROUP BY stats.team;'''
+    yearRanges = {}
+    try:
+        connection = getConnection()
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            if (row[0] != None):
+                yearRanges[row[0]] = str(row[1]) + '-' + str(row[2])
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(getTeamSelectorInfo)
