@@ -11,12 +11,16 @@ window.onload = initialize;
 //or changes search selections in rankings, rosters, or player_info
 function initialize() {
     // ------- loading roster page -------
+
     loadRostersTeamSelector();
     loadRostersYearSelector();
 
     //setting rosters to change url as input changes
     let rostersYearSelector = document.getElementById('rosters-year-selector');
     let rostersTeamSelector = document.getElementById('rosters-team-selector');
+      if (rostersTeamSelector) {
+          fillRostersTable();
+      }
 
       if (rostersYearSelector) {
           rostersYearSelector.onchange = updateRostersUrl;
@@ -24,7 +28,7 @@ function initialize() {
       if (rostersTeamSelector) {
           rostersTeamSelector.onchange = updateRostersUrl;
       }
-
+      
 
     // ------- loading rankings page --------
     loadRankingsTeamSelector();
@@ -34,7 +38,9 @@ function initialize() {
     //setting rankings to change url as input changes
     let rankingsYearSelector = document.getElementById('rankings-year-selector');
     let rankingsTeamSelector = document.getElementById('rankings-team-selector');
-
+      if (rankingsYearSelector) {  
+            fillRankingsTable()
+      }
       if (rankingsYearSelector) {
           rankingsYearSelector.onchange = updateRankingsUrl;
       }
@@ -62,8 +68,12 @@ function initialize() {
     if (showBoxScoreStats) {
         showBoxScoreStats.onchange = fillPlayerInfoTable;
     }
+    if (showBoxScoreStats || showAdvancedStats){
+        fillPlayerInfoTable()
+    }
+        
     //once player page is loaded, fill the table
-    fillPlayerInfoTable()
+    
 //
 //    //alert("in initialize")
 
@@ -126,65 +136,98 @@ function loadRostersYearSelector() {
 //then it assembles the list of team options, selecting by default the team in the url
 
 function loadRostersTeamSelector() {
-    let selector = document.getElementById('rosters-team-selector');
-    //so this doesn't run on player-info page
-    if (selector) {
-        //other option - giving more info - we should do this
-        //this probably means making a datalist to select from in rosters
-//          let selectorBody = '';
-//          selectorBody += '<option value="BOS">Boston Celtics - BOS 1950-2017</option>'
-//          selectorBody += '<option value="ATL">Atlanta Hawks - ATL 1969-2017</option>'
-//
-//          selector.innerHTML = selectorBody;
-//          fillRostersTable();
+        let selector = document.getElementById('rosters-team-selector');
+        if (selector) {
+              //setting our list of teams to pick
+              let selectorBody = '<option selected disabled hidden> - </option>' +
+              '<option disabled>Active Teams</option>' +
+              '<option value="ATL">Atlanta Hawks (1969-) </option>' +
+              '<option value="BOS">Boston Celtics (1950-) </option>' +
+              '<option value="BRK">Brooklyn Nets (2013-)</option>' +      
+              '<option value="CHO">Charlotte Hornets (2015-) </option>' +
+              '<option value="CHI">Chicago Bulls (1967-)</option>' +
+              '<option value="CLE">Cleveland Cavaliers (1971-)</option>' +
+                '<option value="DAL">Dallas Mavericks (1981-)</option>' +
+                '<option value="DEN">Denver Nuggets (1977-)</option>' +
+                '<option value="DET">Detroit Pistons (1958-)</option>' +
+                '<option value="GSW">Golden State Warriors (1972-)</option>' +
+                '<option value="HOU">Houston Rockets (1972-)</option>' +
+                '<option value="IND">Indiana Pacers (1977-)</option>' +
+                '<option value="LAC">Los Angeles Clippers (1985-)</option>' +
+                '<option value="LAL">Los Angeles Lakers (1961-)</option>' +
+                '<option value="MEM">Memphis Grizzlies (2002-)</option>' +
+                '<option value="MIA">Miami Heat (1989-)</option>' +
+                '<option value="MIL">Milwaukee Bucks (1969-)</option>' +
+                '<option value="MIN">Minnesota Timberwolves (1990-)</option>' +
+                '<option value="NOP">New Orleans Pelicans (2014-)</option>' +
+                '<option value="NYK">New York Knicks (1950-)</option>' +
+                '<option value="OKC">Oklahoma City Thunder (2009-)</option>' +
+                '<option value="ORL">Orlando Magic (1990-)</option>' +
+                '<option value="PHI">Philadelphia 76ers (1964-)</option>' +
+                '<option value="PHO">Phoenix Suns (1969-)</option>' +
+                '<option value="POR">Portland Trail Blazers (1971-)</option>' +
+                '<option value="SAC">Sacramento Kings (1986-)</option>' +
+                '<option value="SAS">San Antonio Spurs (1977-)</option>' +
+                '<option value="TOR">Toronto Raptors (1996-)</option>' +
+                '<option value="UTA">Utah Jazz (1980-)</option>' +
+                '<option value="WAS">Washington Wizards (1998-)</option>' +
+                '<option disabled>Defunct Teams</option>' +
+        
+                '<option value="AND">Anderson Packers (1950-1950)</option>' + 
+                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' + 
+                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' + 
 
-        let url = getAPIBaseURL() + '/teams';
-
-        // Send the request to the books API /teams endpoint
-        fetch(url, {method: 'get'})
-
-        // When the results come back, transform them from a JSON string into
-        // a Javascript object (in this case, a list of author dictionaries).
-        .then((response) => response.json())
-
-        // Once you have your list of author dictionaries, use it to build
-        // an HTML table displaying the author names and lifespan.
-        .then(function(teams) {
-            let selectorBody = '';
-            selectorBody += '<option selected disabled hidden> - </option>';
-            // Add the <option> elements to the <select> element
+                '<option value="BUF">Buffalo Braves (1971-1978)</option>' + 
+                '<option value="CAP">Capital Bullets (1974-1974)</option>' + 
+                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' + 
+                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' + 
+                '<option value="CHP">Chicago Packers (1962-1962)</option>' + 
+                '<option value="CHS">Chicago Stags (1950-1950)</option>' + 
+                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' + 
+                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' + 
+                '<option value="DNN">Denver Nuggets (1950-1950)</option>' + 
+                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' + 
+                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' + 
+                '<option value="KCK">Kansas City Kings (1976-1985)</option>' + 
+                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' + 
+                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' + 
+                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' + 
+                '<option value="NJN">New Jersey Nets (1978-2012)</option>' + 
+                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' + 
+                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' + 
+                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' + 
+                '<option value="NYN">New York Nets (1977-1977)</option>' + 
+                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' + 
+                '<option value="ROC">Rochester Royals (1950-1957)</option>' + 
+                '<option value="SDC">San Diego Clippers (1979-1984)</option>' + 
+                '<option value="SDR">San Diego Rockets (1968-1971)</option>' + 
+                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' + 
+                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' + 
+                //probably just omit this one
+                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' + 
+                '<option value="STB">St. Louis Bombers (1950-1950)</option>' + 
+                '<option value="STL">St. Louis Hawks (1956-1968)</option>' + 
+                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' + 
+                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' + 
+                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' + 
+                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' + 
+                '<option value="WSB">Washington Bullets (1975-1997)</option>' + 
+                '<option value="WSC">Washington Capitols (1950-1951)</option>';
+            
+              
+            //marking one team as selected. This team's abreviation is passed to 
+            //rosters-team-selector as a class whenever rosters/<team_name>/<year> is called.
+            //this relies on the options in selectorBody being written exactly with:
+            //<option value="[TEAM ABREVIATION]">
             let selectedTeam = selector.getAttribute('class');
-
-            for (let k = 0; k < teams.length; k++) {
-                let team = teams[k];
-                //setting selectedTeam as the selected option
-                if (team['team'] === selectedTeam){
-                    selectorBody += '<option value="' + team['team'] + '" selected>'
-                                        + team['team'] + '</option>\n';
-                    //checking that the team is valid
-                    var validTeam = true;
-
-                }
-                else{
-                    selectorBody += '<option value="' + team['team'] + '">'
-                                        + team['team'] + '</option>\n';
-                }
+            let selectedTeamTag = ' value="' + selectedTeam + '"'
+            let finalSelectedTeamTag = selectedTeamTag + ' selected'
+            
+            if (selectorBody.includes(selectedTeamTag)){
+                selectorBody = selectorBody.replace(selectedTeamTag, finalSelectedTeamTag)
             }
-            //if not a valid team in url, let the user know
-            if(!validTeam){
-                ////alert("bad url")
-            }
+                
             selector.innerHTML = selectorBody;
-            //this is the only place i can put fillRostersTable so it runs correctly
-            //alert("in team selector")
-            fillRostersTable();
-
-        })
-
-        // Log the error if anything went wrong during the fetch.
-        .catch(function(error) {
-            console.log(error);
-        });
     }
 }
 
@@ -205,9 +248,6 @@ function fillRostersTable() {
     let year = document.getElementById('rosters-year-selector').value;
     let team = document.getElementById('rosters-team-selector').value;
 
-//    if (team != ' - ' || year != ' - '){
-//want to check so we aren't unnecesarily executing a bunch of code
-//when we call fillRostersTable from load year selector
 
         let url = getAPIBaseURL() + '/rosters/' + team + '/' + year;
         fetch(url, {method: 'get'})
@@ -219,12 +259,13 @@ function fillRostersTable() {
         .then((response) => response.json())
 
         .then(function(roster) {
-
+            
             let selectorYear = document.getElementById('rosters-year-selector');
             let selectedYear = selectorYear.getAttribute('class');
 
             let selectorTeam = document.getElementById('rosters-team-selector');
-            let selectedTeam = selectorTeam.getAttribute('class');
+            let selectedTeam = selectorTeam.input;
+                //selectorTeam.getAttribute('class');
 
 
 
@@ -270,9 +311,6 @@ function fillRostersTable() {
               }
             }
 
-
-
-
             // Put the table body we just built inside the table that's already on the page.
             let rosterTable = document.getElementById('roster-table');
             if(rosterTable){
@@ -281,6 +319,10 @@ function fillRostersTable() {
 
 
         })
+        .catch(function(error) {
+            
+            console.log(error);
+        });
 
 
 }
@@ -344,56 +386,98 @@ function loadRankingsYearSelector() {
 //it takes the team from the url (either generated from selections or entered manually)
 //then it assembles the list of team options, selecting by default the team in the url
 function loadRankingsTeamSelector() {
-    let selector = document.getElementById('rankings-team-selector');
-    //so this doesn't run on player-info page
-    if (selector) {
-        let url = getAPIBaseURL() + '/teams';
+        let selector = document.getElementById('rankings-team-selector');
+        if (selector) {
+              //setting our list of teams to pick
+              let selectorBody = '<option selected disabled hidden> - </option>' +
+              '<option disabled>Active Teams</option>' +
+              '<option value="ATL">Atlanta Hawks (1969-) </option>' +
+              '<option value="BOS">Boston Celtics (1950-) </option>' +
+              '<option value="BRK">Brooklyn Nets (2013-)</option>' +      
+              '<option value="CHO">Charlotte Hornets (2015-) </option>' +
+              '<option value="CHI">Chicago Bulls (1967-)</option>' +
+              '<option value="CLE">Cleveland Cavaliers (1971-)</option>' +
+                '<option value="DAL">Dallas Mavericks (1981-)</option>' +
+                '<option value="DEN">Denver Nuggets (1977-)</option>' +
+                '<option value="DET">Detroit Pistons (1958-)</option>' +
+                '<option value="GSW">Golden State Warriors (1972-)</option>' +
+                '<option value="HOU">Houston Rockets (1972-)</option>' +
+                '<option value="IND">Indiana Pacers (1977-)</option>' +
+                '<option value="LAC">Los Angeles Clippers (1985-)</option>' +
+                '<option value="LAL">Los Angeles Lakers (1961-)</option>' +
+                '<option value="MEM">Memphis Grizzlies (2002-)</option>' +
+                '<option value="MIA">Miami Heat (1989-)</option>' +
+                '<option value="MIL">Milwaukee Bucks (1969-)</option>' +
+                '<option value="MIN">Minnesota Timberwolves (1990-)</option>' +
+                '<option value="NOP">New Orleans Pelicans (2014-)</option>' +
+                '<option value="NYK">New York Knicks (1950-)</option>' +
+                '<option value="OKC">Oklahoma City Thunder (2009-)</option>' +
+                '<option value="ORL">Orlando Magic (1990-)</option>' +
+                '<option value="PHI">Philadelphia 76ers (1964-)</option>' +
+                '<option value="PHO">Phoenix Suns (1969-)</option>' +
+                '<option value="POR">Portland Trail Blazers (1971-)</option>' +
+                '<option value="SAC">Sacramento Kings (1986-)</option>' +
+                '<option value="SAS">San Antonio Spurs (1977-)</option>' +
+                '<option value="TOR">Toronto Raptors (1996-)</option>' +
+                '<option value="UTA">Utah Jazz (1980-)</option>' +
+                '<option value="WAS">Washington Wizards (1998-)</option>' +
+                '<option disabled>Defunct Teams</option>' +
+        
+                '<option value="AND">Anderson Packers (1950-1950)</option>' + 
+                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' + 
+                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' + 
 
-        // Send the request to the books API /teams endpoint
-        fetch(url, {method: 'get'})
-
-        // When the results come back, transform them from a JSON string into
-        // a Javascript object (in this case, a list of author dictionaries).
-        .then((response) => response.json())
-
-        // Once you have your list of author dictionaries, use it to build
-        // an HTML table displaying the author names and lifespan.
-        .then(function(teams) {
-            let selectorBody = '';
-            selectorBody += '<option selected disabled hidden> - </option>';
-            // Add the <option> elements to the <select> element
+                '<option value="BUF">Buffalo Braves (1971-1978)</option>' + 
+                '<option value="CAP">Capital Bullets (1974-1974)</option>' + 
+                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' + 
+                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' + 
+                '<option value="CHP">Chicago Packers (1962-1962)</option>' + 
+                '<option value="CHS">Chicago Stags (1950-1950)</option>' + 
+                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' + 
+                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' + 
+                '<option value="DNN">Denver Nuggets (1950-1950)</option>' + 
+                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' + 
+                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' + 
+                '<option value="KCK">Kansas City Kings (1976-1985)</option>' + 
+                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' + 
+                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' + 
+                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' + 
+                '<option value="NJN">New Jersey Nets (1978-2012)</option>' + 
+                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' + 
+                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' + 
+                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' + 
+                '<option value="NYN">New York Nets (1977-1977)</option>' + 
+                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' + 
+                '<option value="ROC">Rochester Royals (1950-1957)</option>' + 
+                '<option value="SDC">San Diego Clippers (1979-1984)</option>' + 
+                '<option value="SDR">San Diego Rockets (1968-1971)</option>' + 
+                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' + 
+                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' + 
+                //probably just omit this one
+                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' + 
+                '<option value="STB">St. Louis Bombers (1950-1950)</option>' + 
+                '<option value="STL">St. Louis Hawks (1956-1968)</option>' + 
+                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' + 
+                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' + 
+                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' + 
+                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' + 
+                '<option value="WSB">Washington Bullets (1975-1997)</option>' + 
+                '<option value="WSC">Washington Capitols (1950-1951)</option>';
+            
+              
+            //marking one team as selected. This team's abreviation is passed to 
+            //rosters-team-selector as a class whenever rosters/<team_name>/<year> is called.
+            //this relies on the options in selectorBody being written exactly with:
+            //<option value="[TEAM ABREVIATION]">
             let selectedTeam = selector.getAttribute('class');
-
-            for (let k = 0; k < teams.length; k++) {
-                let team = teams[k];
-                //setting selectedTeam as the selected option
-                if (team['team'] === selectedTeam){
-                    selectorBody += '<option value="' + team['team'] + '" selected>'
-                                        + team['team'] + '</option>\n';
-                    //checking that the team is valid
-                    var validTeam = true;
-
-                }
-                else{
-                    selectorBody += '<option value="' + team['team'] + '">'
-                                        + team['team'] + '</option>\n';
-                }
+            let selectedTeamTag = ' value="' + selectedTeam + '"'
+            let finalSelectedTeamTag = selectedTeamTag + ' selected'
+            
+            if (selectorBody.includes(selectedTeamTag)){
+                selectorBody = selectorBody.replace(selectedTeamTag, finalSelectedTeamTag)
             }
-            //if not a valid team in url, let the user know
-            if(!validTeam){
-                ////alert("bad url")
-            }
+                
             selector.innerHTML = selectorBody;
-            //this is the only place i can put fillRostersTable so it runs correctly
-            //alert("in team selector")
-            fillRankingsTable();
-
-        })
-
-        // Log the error if anything went wrong during the fetch.
-        .catch(function(error) {
-            console.log(error);
-        });
     }
 }
 
