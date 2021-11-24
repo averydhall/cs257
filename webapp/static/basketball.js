@@ -836,52 +836,52 @@ function fillPlayerInfoTable() {
             //adding table headers
             tableBody += '<tr>'
                             + '<th class="player-stats-table-year-cell">Year</th>'
-                            //+ '<th>name</th>'
-                            //+ '<th>position</th>'
-                            + '<th>Age</th>'
-                            + '<th>Team</th>'
-                            + '<th>G</th>'
-                            + '<th>GS</th>'
-                            + '<th>MP</th>';
+                            //+ '<th><span title="Name">name</span></th>'
+                            //+ '<th><span title="Position">position</span></th>'
+                            + '<th><span title="Age">Age</span></th>'
+                            + '<th><span title="Team">Team</span></th>'
+                            + '<th><span title="Games">G</span></th>'
+                            + '<th><span title="Games Started">GS</span></th>'
+                            + '<th><span title="Minutes Played">MP</span></th>';
 
                             //if statements check which columns the user requested
 
                             if (showBoxScoreStats.checked) {
-                                tableBody += '<th>FG</th>'
-                                + '<th>FGA</th>'
-                                + '<th>FG%</th>'
-                                + '<th>3P</th>'
-                                + '<th>3PA</th>'
-                                + '<th>3P%</th>'
-                                + '<th>2P</th>'
-                                + '<th>2PA</th>'
-                                + '<th>2P%</th>'
-                                + '<th>eFG%</th>'
-                                + '<th>FT</th>'
-                                + '<th>FTA</th>'
-                                + '<th>FT%</th>'
-                                + '<th>ORB</th>'
-                                + '<th>DRB</th>'
-                                + '<th>TRB</th>'
-                                + '<th>AST</th>'
-                                + '<th>STL</th>'
-                                + '<th>BLK</th>'
-                                + '<th>TOV</th>'
-                                + '<th>PF</th>'
-                                + '<th>PTS</th>'
+                                tableBody += '<th><span title="Games">FG</span></th>'
+                                + '<th><span title="Field Goals Attempted">FGA</span></span></th>'
+                                + '<th><span title="Field Goal Percentage">FG%</span></span></th>'
+                                + '<th><span title="Three Pointers Made">3P</span></span></th>'
+                                + '<th><span title="Three Pointers Attempted">3PA</span></span></th>'
+                                + '<th><span title="Three Point Percentage">3P%</span></span></th>'
+                                + '<th><span title="Two Pointers Made">2P</span></span></th>'
+                                + '<th><span title="Two Pointers Attempted">2PA</span></th>'
+                                + '<th><span title="Two Point Percentage">2P%</span></th>'
+                                + '<th><span title="Effective Field Goal Percentage">eFG%</span></th>'
+                                + '<th><span title="Free Throws Made">FT</span></th>'
+                                + '<th><span title="Free Throws Attempted">FTA</span></th>'
+                                + '<th><span title="Free Throw Percentage">FT%</span></th>'
+                                + '<th><span title="Offensive Rebounds">ORB</span></th>'
+                                + '<th><span title="Defensive Rebounds">DRB</span></th>'
+                                + '<th><span title="Total Rebounds">TRB</span></th>'
+                                + '<th><span title="Assists">AST</span></th>'
+                                + '<th><span title="Steals">STL</span></th>'
+                                + '<th><span title="Blocks">BLK</span></th>'
+                                + '<th><span title="Turnovers">TOV</span></th>'
+                                + '<th><span title="Personal Fouls">PF</span></th>'
+                                + '<th><span title="Points">PTS</span></th>'
                             }
                             if (showAdvancedStats.checked) {
-                              tableBody += '<th>PER</th>'
-                              + '<th>TS%</th>'
-                              + '<th>USG%</th>'
-                              + '<th>OWS</th>'
-                              + '<th>DWS</th>'
-                              + '<th>WS</th>'
-                              + '<th>WS_per_48</th>'
-                              + '<th>OBPM</th>'
-                              + '<th>DBPM</th>'
-                              + '<th>BPM</th>'
-                              + '<th>VORP</th>';
+                              tableBody += '<th><span title="Player Efficiency Rating">PER</span></th>'
+                              + '<th><span title="True Shooting Percentage">TS%</span></th>'
+                              + '<th><span title="Usage Percentage">USG%</span></th>'
+                              + '<th><span title="Offensive Win Shares">OWS</span></th>'
+                              + '<th><span title="Defensive Win Shares">DWS</span></th>'
+                              + '<th><span title="Win Shares">WS</span></th>'
+                              + '<th><span title="Win Shares Per 48 Minutes">WS_per_48</span></th>'
+                              + '<th><span title="Offensive Box Plus/Minus">OBPM</span></th>'
+                              + '<th><span title="Defensive Box Plus/Minus">DBPM</span></th>'
+                              + '<th><span title="Box Plus/Minus">BPM</span></th>'
+                              + '<th><span title="Value Over Replacement Player">VORP</span></th>';
                             }
                             + '</tr>\n';
 
@@ -895,11 +895,16 @@ function fillPlayerInfoTable() {
                             + '<td class="player-stats-table-year-cell">' + playerSeason['year'] + '</td>'
                             //+ '<td>' + playerSeason['name'] + '</td>'
                             //+ '<td>' + playerSeason['position'] + '</td>'
-                            + '<td>' + playerSeason['age'] + '</td>'
+                            + '<td>' + playerSeason['age'] + '</td>';
                             //this is a link to the roster the player was on
-                            + '<td class="team-in-player-stats"><a href="/rosters/' + playerSeason['team'] + '/' + playerSeason['year'] + '">' +
-                            playerSeason['team'] + '</a></td>'
-                            + '<td>' + playerSeason['G'] + '</td>'
+                            if (playerSeason['team'] != 'TOT'){
+                              tableBody += '<td class="team-in-player-stats"><a href="/rosters/' + playerSeason['team']
+                              + '/' + playerSeason['year'] + '">' + playerSeason['team'] + '</a></td>';
+                            }
+                            else {
+                              tableBody += '<td class="team-in-player-stats">' + playerSeason['team'] + '</td>';
+                            }
+                            tableBody += '<td>' + playerSeason['G'] + '</td>'
                             + '<td>' + playerSeason['GS'] + '</td>'
                             + '<td>' + playerSeason['MP'] + '</td>';
 
