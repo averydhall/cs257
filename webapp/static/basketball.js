@@ -279,7 +279,7 @@ function fillRostersTable() {
 
                   tableBody += '<tr>'
                                   + '<th>Name</th>'
-                                  + '<th>Experience</th>'
+                                  + '<th id="experience-info">Years Played</th>'
                                   + '<th>Postion</th>'
                                   + '<th>Height</th>'
                                   + '<th>Weight</th>'
