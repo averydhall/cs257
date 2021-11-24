@@ -1,7 +1,7 @@
 '''
     api.py
     Anders Shenholm and Avery Hall
-    10, November 2021
+    November 23, 2021
 
     API for Hoopdata web app
 '''
@@ -24,6 +24,8 @@ def getConnection():
 
 @api.route('/help')
 def getHelp():
+    '''Returns usage information in text form
+    '''
     contents = '';
     with open("api-help.txt", "r") as f:
         for line in f:
@@ -33,36 +35,16 @@ def getHelp():
     return contents
 
 
-#improve this by listing extinct teams separately at bottom of list
-@api.route('/teams')
-def getTeams():
-    ''' Returns a list of the teams in the db (in order)
-    '''
-    query = '''SELECT DISTINCT stats.team FROM stats ORDER BY stats.team; '''
-
-    team_list = []
-    try:
-        connection = getConnection()
-        cursor = connection.cursor()
-        cursor.execute(query, tuple())
-        for row in cursor:
-            team = {'team':row[0]}
-            if not team['team'] == None:
-                team_list.append(team)
-        cursor.close()
-        connection.close()
-    except Exception as e:
-        print(e, file=sys.stderr)
-
-    return json.dumps(team_list)
-
 @api.route('rosters/<team>/<year>')
-#CONCAT with asterisk is there so that players who have an asterisk by their name (all star season) are included
 def getRoster(team, year):
 
     ''' Returns basic info for a team's roster
         The birthdate comparison is addressing a bug where players with the
         same name as a player on the roster that played some other year would show up
+        
+        We check that a player is an appropriate age so different players with the same name aren't included on the roster
+        
+        Some players in the database have an asterisk by their name (all star season), so we check to see if there is a stats.name matching the player's name or their name with an asterisk.
     '''
 
     query = '''
@@ -86,7 +68,7 @@ def getRoster(team, year):
                AND stats.year = %s
                ORDER BY stats.pts DESC
                '''
-    #player age and birthdate
+   
     roster = []
     try:
         connection = getConnection()
@@ -104,6 +86,10 @@ def getRoster(team, year):
         print(e, file=sys.stderr)
 
     return json.dumps(roster)
+
+
+
+
 
 # --------------------- PLAYER-INFO ----------------------
 
@@ -135,7 +121,9 @@ def getPlayerInfoBio(player_name):
     ''' Returns info needed for bio on player page
     '''
     bio_list = []
-    player_name = player_name.replace('-', ' ').replace('*', '');
+    
+    #stripping '_' which is used to connect player names in the URL
+    player_name = player_name.replace('_', ' ');
     query = '''SELECT players.name,
                 players.first_year,
                 players.last_year,
@@ -169,7 +157,7 @@ def getPlayerInfoBio(player_name):
 
 @api.route('/player-info/stats/<player_name>/')
 def getPlayerInfoStats(player_name):
-    player_name = player_name.replace('-', ' ');
+    player_name = player_name.replace('_', ' ');
     asterisk_name = player_name;
     asterisk_name += '*';
     #asterisk_name accounts for all-star seasons, where stats.name includes an extra asterisk
@@ -335,3 +323,28 @@ def getTeamSelectorInfo():
         print(e, file=sys.stderr)
 
     return json.dumps(getTeamSelectorInfo)
+
+
+@api.route('/teams')
+def getTeams():
+    ''' Returns a list of the teams in the db (in order)
+        This isn't currently used by the app, though it could in the future
+    '''
+    query = '''SELECT DISTINCT stats.team FROM stats ORDER BY stats.team; '''
+
+    team_list = []
+    try:
+        connection = getConnection()
+        cursor = connection.cursor()
+        cursor.execute(query, tuple())
+        for row in cursor:
+            team = {'team':row[0]}
+            if not team['team'] == None:
+                team_list.append(team)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(team_list)
+

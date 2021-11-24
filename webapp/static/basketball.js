@@ -1,7 +1,8 @@
 /*
     basketball.js
+    All js for hoopdata webapp
     Anders Shenholm and Avery Hall
-    10, November 2021
+    November 23, 2021
 */
 
 window.onload = initialize;
@@ -299,8 +300,8 @@ function fillRostersTable() {
                   //experience measures how many previous seasons a player has played
 
                   tableBody += '<tr>'
-                                  //at some point we can add a link to player info page
-                                  + '<td>' + player['name'] + '</td>'
+                                  //linking to player-info page
+                                  + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                                   + '<td>' + experience + '</td>'
                                   + '<td>' + player['position'] + '</td>'
                                   + '<td>' + player['height'] + '</td>'
@@ -488,7 +489,7 @@ function pushRankingsTables(){
     let rankingTable = document.getElementById('rankings-table');
       if(rankingTable){
           if(validRankingsSearch === false){
-               rankingTable.innerHTML = "<td><b>Select a valid team and year</b></td>";
+               rankingTable.innerHTML = "<td><b>Select a team and year...</b></td>";
           }
           else if (validRankingsSearch === true && teamExists === false){
                 rankingTable.innerHTML = "<td><b>This team didn't exist this year</b></td>";
@@ -550,9 +551,8 @@ function fillRankingsTable() {
               for (let k = 0; k < ranking.length; k++) {
                   let player = ranking[k];
                     ptsTableBody += '<tr>'
-                    + '<td>'
-                    + player['name']
-                    + '</td>'
+                    //linking to player-info page
+                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                     + '<td>'
                     + player['stat_total']
                     + '</td>'
@@ -585,9 +585,8 @@ function fillRankingsTable() {
               for (let k = 0; k < ranking.length; k++) {
                   let player = ranking[k];
                     rebTableBody += '<tr>'
-                    + '<td>'
-                    + player['name']
-                    + '</td>'
+                    //linking to player-info page
+                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                     + '<td>'
                     + player['stat_total']
                     + '</td>'
@@ -624,9 +623,8 @@ function fillRankingsTable() {
                   for (let k = 0; k < ranking.length; k++) {
                       let player = ranking[k];
                         astTableBody += '<tr>'
-                        + '<td>'
-                        + player['name']
-                        + '</td>'
+                        //linking to player-info page
+                         + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                         + '<td>'
                         + player['stat_total']
                         + '</td>'
@@ -660,9 +658,8 @@ function fillRankingsTable() {
                       for (let k = 0; k < ranking.length; k++) {
                           let player = ranking[k];
                             stlTableBody += '<tr>'
-                            + '<td>'
-                            + player['name']
-                            + '</td>'
+                            //linking to player-info page
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
@@ -696,9 +693,8 @@ function fillRankingsTable() {
                       for (let k = 0; k < ranking.length; k++) {
                           let player = ranking[k];
                             blkTableBody += '<tr>'
-                            + '<td>'
-                            + player['name']
-                            + '</td>'
+                            //linking to player-info page
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
@@ -731,9 +727,8 @@ function fillRankingsTable() {
                       for (let k = 0; k < ranking.length; k++) {
                           let player = ranking[k];
                             tovTableBody += '<tr>'
-                            + '<td>'
-                            + player['name']
-                            + '</td>'
+                            //linking to player-info page
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
@@ -796,7 +791,7 @@ function loadPlayerSelector() {
 
 function fillPlayerInfoTable() {
     let playerInput = document.getElementById('player-input');
-    let playerUrl = playerInput.value.split(' ').join('-');
+    let playerUrl = playerInput.value;
 
     //GETTING BIO PARAGRAPH
     let bioUrl = getAPIBaseURL() + '/player-info/bio/' + playerUrl;
@@ -971,7 +966,7 @@ function fillPlayerInfoTable() {
 
 function updatePlayerInfoUrl(){
     let player = document.getElementById('player-input').value;
-    player = player.replace(' ', '-')
+    player = player.replace(' ', '_')
     window.location.href = '/player-info/' + player;
 
 }

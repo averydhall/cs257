@@ -1,4 +1,4 @@
-Usage info for HoopData API.
+Usage info for HoopData API. API by Anders Shenholm and Avery Hall
 
 
 REQUEST: /teams
@@ -90,7 +90,7 @@ Each dictionary in this list will have the following fields.
   college -- (TEXT) player's college
 
 EXAMPLE(S):
-   /player-info/bio/LeBron-James/
+   /player-info/bio/LeBron_James/
 
       [{"name": "LeBron James", "first_year": 2004, "last_year": 2018,
       "position": "F-G", "height": "6-8", "weight": 250, "birth_date":
