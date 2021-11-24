@@ -1,7 +1,7 @@
 <!--
     rankings.html
     Anders Shenholm and Avery Hall
-    10, November 2021
+    November 23, 2021
 
     rankings page for Hoopdata web app
 -->
@@ -36,6 +36,7 @@
 
   <br>
     <div>
+    <!--handling variables from when flask loads a template. teamName and year are user inputs via dropdown selections (or setting an url)-->
     <label for="rankings-team-selector">Team </label>
        {% if teamName %}
           <select id="rankings-team-selector" name="teams" class={{teamName}}></select>

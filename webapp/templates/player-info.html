@@ -1,7 +1,7 @@
 <!--
     player-info.html
     Anders Shenholm and Avery Hall
-    10, November 2021
+    November 23, 2021
 
     player info page for HOOPDATA
 -->
@@ -38,9 +38,9 @@
 
   <label for="player-input">Start typing and select a player:</label><br>
   <datalist id="player-selector"></datalist>
-
+  <!--handling variables from when flask loads a template. playerName is determined by url (usually set by user input)-->
   {% if playerName %}
-      <input list="player-selector" id="player-input" value="{{ playerName|replace("-", " ") }}">
+      <input list="player-selector" id="player-input" value="{{ playerName|replace("_", " ") }}">
     {% else %}
       <input list="player-selector" id="player-input">
     {% endif %}

@@ -1,7 +1,7 @@
 '''
     app.py
     Anders Shenholm and Avery Hall
-    10, November 2021
+    November 23, 2021
 
     Flask App for Hoopdata web app
 '''
