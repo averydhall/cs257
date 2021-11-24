@@ -316,8 +316,8 @@ def getRanking(category, team, year):
 #This endpoint does not get used in the current iteration of the website,
 # but it was left in this api due to its potential usefulness for future
 # development.
-@api.route('/team-selector-info')
-def getTeamSelectorInfo():
+@api.route('/team-year-ranges')
+def getAllTeamYearRanges():
     query = '''SELECT stats.team, MIN(stats.year), MAX(stats.year)
                 FROM stats
                 GROUP BY stats.team;'''
@@ -328,10 +328,10 @@ def getTeamSelectorInfo():
         cursor.execute(query)
         for row in cursor:
             if (row[0] != None):
-                yearRanges[row[0]] = str(row[1]) + '-' + str(row[2])
+                yearRanges[row[0]] = [str(row[1]), str(row[2])]
         cursor.close()
         connection.close()
     except Exception as e:
         print(e, file=sys.stderr)
 
-    return json.dumps(getTeamSelectorInfo)
+    return json.dumps(yearRanges)
