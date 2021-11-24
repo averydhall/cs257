@@ -18,7 +18,7 @@ EXAMPLE(S):
       (output abbreviated)
 
 
-REQUEST: /rosters/<team>/<year>
+REQUEST: /rosters/{team}/{year}
 
 RESPONSE: a JSON list of dictionaries which represents an NBA roster for a
 given team and year, each of whose dictionaries represents a single player on
@@ -62,7 +62,7 @@ this list will have the following fields.
 
 
 EXAMPLE(S):
-    /player-info/bio/<player_name>/
+    /player-info/bio/{player_name}/
 
 
        [{"player": "A.C. Green"}, {"player": "A.J. Bramlett"}, {"player": "A.J.
@@ -74,7 +74,7 @@ EXAMPLE(S):
        (output abbreviated)
 
 
-REQUEST: /player-info/bio/<player_name>/
+REQUEST: /player-info/bio/{player_name}/
 
 RESPONSE: a JSON dictionary which represents one player, each of
 whose elements represents one piece of bio information about that player.
@@ -97,7 +97,7 @@ EXAMPLE(S):
       "December 30, 1984", "college": "n/a"}]
 
 
-REQUEST: /player-info/stats/<player_name>/
+REQUEST: /player-info/stats/{player_name}/
 
 RESPONSE: a JSON list of dictionaries which represents one player, each of whose
 dictionaries represents one statistical season of stats for that player. Each
@@ -167,7 +167,7 @@ EXAMPLE(S):
        (output abbreviated)
 
 
-REQUEST: /rankings/single-year/single-team/<category>/<team>/<year>/
+REQUEST: /rankings/single-year/single-team/{category}/{team}/{year}/
 
 RESPONSE: a JSON list of five dictionaries that represents a single season, each
 of whose dictionaries represents one NBA player in the ranking list for a given
