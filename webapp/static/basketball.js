@@ -16,13 +16,15 @@ function initialize() {
     loadRostersTeamSelector();
     loadRostersYearSelector();
 
-    //setting rosters to change url as input changes
+    
     let rostersYearSelector = document.getElementById('rosters-year-selector');
     let rostersTeamSelector = document.getElementById('rosters-team-selector');
+        //once rosters page is loaded, fill the table
       if (rostersTeamSelector) {
           fillRostersTable();
       }
-
+    
+        //setting rosters to change url as input changes
       if (rostersYearSelector) {
           rostersYearSelector.onchange = updateRostersUrl;
       }
@@ -39,9 +41,11 @@ function initialize() {
     //setting rankings to change url as input changes
     let rankingsYearSelector = document.getElementById('rankings-year-selector');
     let rankingsTeamSelector = document.getElementById('rankings-team-selector');
-      if (rankingsYearSelector) {  
+      //once rankings page is loaded, fill the table
+        if (rankingsYearSelector) {  
             fillRankingsTable()
       }
+        //if selection changes, update url to load the appropriate page
       if (rankingsYearSelector) {
           rankingsYearSelector.onchange = updateRankingsUrl;
       }
@@ -56,7 +60,12 @@ function initialize() {
     let playerInput = document.getElementById('player-input');
     let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
     let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-
+    
+    //once player page is loaded, fill the table
+    if (showBoxScoreStats || showAdvancedStats){
+        fillPlayerInfoTable()
+    }
+    
     //setting player-info to change url as input changes
     if (playerInput) {
         playerInput.onchange = updatePlayerInfoUrl;
@@ -69,14 +78,9 @@ function initialize() {
     if (showBoxScoreStats) {
         showBoxScoreStats.onchange = fillPlayerInfoTable;
     }
-    if (showBoxScoreStats || showAdvancedStats){
-        fillPlayerInfoTable()
-    }
-        
-    //once player page is loaded, fill the table
     
-//
-//    //alert("in initialize")
+        
+    
 
 }
 
@@ -92,17 +96,13 @@ function getAPIBaseURL() {
 
 
 // ----------------- ROSTERS -------------------
-//Potential things to add:
-//Another table with stats for each player (option for box-score and advanced)
-//link player names to player info page
 
 //this function runs every time rosters is loaded
 //it takes the year from the url (either generated from selections or entered manually)
-//then it assembles the list of year options, selecting by default the year in the url
-
+//then it assembles the list of year options (1950-2017), selecting by default the year in the url
 function loadRostersYearSelector() {
     let selector = document.getElementById('rosters-year-selector');
-    //so this doesn't run on player-info page
+    //so this doesn't run on wrong page
     if(selector){
         let selectorBody = '';
         selectorBody += '<option selected disabled hidden> - </option>';
@@ -113,24 +113,19 @@ function loadRostersYearSelector() {
                 selectorBody += '<option value="' + year + '"selected>'
                                     + year + '</option>\n';
 
-                var validYear = true;
             }
             else{
                 selectorBody += '<option value="' + year + '">'
                                     + year + '</option>\n';
             }
         }
-        //if not a valid year in url, let the user know
-        if(!validYear){
-            ////alert("bad url")
-        }
-        //alert("in year selector")
         selector.innerHTML = selectorBody;
 
     }
     //
 
 }
+
 
 //this function runs every time rosters is loaded
 //it takes the team from the url (either generated from selections or entered manually)
@@ -172,12 +167,12 @@ function loadRostersTeamSelector() {
                 '<option value="TOR">Toronto Raptors (1996-)</option>' +
                 '<option value="UTA">Utah Jazz (1980-)</option>' +
                 '<option value="WAS">Washington Wizards (1998-)</option>' +
-                '<option disabled>Defunct Teams</option>' +
+                
+                  '<option disabled>Defunct Teams</option>' +
         
                 '<option value="AND">Anderson Packers (1950-1950)</option>' + 
                 '<option value="BAL">Baltimore Bullets (1964-1973)</option>' + 
                 '<option value="BLB">Baltimore Bullets (1950-1955)</option>' + 
-
                 '<option value="BUF">Buffalo Braves (1971-1978)</option>' + 
                 '<option value="CAP">Capital Bullets (1974-1974)</option>' + 
                 '<option value="CHH">Charlotte Hornets (1989-2002)</option>' + 
@@ -204,7 +199,7 @@ function loadRostersTeamSelector() {
                 '<option value="SDR">San Diego Rockets (1968-1971)</option>' + 
                 '<option value="SEA">Seattle Supersonics (1968-2008)</option>' + 
                 '<option value="SFW">San Francisco Warriors (1963-1971)</option>' + 
-                //probably just omit this one
+                //just gonna omit this one
                 //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' + 
                 '<option value="STB">St. Louis Bombers (1950-1950)</option>' + 
                 '<option value="STL">St. Louis Hawks (1956-1968)</option>' + 
@@ -216,10 +211,12 @@ function loadRostersTeamSelector() {
                 '<option value="WSC">Washington Capitols (1950-1951)</option>';
             
               
-            //marking one team as selected. This team's abreviation is passed to 
+            //marking one team as selected. This team's abreviation is added to 
             //rosters-team-selector as a class whenever rosters/<team_name>/<year> is called.
-            //this relies on the options in selectorBody being written exactly with:
+
+            //this string manipulation relies on the options in selectorBody being written exactly with:
             //<option value="[TEAM ABREVIATION]">
+            
             let selectedTeam = selector.getAttribute('class');
             let selectedTeamTag = ' value="' + selectedTeam + '"'
             let finalSelectedTeamTag = selectedTeamTag + ' selected'
@@ -232,18 +229,17 @@ function loadRostersTeamSelector() {
     }
 }
 
-//this function changes the url if the user selection changes
+
+//this function changes the url (then loads a new page) if the user selection changes
 function updateRostersUrl(){
     let year = document.getElementById('rosters-year-selector').value;
     let team = document.getElementById('rosters-team-selector').value;
     window.location.href = '/rosters/' + team + '/' + year;
 }
 
+
 //this function generates rosters and sets them in roster-table html element
-//right now, this function is called in loadRostersTeamSelector because this is the only place it works
-//in initialize, loadRostersTeamSelector is the last function to complete,
-//so calling a fillRostersTable works because all the selected values are set
-//the same is the case with rankings
+
 function fillRostersTable() {
 
     let year = document.getElementById('rosters-year-selector').value;
@@ -261,13 +257,11 @@ function fillRostersTable() {
 
         .then(function(roster) {
             
-            let selectorYear = document.getElementById('rosters-year-selector');
-            let selectedYear = selectorYear.getAttribute('class');
+            let yearSelector = document.getElementById('rosters-year-selector');
+            let selectedYear = yearSelector.getAttribute('class');
 
-            let selectorTeam = document.getElementById('rosters-team-selector');
-            let selectedTeam = selectorTeam.input;
-                //selectorTeam.getAttribute('class');
-
+            let teamSelector = document.getElementById('rosters-team-selector');
+            let selectedTeam = teamSelector.input;
 
 
             let tableBody = '';
@@ -364,22 +358,14 @@ function loadRankingsYearSelector() {
                 selectorBody += '<option value="' + year + '"selected>'
                                     + year + '</option>\n';
 
-                var validYear = true;
             }
             else{
                 selectorBody += '<option value="' + year + '">'
                                     + year + '</option>\n';
             }
         }
-        //if not a valid year in url, let the user know
-        if(!validYear){
-            ////alert("bad url")
-        }
-        //alert("in year selector")
         selector.innerHTML = selectorBody;
-//        fillRostersTable();
     }
-    //
 
 }
 
@@ -482,6 +468,16 @@ function loadRankingsTeamSelector() {
     }
 }
 
+
+//this function changes the url if the user selection changes
+function updateRankingsUrl(){
+    let year = document.getElementById('rankings-year-selector').value;
+    let team = document.getElementById('rankings-team-selector').value;
+    window.location.href = '/rankings/' + team + '/' + year;
+
+}
+
+
 //this function takes rankings from fillRankingsTable and puts them on the page
 function pushRankingsTables(){
     let fullTable = '<tr><td>' + ptsTableBody + '</td><td>'+ astTableBody + '</td><td>'+ rebTableBody + '</td></tr><tr><td>'+ stlTableBody +'</td><td>'+ blkTableBody +'</td><td>'+ tovTableBody + '</td></tr>';
@@ -510,13 +506,7 @@ function pushRankingsTables(){
     validRankingsSearch = true;
 
 }
-//this function changes the url if the user selection changes
-function updateRankingsUrl(){
-    let year = document.getElementById('rankings-year-selector').value;
-    let team = document.getElementById('rankings-team-selector').value;
-    window.location.href = '/rankings/' + team + '/' + year;
 
-}
 
 //this function generates ranking lists
 //it passes ranking lists to pushRankingsTables
@@ -531,6 +521,10 @@ function fillRankingsTable() {
     let selectedTeam = teamSelector.getAttribute('class');
 
     let tableBody = '';
+    
+    //checking if there's an proper input
+    //if not, we call pushRankingTables, indicating with validRankingsSearch = false
+    //that we should return a message telling the user to make an input
 
     if ((selectedYear == '-') || (selectedTeam == '-')
               || ((selectedYear == null) && (selectedTeam == null))) {
@@ -563,7 +557,10 @@ function fillRankingsTable() {
               ptsTableBody += '<tr><td colspan="2">No Data</td></tr>'
           }
           ptsTableBody += '</table>'
-
+            
+          //this if statement checks if every table has been filled. If they have,
+          //it calls pushRankingsTables to display those tables
+          
           if(ptsTableBody != '' &&
              astTableBody != '' &&
              rebTableBody != '' &&
@@ -757,20 +754,16 @@ function fillRankingsTable() {
 // ----------------- END RANKINGS  -------------------
 // ----------------- BEGIN PLAYER-INFO -------------------
 
-
+//this function runs every time player-info is loaded
+//it populates the datalist of players that users can search for
 function loadPlayerSelector() {
 
     let url = getAPIBaseURL() + '/players';
 
-    // Send the request to the books API /authors/ endpoint
     fetch(url, {method: 'get'})
-
-    // When the results come back, transform them from a JSON string into
-    // a Javascript object (in this case, a list of author dictionaries).
+    
     .then((response) => response.json())
 
-    // Once you have your list of author dictionaries, use it to build
-    // an HTML table displaying the author names and lifespan.
     .then(function(players) {
 
         // Add the <option> elements to the <select> element
@@ -789,18 +782,20 @@ function loadPlayerSelector() {
     })
 }
 
+
+//this function generates a player's bio paragraph and their stats table, then displays it
 function fillPlayerInfoTable() {
     let playerInput = document.getElementById('player-input');
     let playerUrl = playerInput.value;
 
-    //GETTING BIO PARAGRAPH
+    //getting bio paragraph
     let bioUrl = getAPIBaseURL() + '/player-info/bio/' + playerUrl;
     fetch(bioUrl, {method: 'get'})
     .then((response) => response.json())
 
 
     .then(function(playerBio) {
-
+        //formatting bio paragraph
         let paragraphBody = '';
         player = playerBio[0]
 
@@ -811,7 +806,7 @@ function fillPlayerInfoTable() {
             + '<p>College: ' + player['college'] + '</p>';
 
 
-        // SETTING BIO PARAGRAPH
+        // displaying bio paragraph data
         let playerBioText = document.getElementById('player-bio-text');
         if(playerBioText){
             playerBioText.innerHTML = paragraphBody;
@@ -821,7 +816,7 @@ function fillPlayerInfoTable() {
     })
 
 
-    //GETTING PLAYER STATS TABLE
+    //getting stats data
     let statsUrl = getAPIBaseURL() + '/player-info/stats/' + playerUrl;
     fetch(statsUrl, {method: 'get'})
     .then((response) => response.json())
@@ -831,9 +826,11 @@ function fillPlayerInfoTable() {
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
         let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-
-        //checking that a player has stats
+        
+        //formatting stats table
+        //checking that a player has stats (some never got off the bench)
         if (playerStats.length != 0){
+            
             //adding table headers
             tableBody += '<tr>'
                             + '<th class="player-stats-table-year-cell">Year</th>'
@@ -844,6 +841,8 @@ function fillPlayerInfoTable() {
                             + '<th>G</th>'
                             + '<th>GS</th>'
                             + '<th>MP</th>';
+                            
+                            //if statements check which columns the user requested
 
                             if (showBoxScoreStats.checked) {
                                 tableBody += '<th>FG</th>'
@@ -884,11 +883,11 @@ function fillPlayerInfoTable() {
                             }
                             + '</tr>\n';
 
-
-
+            
+        //adding table data
         for (let k = 0; k < playerStats.length; k++) {
             let playerSeason = playerStats[k];
-            //adding table data
+            
             tableBody += '<tr>'
                             //at some point we can add a link to player info page
                             + '<td class="player-stats-table-year-cell">' + playerSeason['year'] + '</td>'
@@ -901,8 +900,9 @@ function fillPlayerInfoTable() {
                             + '<td>' + playerSeason['G'] + '</td>'
                             + '<td>' + playerSeason['GS'] + '</td>'
                             + '<td>' + playerSeason['MP'] + '</td>';
-
-
+                            
+                            //if statements check which columns the user requested
+            
                             if (showBoxScoreStats.checked) {
                                 tableBody += '<td>' + playerSeason['FG'] + '</td>'
                                 + '<td>' + playerSeason['FGA'] + '</td>'
@@ -927,7 +927,7 @@ function fillPlayerInfoTable() {
                                 + '<td>' + playerSeason['PF'] + '</td>'
                                 + '<td>' + playerSeason['PTS'] + '</td>';
                             }
-                            //Advanced stats
+
 
                             if (showAdvancedStats.checked) {
                               tableBody += '<td>' + playerSeason['PER'] + '</td>'
@@ -943,19 +943,19 @@ function fillPlayerInfoTable() {
                               + '<td>' + playerSeason['VORP'] + '</td>';
                             }
 
-
+                            
                             + '</tr>\n';
 
 
         }
 
-      } //end of if statement
+      } //end of if statement (checking if a player has stats)
       else {
         str = "No season stats exist for the requested player";
         tableBody += '<td>' + str.bold() + '</td>';
       }
 
-        // SETTING STATS TABLE
+        // displaying stats table
         let playerStatsTable = document.getElementById('player-stats-table');
         if(playerStatsTable){
             playerStatsTable.innerHTML = tableBody;
@@ -963,6 +963,7 @@ function fillPlayerInfoTable() {
 
     })
 }
+
 
 function updatePlayerInfoUrl(){
     let player = document.getElementById('player-input').value;

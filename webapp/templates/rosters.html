@@ -13,8 +13,7 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
       <script type="text/javascript" src="{{ url_for('static', filename='basketball.js') }}" ></script>
       <meta charset="UTF-8">
-
-
+       
    </head>
    <body>
        <div class="header">
@@ -36,15 +35,7 @@
        <br>
 
        <div>
-<!-- datalist option
-           <label for="rosters-team-selector">Start typing and select a team:</label><br>
-           <datalist id="rosters-team-list"></datalist>
-            {% if teamName %}
-              <input id="rosters-team-selector" list="rosters-team-list" value="{{teamName}}">
-            {% else %}
-              <input id="rosters-team-selector" list="rosters-team-list" >
-            {% endif %}
--->
+           <!--handling variables from when flask loads a template. teamName and year are user inputs via dropdown selections (or setting an url)-->
            <label for="rosters-team-selector">Team </label>
            {% if teamName %}
               <select id="rosters-team-selector" name="teams" class={{teamName}}></select>

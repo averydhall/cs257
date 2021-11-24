@@ -3,7 +3,7 @@
    November 23, 2021
 */
 
-/*General*/
+/* ------- General ------- */
 
 html {
     height: 100%;
@@ -17,6 +17,9 @@ body {
 
 table{
     overflow: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid black;
 }
 
 td, th, tr{
@@ -28,26 +31,17 @@ td, th, tr{
 }
 
 
-table{
-   border-collapse: separate;
-   border-spacing: 0;
-   border: 1px solid black;
-
-}
-
-
-
-
 .container {
   border: 0px solid black;
   background-color: #bcdbdf;
   padding: 20px;
 }
 
-
 h1 {
   font-size: 40px;
 }
+
+/* ------- Header ----------*/
 
 .header {
   display: flex;
@@ -61,12 +55,22 @@ h1 {
   margin: 0px;
 }
 
-/*Player info*/
+
+/*------- Player-Info ---------*/
 #player-info-container{
   display: grid;
   grid-template-columns: 1fr 4.5fr;
 }
 
+#bio-container{
+    width: 250px;
+}
+
+#player-stats-container{
+    width: auto;
+    overflow: scroll;
+    float: left;
+}
 
 
 #player-stats-table{
@@ -78,6 +82,7 @@ h1 {
     font-size: 0.9em;
 }
 
+/*this applies to the first column that moves when the table scrolls*/
 .player-stats-table-year-cell{
     position: sticky; 
     left:0; 
@@ -88,20 +93,7 @@ h1 {
 }
 
 
-#player-stats-container{
-    width: auto;
-    overflow: scroll;
-    float: left;
-}
-
-#bio-container{
-    width: 250px;
-
-}
-
-/*Rosters*/
-
-/*Rankings*/
+/*------------ Rankings ------------ */
 
 
 #rankings-table table td{
@@ -121,7 +113,7 @@ h1 {
 }
 
 
-/* Nav bar */
+/* ---------- Nav bar ------------ */
 
 ul.horizontal-navbar {
     list-style-type: none;
@@ -148,6 +140,9 @@ ul.horizontal-navbar li a:hover {
     color: white;
 }
 
+
+/*------- Color Palette ------- */
+
 .first-color {
 	background: #00204a;
 }
@@ -164,22 +159,3 @@ ul.horizontal-navbar li a:hover {
 	background: #fdb44b;
 }
 
-
-/*Advanced Stats
-#advanced_stats_selections{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 80vh;
-    display: inline-block;
-    position:absolute;
-    background-color: lightgray;
-}
-
-#advanced_stats_table{
-    width: 70%;
-    display: inline-block;
-    overflow: scroll;
-    float: right;
-/*    border-collapse: separate;
-}
-*/

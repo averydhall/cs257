@@ -22,19 +22,6 @@ def getConnection():
                             password=config.password)
 
 
-@api.route('/help')
-def getHelp():
-    '''Returns usage information in text form
-    '''
-    contents = '';
-    with open("api-help.txt", "r") as f:
-        for line in f:
-            contents += '</br>'
-            contents += line
-
-    return contents
-
-
 @api.route('rosters/<team>/<year>')
 def getRoster(team, year):
 
@@ -87,7 +74,15 @@ def getRoster(team, year):
 
     return json.dumps(roster)
 
+@api.route('/help/')
+def getHelp():
+    contents = '';
+    with open("api-help.txt", "r") as f:
+        for line in f:
+            contents += '</br>'
+            contents += line
 
+    return contents
 
 
 

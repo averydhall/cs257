@@ -36,6 +36,7 @@
 
   <br>
     <div>
+    <!--handling variables from when flask loads a template. teamName and year are user inputs via dropdown selections (or setting an url)-->
     <label for="rankings-team-selector">Team </label>
        {% if teamName %}
           <select id="rankings-team-selector" name="teams" class={{teamName}}></select>
