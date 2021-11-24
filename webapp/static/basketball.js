@@ -552,7 +552,7 @@ function fillRankingsTable() {
                   let player = ranking[k];
                     ptsTableBody += '<tr>'
                     //linking to player-info page
-                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                     + '<td>'
                     + player['stat_total']
                     + '</td>'
@@ -586,7 +586,7 @@ function fillRankingsTable() {
                   let player = ranking[k];
                     rebTableBody += '<tr>'
                     //linking to player-info page
-                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                    + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                     + '<td>'
                     + player['stat_total']
                     + '</td>'
@@ -624,7 +624,7 @@ function fillRankingsTable() {
                       let player = ranking[k];
                         astTableBody += '<tr>'
                         //linking to player-info page
-                         + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                         + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                         + '<td>'
                         + player['stat_total']
                         + '</td>'
@@ -659,7 +659,7 @@ function fillRankingsTable() {
                           let player = ranking[k];
                             stlTableBody += '<tr>'
                             //linking to player-info page
-                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
@@ -694,7 +694,7 @@ function fillRankingsTable() {
                           let player = ranking[k];
                             blkTableBody += '<tr>'
                             //linking to player-info page
-                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
@@ -728,7 +728,7 @@ function fillRankingsTable() {
                           let player = ranking[k];
                             tovTableBody += '<tr>'
                             //linking to player-info page
-                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_') + '">' + player['name'] + '</a></td>'
+                            + '<td class="team-in-player-stats"><a href="/player-info/' + player['name'].replace(' ', '_').replace('*', '') + '">' + player['name'] + '</a></td>'
                             + '<td>'
                             + player['stat_total']
                             + '</td>'
