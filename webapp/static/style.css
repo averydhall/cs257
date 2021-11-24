@@ -84,8 +84,8 @@ h1 {
 
 /*this applies to the first column that moves when the table scrolls*/
 .player-stats-table-year-cell{
-    position: sticky; 
-    left:0; 
+    position: sticky;
+    left:0;
     border-right: 2px solid black;
     border-left: 2px solid black;
     border-top: 1px solid black;
@@ -139,23 +139,3 @@ ul.horizontal-navbar li a:hover {
     background-color: #40a8c4;
     color: white;
 }
-
-
-/*------- Color Palette ------- */
-
-.first-color {
-	background: #00204a;
-}
-
-.second-color {
-	background: #005792;
-}
-
-.third-color {
-	background: #00bbf0;
-}
-
-.fourth-color {
-	background: #fdb44b;
-}
-

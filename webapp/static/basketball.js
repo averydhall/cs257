@@ -16,14 +16,14 @@ function initialize() {
     loadRostersTeamSelector();
     loadRostersYearSelector();
 
-    
+
     let rostersYearSelector = document.getElementById('rosters-year-selector');
     let rostersTeamSelector = document.getElementById('rosters-team-selector');
         //once rosters page is loaded, fill the table
       if (rostersTeamSelector) {
           fillRostersTable();
       }
-    
+
         //setting rosters to change url as input changes
       if (rostersYearSelector) {
           rostersYearSelector.onchange = updateRostersUrl;
@@ -31,7 +31,7 @@ function initialize() {
       if (rostersTeamSelector) {
           rostersTeamSelector.onchange = updateRostersUrl;
       }
-      
+
 
     // ------- loading rankings page --------
     loadRankingsTeamSelector();
@@ -42,7 +42,7 @@ function initialize() {
     let rankingsYearSelector = document.getElementById('rankings-year-selector');
     let rankingsTeamSelector = document.getElementById('rankings-team-selector');
       //once rankings page is loaded, fill the table
-        if (rankingsYearSelector) {  
+        if (rankingsYearSelector) {
             fillRankingsTable()
       }
         //if selection changes, update url to load the appropriate page
@@ -60,12 +60,12 @@ function initialize() {
     let playerInput = document.getElementById('player-input');
     let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
     let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-    
+
     //once player page is loaded, fill the table
     if (showBoxScoreStats || showAdvancedStats){
         fillPlayerInfoTable()
     }
-    
+
     //setting player-info to change url as input changes
     if (playerInput) {
         playerInput.onchange = updatePlayerInfoUrl;
@@ -78,9 +78,9 @@ function initialize() {
     if (showBoxScoreStats) {
         showBoxScoreStats.onchange = fillPlayerInfoTable;
     }
-    
-        
-    
+
+
+
 
 }
 
@@ -136,10 +136,11 @@ function loadRostersTeamSelector() {
         if (selector) {
               //setting our list of teams to pick
               let selectorBody = '<option selected disabled hidden> - </option>' +
-              '<option disabled>Active Teams</option>' +
+              '<option disabled>--- Active Teams --------------------------------</option>' +
+
               '<option value="ATL">Atlanta Hawks (1969-) </option>' +
               '<option value="BOS">Boston Celtics (1950-) </option>' +
-              '<option value="BRK">Brooklyn Nets (2013-)</option>' +      
+              '<option value="BRK">Brooklyn Nets (2013-)</option>' +
               '<option value="CHO">Charlotte Hornets (2015-) </option>' +
               '<option value="CHI">Chicago Bulls (1967-)</option>' +
               '<option value="CLE">Cleveland Cavaliers (1971-)</option>' +
@@ -167,64 +168,64 @@ function loadRostersTeamSelector() {
                 '<option value="TOR">Toronto Raptors (1996-)</option>' +
                 '<option value="UTA">Utah Jazz (1980-)</option>' +
                 '<option value="WAS">Washington Wizards (1998-)</option>' +
-                
-                  '<option disabled>Defunct Teams</option>' +
-        
-                '<option value="AND">Anderson Packers (1950-1950)</option>' + 
-                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' + 
-                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' + 
-                '<option value="BUF">Buffalo Braves (1971-1978)</option>' + 
-                '<option value="CAP">Capital Bullets (1974-1974)</option>' + 
-                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' + 
-                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' + 
-                '<option value="CHP">Chicago Packers (1962-1962)</option>' + 
-                '<option value="CHS">Chicago Stags (1950-1950)</option>' + 
-                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' + 
-                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' + 
-                '<option value="DNN">Denver Nuggets (1950-1950)</option>' + 
-                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' + 
-                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' + 
-                '<option value="KCK">Kansas City Kings (1976-1985)</option>' + 
-                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' + 
-                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' + 
-                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' + 
-                '<option value="NJN">New Jersey Nets (1978-2012)</option>' + 
-                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' + 
-                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' + 
-                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' + 
-                '<option value="NYN">New York Nets (1977-1977)</option>' + 
-                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' + 
-                '<option value="ROC">Rochester Royals (1950-1957)</option>' + 
-                '<option value="SDC">San Diego Clippers (1979-1984)</option>' + 
-                '<option value="SDR">San Diego Rockets (1968-1971)</option>' + 
-                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' + 
-                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' + 
+
+                '<option disabled>--- Defunct Teams -------------------------------</option>' +
+
+                '<option value="AND">Anderson Packers (1950-1950)</option>' +
+                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' +
+                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' +
+                '<option value="BUF">Buffalo Braves (1971-1978)</option>' +
+                '<option value="CAP">Capital Bullets (1974-1974)</option>' +
+                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' +
+                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' +
+                '<option value="CHP">Chicago Packers (1962-1962)</option>' +
+                '<option value="CHS">Chicago Stags (1950-1950)</option>' +
+                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' +
+                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' +
+                '<option value="DNN">Denver Nuggets (1950-1950)</option>' +
+                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' +
+                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' +
+                '<option value="KCK">Kansas City Kings (1976-1985)</option>' +
+                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' +
+                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' +
+                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' +
+                '<option value="NJN">New Jersey Nets (1978-2012)</option>' +
+                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' +
+                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' +
+                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' +
+                '<option value="NYN">New York Nets (1977-1977)</option>' +
+                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' +
+                '<option value="ROC">Rochester Royals (1950-1957)</option>' +
+                '<option value="SDC">San Diego Clippers (1979-1984)</option>' +
+                '<option value="SDR">San Diego Rockets (1968-1971)</option>' +
+                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' +
+                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' +
                 //just gonna omit this one
-                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' + 
-                '<option value="STB">St. Louis Bombers (1950-1950)</option>' + 
-                '<option value="STL">St. Louis Hawks (1956-1968)</option>' + 
-                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' + 
-                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' + 
-                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' + 
-                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' + 
-                '<option value="WSB">Washington Bullets (1975-1997)</option>' + 
+                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' +
+                '<option value="STB">St. Louis Bombers (1950-1950)</option>' +
+                '<option value="STL">St. Louis Hawks (1956-1968)</option>' +
+                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' +
+                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' +
+                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' +
+                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' +
+                '<option value="WSB">Washington Bullets (1975-1997)</option>' +
                 '<option value="WSC">Washington Capitols (1950-1951)</option>';
-            
-              
-            //marking one team as selected. This team's abreviation is added to 
+
+
+            //marking one team as selected. This team's abreviation is added to
             //rosters-team-selector as a class whenever rosters/<team_name>/<year> is called.
 
             //this string manipulation relies on the options in selectorBody being written exactly with:
             //<option value="[TEAM ABREVIATION]">
-            
+
             let selectedTeam = selector.getAttribute('class');
             let selectedTeamTag = ' value="' + selectedTeam + '"'
             let finalSelectedTeamTag = selectedTeamTag + ' selected'
-            
+
             if (selectorBody.includes(selectedTeamTag)){
                 selectorBody = selectorBody.replace(selectedTeamTag, finalSelectedTeamTag)
             }
-                
+
             selector.innerHTML = selectorBody;
     }
 }
@@ -256,7 +257,7 @@ function fillRostersTable() {
         .then((response) => response.json())
 
         .then(function(roster) {
-            
+
             let yearSelector = document.getElementById('rosters-year-selector');
             let selectedYear = yearSelector.getAttribute('class');
 
@@ -315,7 +316,7 @@ function fillRostersTable() {
 
         })
         .catch(function(error) {
-            
+
             console.log(error);
         });
 
@@ -377,10 +378,10 @@ function loadRankingsTeamSelector() {
         if (selector) {
               //setting our list of teams to pick
               let selectorBody = '<option selected disabled hidden> - </option>' +
-              '<option disabled>Active Teams</option>' +
+              '<option disabled>--- Active Teams --------------------------------</option>' +
               '<option value="ATL">Atlanta Hawks (1969-) </option>' +
               '<option value="BOS">Boston Celtics (1950-) </option>' +
-              '<option value="BRK">Brooklyn Nets (2013-)</option>' +      
+              '<option value="BRK">Brooklyn Nets (2013-)</option>' +
               '<option value="CHO">Charlotte Hornets (2015-) </option>' +
               '<option value="CHI">Chicago Bulls (1967-)</option>' +
               '<option value="CLE">Cleveland Cavaliers (1971-)</option>' +
@@ -408,62 +409,63 @@ function loadRankingsTeamSelector() {
                 '<option value="TOR">Toronto Raptors (1996-)</option>' +
                 '<option value="UTA">Utah Jazz (1980-)</option>' +
                 '<option value="WAS">Washington Wizards (1998-)</option>' +
-                '<option disabled>Defunct Teams</option>' +
-        
-                '<option value="AND">Anderson Packers (1950-1950)</option>' + 
-                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' + 
-                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' + 
 
-                '<option value="BUF">Buffalo Braves (1971-1978)</option>' + 
-                '<option value="CAP">Capital Bullets (1974-1974)</option>' + 
-                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' + 
-                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' + 
-                '<option value="CHP">Chicago Packers (1962-1962)</option>' + 
-                '<option value="CHS">Chicago Stags (1950-1950)</option>' + 
-                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' + 
-                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' + 
-                '<option value="DNN">Denver Nuggets (1950-1950)</option>' + 
-                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' + 
-                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' + 
-                '<option value="KCK">Kansas City Kings (1976-1985)</option>' + 
-                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' + 
-                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' + 
-                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' + 
-                '<option value="NJN">New Jersey Nets (1978-2012)</option>' + 
-                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' + 
-                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' + 
-                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' + 
-                '<option value="NYN">New York Nets (1977-1977)</option>' + 
-                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' + 
-                '<option value="ROC">Rochester Royals (1950-1957)</option>' + 
-                '<option value="SDC">San Diego Clippers (1979-1984)</option>' + 
-                '<option value="SDR">San Diego Rockets (1968-1971)</option>' + 
-                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' + 
-                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' + 
+                '<option disabled>--- Defunct Teams -------------------------------</option>' +
+
+                '<option value="AND">Anderson Packers (1950-1950)</option>' +
+                '<option value="BAL">Baltimore Bullets (1964-1973)</option>' +
+                '<option value="BLB">Baltimore Bullets (1950-1955)</option>' +
+
+                '<option value="BUF">Buffalo Braves (1971-1978)</option>' +
+                '<option value="CAP">Capital Bullets (1974-1974)</option>' +
+                '<option value="CHH">Charlotte Hornets (1989-2002)</option>' +
+                '<option value="CHA">Charlotte Bobcats (2005-2014)</option>' +
+                '<option value="CHP">Chicago Packers (1962-1962)</option>' +
+                '<option value="CHS">Chicago Stags (1950-1950)</option>' +
+                '<option value="CHZ">Chicago Zephyrs (1963-1963)</option>' +
+                '<option value="CIN">Cincinnati Royals (1958-1972)</option>' +
+                '<option value="DNN">Denver Nuggets (1950-1950)</option>' +
+                '<option value="FTW">Fort Wayne Pistons (1950-1957)</option>' +
+                '<option value="INO">Indianapolis Olympians (1950-1953)</option>' +
+                '<option value="KCK">Kansas City Kings (1976-1985)</option>' +
+                '<option value="KCO">Kansas City-Omaha Kings (1973-1975)</option>' +
+                '<option value="MLH">Milwaukee Hawks (1952-1955)</option>' +
+                '<option value="MNL">Minneapolis Lakers (1950-1960)</option>' +
+                '<option value="NJN">New Jersey Nets (1978-2012)</option>' +
+                '<option value="NOH">New Orleans Hornets (2003-2013)</option>' +
+                '<option value="NOJ">New Orleans Jazz (1975-1979)</option>' +
+                '<option value="NOK">New Orleans/Oklahoma City Hornets (2006-2007)</option>' +
+                '<option value="NYN">New York Nets (1977-1977)</option>' +
+                '<option value="PHW">Philadelphia Warriors (1950-1962)</option>' +
+                '<option value="ROC">Rochester Royals (1950-1957)</option>' +
+                '<option value="SDC">San Diego Clippers (1979-1984)</option>' +
+                '<option value="SDR">San Diego Rockets (1968-1971)</option>' +
+                '<option value="SEA">Seattle Supersonics (1968-2008)</option>' +
+                '<option value="SFW">San Francisco Warriors (1963-1971)</option>' +
                 //probably just omit this one
-                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' + 
-                '<option value="STB">St. Louis Bombers (1950-1950)</option>' + 
-                '<option value="STL">St. Louis Hawks (1956-1968)</option>' + 
-                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' + 
-                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' + 
-                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' + 
-                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' + 
-                '<option value="WSB">Washington Bullets (1975-1997)</option>' + 
+                //'<option value="SHE">SHE - Sheboygan Red Skins(1950-1950)</option>' +
+                '<option value="STB">St. Louis Bombers (1950-1950)</option>' +
+                '<option value="STL">St. Louis Hawks (1956-1968)</option>' +
+                '<option value="SYR">Syracuse Nationals (1950-1963)</option>' +
+                '<option value="TRI">Tri-Cities Blackhawks (1950-1951)</option>' +
+                '<option value="VAN">Vancouver Grizzlies (1996-2001)</option>' +
+                '<option value="WAT">Waterloo Hawks (1950-1950)</option>' +
+                '<option value="WSB">Washington Bullets (1975-1997)</option>' +
                 '<option value="WSC">Washington Capitols (1950-1951)</option>';
-            
-              
-            //marking one team as selected. This team's abreviation is passed to 
+
+
+            //marking one team as selected. This team's abreviation is passed to
             //rosters-team-selector as a class whenever rosters/<team_name>/<year> is called.
             //this relies on the options in selectorBody being written exactly with:
             //<option value="[TEAM ABREVIATION]">
             let selectedTeam = selector.getAttribute('class');
             let selectedTeamTag = ' value="' + selectedTeam + '"'
             let finalSelectedTeamTag = selectedTeamTag + ' selected'
-            
+
             if (selectorBody.includes(selectedTeamTag)){
                 selectorBody = selectorBody.replace(selectedTeamTag, finalSelectedTeamTag)
             }
-                
+
             selector.innerHTML = selectorBody;
     }
 }
@@ -521,7 +523,7 @@ function fillRankingsTable() {
     let selectedTeam = teamSelector.getAttribute('class');
 
     let tableBody = '';
-    
+
     //checking if there's an proper input
     //if not, we call pushRankingTables, indicating with validRankingsSearch = false
     //that we should return a message telling the user to make an input
@@ -557,10 +559,10 @@ function fillRankingsTable() {
               ptsTableBody += '<tr><td colspan="2">No Data</td></tr>'
           }
           ptsTableBody += '</table>'
-            
+
           //this if statement checks if every table has been filled. If they have,
           //it calls pushRankingsTables to display those tables
-          
+
           if(ptsTableBody != '' &&
              astTableBody != '' &&
              rebTableBody != '' &&
@@ -761,7 +763,7 @@ function loadPlayerSelector() {
     let url = getAPIBaseURL() + '/players';
 
     fetch(url, {method: 'get'})
-    
+
     .then((response) => response.json())
 
     .then(function(players) {
@@ -826,11 +828,11 @@ function fillPlayerInfoTable() {
         let tableBody = '';
         let showAdvancedStats = document.getElementById('advanced-stats-checkbox');
         let showBoxScoreStats = document.getElementById('box-score-stats-checkbox');
-        
+
         //formatting stats table
         //checking that a player has stats (some never got off the bench)
         if (playerStats.length != 0){
-            
+
             //adding table headers
             tableBody += '<tr>'
                             + '<th class="player-stats-table-year-cell">Year</th>'
@@ -841,7 +843,7 @@ function fillPlayerInfoTable() {
                             + '<th>G</th>'
                             + '<th>GS</th>'
                             + '<th>MP</th>';
-                            
+
                             //if statements check which columns the user requested
 
                             if (showBoxScoreStats.checked) {
@@ -883,11 +885,11 @@ function fillPlayerInfoTable() {
                             }
                             + '</tr>\n';
 
-            
+
         //adding table data
         for (let k = 0; k < playerStats.length; k++) {
             let playerSeason = playerStats[k];
-            
+
             tableBody += '<tr>'
                             //at some point we can add a link to player info page
                             + '<td class="player-stats-table-year-cell">' + playerSeason['year'] + '</td>'
@@ -900,9 +902,9 @@ function fillPlayerInfoTable() {
                             + '<td>' + playerSeason['G'] + '</td>'
                             + '<td>' + playerSeason['GS'] + '</td>'
                             + '<td>' + playerSeason['MP'] + '</td>';
-                            
+
                             //if statements check which columns the user requested
-            
+
                             if (showBoxScoreStats.checked) {
                                 tableBody += '<td>' + playerSeason['FG'] + '</td>'
                                 + '<td>' + playerSeason['FGA'] + '</td>'
@@ -943,7 +945,7 @@ function fillPlayerInfoTable() {
                               + '<td>' + playerSeason['VORP'] + '</td>';
                             }
 
-                            
+
                             + '</tr>\n';
 
 
