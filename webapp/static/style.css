@@ -70,13 +70,23 @@ h1 {
 
 
 #player-stats-table{
-  border-collapse: collapse;
-  border: 2px solid black;
+  border-collapse: separate;
+  border: 1px solid black;
 
 }
 #player-stats-table td, th{
     font-size: 0.9em;
 }
+
+.player-stats-table-year-cell{
+    position: sticky; 
+    left:0; 
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
 
 #player-stats-container{
     width: auto;

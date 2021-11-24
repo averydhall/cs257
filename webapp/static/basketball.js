@@ -754,8 +754,8 @@ function fillRankingsTable() {
 }
 
 
-
-// ----------------- PLAYER-INFO -------------------
+// ----------------- END RANKINGS  -------------------
+// ----------------- BEGIN PLAYER-INFO -------------------
 
 
 function loadPlayerSelector() {
@@ -836,7 +836,7 @@ function fillPlayerInfoTable() {
         if (playerStats.length != 0){
             //adding table headers
             tableBody += '<tr>'
-                            + '<th style="position: sticky; left:0; border: 1px solid black;">Year</th>'
+                            + '<th class="player-stats-table-year-cell">Year</th>'
                             //+ '<th>name</th>'
                             //+ '<th>position</th>'
                             + '<th>Age</th>'
@@ -891,7 +891,7 @@ function fillPlayerInfoTable() {
             //adding table data
             tableBody += '<tr>'
                             //at some point we can add a link to player info page
-                            + '<td style="position: sticky; left:0; border-right: 1px solid black;">' + playerSeason['year'] + '</td>'
+                            + '<td class="player-stats-table-year-cell">' + playerSeason['year'] + '</td>'
                             //+ '<td>' + playerSeason['name'] + '</td>'
                             //+ '<td>' + playerSeason['position'] + '</td>'
                             + '<td>' + playerSeason['age'] + '</td>'
